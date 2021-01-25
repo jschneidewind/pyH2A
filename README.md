@@ -2,7 +2,7 @@
 
 pyH2A is an extensible Python implementation of the H2A Hydrogen Analysis model developed buy the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
 
-`pyH2A.py` provides the basic discounted cashflow analysis functionalitiy and it can be interfaced with different `plugins` to allow modelling of various hydrogen production technologies. It is a command line tool, with the input being provided using Markdown formatted plaintext files and the output being plots and formatted PDF reports.
+`pyH2A.py` provides the basic discounted cashflow analysis functionality and it can be interfaced with different `plugins` to allow modelling of various hydrogen production technologies. It is a command line tool, with the input being provided using Markdown formatted plaintext files and the output being plots and formatted PDF reports.
 
 Note: pyH2A is currently under development and may undergo major changes in its design.
 
