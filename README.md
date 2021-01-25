@@ -41,7 +41,7 @@ The current output is a cost breakdown plot:
 
 a sensitivity analysis plot (if sensitivity analysis is requested in the input file):
 
-![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/sensitivity_box_plot.png "Senitivity plot")
+![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/sensitivity_box_plot.png "Sensitivity plot")
 
 and a formatted PDF file combining the plots and a summary of the computed hydrogen cost.
 
