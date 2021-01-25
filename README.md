@@ -46,7 +46,7 @@ a sensitivity analysis plot (if sensitivity analysis is requested in the input f
 
 and a formatted PDF file combining the plots and a summary of the computed hydrogen cost:
 
-![pdf report](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/Future_PEC_Type_2.pdf "PDF report")
+![PDF report](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/Future_PEC_Type_2.pdf "PDF report")
 
 # License
 
