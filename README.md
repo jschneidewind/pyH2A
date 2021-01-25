@@ -29,13 +29,21 @@ pyH2A can be run in the command line using:
 python pyH2A.py path/to/input_file path/to/output_directory
 ```
 
-For example, if the input file is in the `Input` directory and the output directory is `Output/Example_Output`:
+For example, if the input file `Input.md` is in the `../Input` directory and the output directory is `../Output/Example_Output`:
 
 ```bash
 python pyH2A.py ../Input/Input.md ../Output/Example_Output
 ```
 
-The current output is a cost breakdown plot, a sensitivity analysis plot (if sensitivity analysis is requested in the input file) and a formatted PDF file combining the plots and a summary of the computed hydrogen cost.
+The current output is a cost breakdown plot:
+
+![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/cost_breakdown.png "Cost breakdown plot")
+
+a sensitivity analysis plot (if sensitivity analysis is requested in the input file):
+
+![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/sensitivity_box_plot.png "Senitivity plot")
+
+and a formatted PDF file combining the plots and a summary of the computed hydrogen cost.
 
 # License
 
