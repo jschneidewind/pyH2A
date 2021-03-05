@@ -1,4 +1,4 @@
-<img style="float: center;" src="./Lookup_Tables/pyH2A.svg">
+<img align="right" src="./Lookup_Tables/pyH2A.svg"/>
 
 # pyH2A
 
