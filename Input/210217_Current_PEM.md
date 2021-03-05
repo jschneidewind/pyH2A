@@ -1,9 +1,26 @@
+# Workflow
+
+Name | Type | Description
+--- | --- | ---
+Production_Scaling_Plugin | plugin | Computes plant output and scaling factors (if scaling is requested)
+production_scaling | function | core function to process yearly plant output
+Capital_Cost_Plugin | plugin | Calculation of direct, indirect and non-depreciable capital costs
+initial_equity_depreciable_capital | function | core function to process depreciable capital costs
+non_depreciable_capital_costs | function | core function to process non-depreciable capital costs
+Replacement_Plugin | plugin | Calculation of replacement costs
+replacement_costs | function | core function to process replacement costs
+Fixed_Operating_Cost_Plugin | plugin | Calculation of fixed operating costs
+fixed_operating_costs | function | core function to process fixed operating costs
+Variable_Operating_Cost_Plugin | plugin | Calculation of variable operating costs, including utilities
+variable_operating_costs | function | core function to process variable operating costs
+
 # Technical Operating Parameters and Specifications
 
-Name | Value
---- | ---
-Operating Capacity Factor (%) | 82.4%
-Plant Design Capacity (kg of H2/day) | 50,000
+Name | Value | Path | Full Name
+--- | --- | --- | ---
+Operating Capacity Factor (%) | 97.0%
+Plant Design Capacity (kg of H2/day) | 56,500
+Maximum Output at Gate | 100% | Technical Operating Parameters and Specifications > Plant Design Capacity (kg of H2/day) > Value | % of plant design capacity
 
 # Financial Input Values
 
@@ -38,19 +55,13 @@ Name | Full Name | Value
 --- | --- | ---
 capital perc 1st | % of Capital Spent in 1st Year of Construction | 100%
 
-# Energy Feedstocks, Utilities, and Byproducts
-
-Name | Price Conversion Factor (GJ/kWh) | Price in Startup Year | Usage (kWh/kg H2) | Cost in Startup Year
---- | --- | --- | --- | ---
-Industrial Electricity | 0.0036 | 0.069980611 | 55.5 | 77,693,335.0
-
-# Total Capital Costs
+# Direct Capital Costs
 
 Name | Value
 --- | ---
-H2A Total Direct Capital Cost | 60,676,256.0
+Direct Capital Cost | 60,676,256.0
 
-# Indirect Depreciable Capital Costs
+# Indirect Capital Costs
 
 Name | Value
 --- | ---
@@ -67,21 +78,20 @@ Name | Value
 --- | ---
 Cost of land ($ per acre) | 50,000.0
 Land required (acres) | 5
-Other non-depreciable capital costs ($) | 0.0
 
 # Fixed Operating Costs
 
 Name | Full Name | Value
 --- | --- | ---
 staff | Total plant staff (FTEs) | 10
-labor cost | Burdened labor cost, including overhead ($ per man-hr) | 50.0
-g&a | G&A rate (% of labor cost) | 20.0%
-property tax | Property tax and insurance rate (% of total capital investment per year) | 2.0%
+hourly labor cost | Burdened labor cost, including overhead ($ per man-hr) | 50.0
 
 # Other Fixed Operating Costs
 
-Name | Full Name | Value
+Name | Full Name | Value | Path
 --- | --- | ---
+g&a | G&A rate (% of labor cost) | 20.0% | Fixed Operating Costs > Labor Cost > Value
+property tax | Property tax and insurance rate (% of total capital investment per year) | 2.0% | Total Capital Costs > Inflated > Value
 rent | Rent ($ per year) | 0.0
 fees | Licensing, Permits and Fees ($ per year) | 0.0
 material cost repair | Material costs for maintenance and repairs ($ per year) | 1,820,288.0
@@ -89,11 +99,12 @@ repair | Production Maintenance and Repairs ($ per year) | 0.0
 other fees | Other Fees ($ per year) | 0.0
 other o&m | Other Fixed O&M Costs ($ per year) | 0.0
 
-# Materials and Byproducts
+# Utilities
 
-Name | $(2016)/gal | Usage per kg H2 | Cost in Startup Year ($)
---- | --- | --- | ---
-Process Water | 0.0023749510945008 | 3.78 | 179,581.0
+Name | Usage per kg H2 | Usage Unit | Cost | Cost Unit | Price Conversion Factor | Price Conversion Factor Unit
+--- | --- | --- | --- | --- | --- | ---
+Industrial Electricity | 55.5 | kWh/kg H2 | ../Lookup_Tables/Industrial_Electricity_AEO_2017_Reference_Case.csv | GJ | 0.0036 | GJ/kWh
+Process Water | 3.78 | gal/kg H2 | 0.0023749510945008 | $(2016)/gal | 1. | None
 
 # Other Variable Operating Costs
 
@@ -115,16 +126,16 @@ Planned Replacement | 7 | 9,101,438.0
 
 # Unplanned Replacement
 
-Name | Full Name | Value
---- | --- | ---
-unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of total direct depreciable costs/year) | 0.5%
+Name | Full Name | Value | Path
+--- | --- | --- | ---
+unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of total direct depreciable costs/year) | 0.5% | Depreciable Capital Costs > Inflated > Value
 
 # Sensitivity Analysis
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---
-Energy Feedstocks, Utilities, and Byproducts > Industrial Electricity > Usage (kWh/kg H2) | Electricity Usage (kWh/kg H2) | factor | 95%; 105%
+Utilities > Industrial Electricity > Usage per kg H2 | Electricity Usage (kWh/kg H2) | factor | 95%; 105%
 Technical Operating Parameters and Specifications > Plant Design Capacity (kg of H2/day) > Value | Plant Design Capacity (kg H2/day) | factor | 95%; 105%
 Technical Operating Parameters and Specifications > Operating Capacity Factor (%) > Value | Operating Capacity Factor | factor | 95%; 105%
 Financial Input Values > irr > Value | Internal Rate of Return | factor | 95%; 105%
-Materials and Byproducts > Process Water > Usage per kg H2 | Water Usage per kg H2 | factor | 50%; 150%
+Utilities > Process Water > Usage per kg H2 | Water Usage per kg H2 | factor | 50%; 150%

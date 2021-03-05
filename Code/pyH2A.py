@@ -1,14 +1,22 @@
-import numpy as np
+import types
+import importlib.machinery
 import copy
 import sys
+import numpy as np
 from fpdf import FPDF
-import find_nearest as fn
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib import rcParams
 rcParams['font.family'] = 'sans-serif'
 rcParams['font.sans-serif'] = ['Arial']
 rcParams['font.size'] = 12
+import find_nearest as fn
+from input_modification import parse_parameter, process_input, process_table, insert
+
+import pprint
+
+from timeit import default_timer as timer
+
 
 '''Printing actions of plugins (and sensitivity analysis?)'''
 
@@ -40,7 +48,7 @@ def convert_input_to_dictionary(file):
 				inp[variable_name] = {}
 				header = False
 
-			if line == '\n':
+			if line.strip(' ') == '\n':
 				table = False
 				header = True
 
@@ -48,7 +56,7 @@ def convert_input_to_dictionary(file):
 				table = True
 				header = False
 
-			if header is True and line != '\n':
+			if header is True and line.strip(' ') != '\n':
 				header_entries = line.split('|')
 
 			if table is True and line[0] != '-':
@@ -61,16 +69,6 @@ def convert_input_to_dictionary(file):
 					inp[variable_name][table_entries[0].strip(' ')][header_entry] = table_entry 
 
 	return inp
-
-def parse_parameter(key, delimiter = '>'):
-
-	path_components = key.split(delimiter)
-	output = []
-
-	for i in path_components:
-		output.append(i.strip(' '))
-		
-	return output	
 
 def parse_file_name(name):
 
@@ -110,57 +108,231 @@ class Figure:
 		self.fig.savefig('{0}{1}.png'.format(self.directory, self.name), transparent = True, dpi = 150)
 
 class Discounted_Cash_Flow:
+	'''
+    ___________________
+	General Remarks
+    ___________________
 
-	def __init__(self, input_file, print_info = True):
+    # Numerical Inputs
+
+    Numbers use decimal points. Commas can be used as thousands seperator, they are removed from numbers
+    during processing. the "%" can be used after a number, indicating that it will be divided by 100
+    before being used. 
+
+    # Special symbols
+
+    Tables in the input file are formatted using GitHub flavoured Markdown. 
+    This means that "#" at the beginning of a line indicates a header.
+    "|" is used to seperate columns.
+    "---" is used on its own line to seperate table headers from table entries.
+
+    Paths to locations in the input file/in self.inp are specified using ">". Paths are always composed
+    of three levels: top key > middle key > bottom key.
+
+    File name paths are specified using "/".
+
+    In cases where multiple numbers are used in one field (e.g. during sensitivity analysis), these numbers
+    are seperated using ";".
+
+	# Order in the input file
+
+	Order matters in the following cases: 
+
+	1. For the "Workflow" table the order of entries determines the order
+	in which functions and plugins are executed.
+
+	2. For a group of sum_all_tables() processed tables (sharing the specified part of their key, e.g. "Direct
+	Capital Cost"), they are processed in their provided order.
+
+	3. Within a table, the first column will be used to generate the "middle key" of self.inp. The order of the
+	other columns is not important.
+
+	# Input
+
+	Processed input cells can contain either a number or path(s) (if multiple paths are used, they have to
+	be seperated by ";") to other cells. The use of process_input() (and hence, process_table(), sum_table() and 
+	sum_all_tables()) also allows for the value of an input cell to be multiplied by another cell by including
+	path(s) in an additiona column (column name typically "Path").
+
+
+	______________
+	Required Input
+	______________
+
+	# Workflow
+	Name | Type
+	--- | ---
+	initial_equity_depreciable_capital | function
+	non_depreciable_capital_costs | function
+	replacement_costs | function
+	fixed_operating_costs | function
+	variable_operating_costs | function
+
+	Optional:
+
+	Inclusion of plugins via
+
+	plugin_name | plugin
+
+	Workflow specifies which functions and plugins are used and in which order they are executed. The listed
+	five functions have to be executed in the specified order for pyH2A to work. Plugins can be inserted at 
+	appropiate positions (Type: "plugin"). Plugins have to be located in the ./Plugins/ directory. 
+
+	Plugins needs to be composed of a class with the same name as the plugin file name. This class uses two inputs, 
+	a discounted cash flow object (usually indicated by "self") and "print_info", which controls the printing of run time
+	statements. Within the __init__ function of the class the actions of the plugins are specified, typically call(s)
+	of the "insert()" function to modify the discounted cash flow object's "inp" dictionary (self.inp).
+
+	# Technical Operating Parameters and Specifications
+	Name | Value
+	--- | ---
+	Output per Year at Gate | num
+
+	process_input() is used
+
+	# Financial Input Values
+	Name | Value
+	--- | ---
+	ref year | num
+	startup year | num
+	basis year | num
+	current year capital costs | num
+	startup time | num
+	plant life | num
+	analysis period | num
+	depreciation length | num
+	depreciation type | MACRS   # other types not yet implemented
+	equity | num
+	interest | num
+	debt | Constant      # other debt not yet implemented
+	startup cost fixed | num
+	startup revenues | num
+	startup cost variable | num
+	decommissioning | num
+	salvage | num
+	inflation | num
+	irr | num
+	state tax | num
+	federal tax | num
+	working capital | num
+
+	process_table() is used on "Financial Input Values"
+
+	# Construction
+	Name | Value
+	--- | ---
+	str | num (have to sum to 100%)
+
+	process_table() is used
+
+	Number of entries in construction determines construction period in years (each entry corresponds to one year).
+	Have to be in order (entry 0 corresponds to first construction years, entry 2 the second etc.)
+	"Value" refers to % of capital spent in corresponding construction year, all values have to sum to 100%.
+
+	# Depreciable Capital Costs
+	Name | Value
+	--- | ---
+	Inflated | num
+
+	process_input() is used
+
+	# Non-Depreciable Capital Costs
+	Name | Value
+	--- | ---
+	Inflated | num
+
+	process_input() is used
+
+	# Replacement
+	Name | Value
+	--- | ---
+	Total | num
+
+	# Fixed Operating Costs
+	Name | Value
+	--- | ---
+	Total | num
+
+	process_input() is used
+
+	# Variable Operating Costs
+	Name | Value
+	--- | ---
+	Total | num
+
+	______________
+	Output
+	______________
+
+	Discounted_Cash_Flow class object.
+
+	.h2_cost attribute (H2 cost per kg)
+	.contributions attribute (cost contributions to H2 price)
+	.plugs dictionary containing plugin class objects used during analysis
+
+	'''
+
+	def __init__(self, input_file, print_info = True, check_processing = True):
 		if isinstance(input_file, str):
 			self.inp = convert_input_to_dictionary(input_file)
 		else:
 			self.inp = input_file
 
-		self.check_plugins()
+		self.print_info = print_info
 
+		process_table(self.inp, 'Financial Input Values', 'Value')
 		self.fin = self.inp['Financial Input Values']
+
+		self.npv_dict = {}	
+		self.plugs = {}
+
 		self.time()
 		self.inflation()
-		self.production_scaling()
 
-		if 'Photocatalytic_Plugin' in self.plugins:
-			from Photocatalytic_Plugin import Photocatalytic_Plugin
-			Photocatalytic_Plugin(self, print_info)
+		self.workflow(self.inp, self.npv_dict, self.plugs)
 
-		if 'Multiple_Modules_Plugin' in self.plugins:
-			from Multiple_Modules_Plugin import Multiple_Modules_Plugin
-			Multiple_Modules_Plugin(self, print_info)
-
-		self.npv_initial_equity_depreciable_capital = self.initial_equity_depreciable_capital()
-		self.npv_non_depreciable_capital_costs = self.non_depreciable_capital_costs()
-		self.npv_replacement_costs = self.replacement_costs()
-		self.npv_salvage, self.npv_decomissioning = self.salvage_decommissioning()
-		self.npv_fixed_operating_costs = self.fixed_operating_costs()
-		self.electricity_cost_per_kg = self.industrial_electricity()
-		self.water_cost_per_kg = self.process_water()
-		self.npv_variable_operating_costs = self.variable_operating_costs()
-		self.npv_working_capital_reserve = self.working_capital_reserve_calc()
-		self.npv_interest, self.npv_principal_payment = self.debt_financing()
-		self.npv_depreciation_charge = self.depreciation_charge()
-		self.npv_h2_sales = self.h2_sales()
+		self.npv_dict['salvage'], self.npv_dict['decomissioning'] = self.salvage_decommissioning()		
+		self.npv_dict['working_capital_reserve'] = self.working_capital_reserve_calc()
+		self.npv_dict['interest'], self.npv_dict['principal_payment'] = self.debt_financing()
+		self.npv_dict['depreciation_charge'] = self.depreciation_charge()
+		self.npv_dict['h2_sales'] = self.h2_sales()
 		self.h2_cost()
-		self.npv_revenue = self.h2_revenue()
-		self.npv_pre_depreciation_income, self.npv_taxable_income, self.npv_taxes, self.npv_after_tax_income = self.income()
+		self.npv_dict['revenue'] = self.h2_revenue()
+		self.npv_dict['pre_depreciation_income'], self.npv_dict['taxable_income'], self.npv_dict['taxes'], self.npv_dict['after_tax_income'] = self.income()
 		self.cash_flow()
 		self.cost_contribution()
 
-	def check_plugins(self):
+		if check_processing is True:
+			self.check_processing()
 
-		try:
-			self.plugins = self.inp['Plugins']['Plugins']['Value']	
-			self.plugins = parse_parameter(self.plugins, delimiter = ';')
-		except KeyError:
-			self.plugins = []
+	def workflow(self, input, npv_dict, plugs_dict):
+
+		for key in input['Workflow']:
+			if input['Workflow'][key]['Type'] == 'function':
+				self.execute_function(key, npv_dict)
+			else:
+				self.execute_plugin(key, plugs_dict)
+
+	def execute_function(self, function_name, npv_dict):
+		'''Execute class function named "function_name" and store output in "npv_dict"'''
+
+		called_function = getattr(self, function_name)
+		output = called_function()
+		npv_dict[function_name] = output
+
+	def execute_plugin(self, plugin_name, plugs_dict):
+		loader = importlib.machinery.SourceFileLoader(plugin_name, './Plugins/{0}.py'.format(plugin_name))
+		mod = types.ModuleType(loader.name)
+		loader.exec_module(mod)
+
+		plugin_class = getattr(mod, plugin_name)
+		plugin_object = plugin_class(self, self.print_info)
+
+		plugs_dict[plugin_name] = plugin_object
 
 	def time(self):
 
-		self.fin['construction time'] = {'Full Name': 'Length of Construction Period (years)', 'Value': len(self.inp['Construction'])}
+		insert(self, 'Financial Input Values', 'construction time', 'Value', len(self.inp['Construction']), __name__, print_info = self.print_info)
 
 		construction_start = self.fin['startup year']['Value'] - self.fin['construction time']['Value']
 		end_of_life = self.fin['startup year']['Value'] + self.fin['plant life']['Value']
@@ -178,37 +350,31 @@ class Discounted_Cash_Flow:
 		plant_cost = np.genfromtxt('../Lookup_Tables/Plant_Cost_Index.csv', delimiter = '	')
 		gdp_deflator_price = np.genfromtxt('../Lookup_Tables/GDP_Implicit_Deflator_Price_Index.csv', delimiter = '	')
 		labor_price = np.genfromtxt('../Lookup_Tables/Labor_Index.csv', delimiter = '	')
+		chemical_price = np.genfromtxt('../Lookup_Tables/SRI_Chemical_Price_Index.csv', delimiter = '	')
 
 		plant_idx = fn.find_nearest(plant_cost, [self.fin['current year capital costs']['Value'], self.fin['basis year']['Value']])
 		gdp_idx = fn.find_nearest(gdp_deflator_price, [self.fin['ref year']['Value'], self.fin['current year capital costs']['Value']])
 		labor_idx = fn.find_nearest(labor_price, [self.fin['ref year']['Value'], self.fin['basis year']['Value']])
+		chemical_idx = fn.find_nearest(chemical_price, [self.fin['ref year']['Value'], self.fin['basis year']['Value']])
 
 		self.cepci_inflator = plant_cost[:,1][plant_idx[0]]/plant_cost[:,1][plant_idx[1]]
 		self.ci_inflator = gdp_deflator_price[:,1][gdp_idx[0]]/gdp_deflator_price[:,1][gdp_idx[1]]
 		self.combined_inflator = self.cepci_inflator * self.ci_inflator
 		self.labor_inflator = labor_price[:,1][labor_idx[0]]/labor_price[:,1][labor_idx[1]]
+		self.chemical_inflator = chemical_price[:,1][chemical_idx[0]]/chemical_price[:,1][chemical_idx[1]]
 
 	def production_scaling(self):
 
-		operating = self.inp['Technical Operating Parameters and Specifications']
+		self.output_per_year_at_gate = process_input(self.inp, 'Technical Operating Parameters and Specifications', 'Output per Year at Gate', 'Value')
 
-		self.max_output_per_day = operating['Plant Design Capacity (kg of H2/day)']['Value'] * operating['Scaling Ratio']['Value']
-		self.output_per_year = operating['Operating Capacity Factor (%)']['Value'] * self.max_output_per_day * 365.
-
-		self.capital_scaling_factor = operating['Scaling Ratio']['Value'] ** operating['Scaling Exponent']['Value']
-		self.labor_scaling_factor = operating['Scaling Ratio']['Value'] ** 0.25
+		return 0.
 
 	def initial_equity_depreciable_capital(self):
 
-		direct_scaling = self.inp['Total Capital Costs']['Scaling Direct Capital Cost']['Value'] * self.capital_scaling_factor * self.combined_inflator
-		direct_non_scaling = self.inp['Total Capital Costs']['Non-Scaling Direct Capital Cost']['Value'] * self.combined_inflator
-
-		indirect = 0.
-		for key in self.inp['Indirect Depreciable Capital Costs']:
-			indirect += self.inp['Indirect Depreciable Capital Costs'][key]['Value'] * self.combined_inflator * self.capital_scaling_factor
-
-		self.depreciable_capital = direct_scaling + direct_non_scaling + indirect
+		self.depreciable_capital = process_input(self.inp, 'Depreciable Capital Costs', 'Inflated', 'Value')
 		self.depreciable_capital_inflation = self.depreciable_capital * self.inflation_correction
+
+		process_table(self.inp, 'Construction', 'Value')
 
 		construction_years = []
 		for counter, key in enumerate(self.inp['Construction']):
@@ -227,10 +393,7 @@ class Discounted_Cash_Flow:
 	def non_depreciable_capital_costs(self):
 		'''Land required only scales when Photocatalytic_Plugin is used'''
 
-		self.non_depreciable_capital = self.inp['Non-Depreciable Capital Costs']['Cost of land ($ per acre)']['Value'] * self.inp['Non-Depreciable Capital Costs']['Land required (acres)']['Value']
-		self.non_depreciable_capital += self.inp['Non-Depreciable Capital Costs']['Other non-depreciable capital costs ($)']['Value']
-		self.non_depreciable_capital *= self.ci_inflator
-
+		self.non_depreciable_capital = process_input(self.inp, 'Non-Depreciable Capital Costs', 'Inflated', 'Value')
 		self.non_depreciable_capital_inflated = self.non_depreciable_capital * self.inflation_correction
 		non_depreciable_capital_inflation_corrected = self.non_depreciable_capital_inflated * self.inflation_factor[0]
 
@@ -240,34 +403,14 @@ class Discounted_Cash_Flow:
 		return non_depreciable_capital_inflation_corrected
 
 	def replacement_costs(self):
-		'''Replacement costs are billed annually, replacements which are performed at a non-integer rate are corrected using non_interger_correction'''
-
-		unplanned_replacement_cost = self.inp['Unplanned Replacement']['unplanned replacement']['Value'] * self.depreciable_capital
-		unplanned_replacement_cost_inflated = unplanned_replacement_cost * self.inflation_correction
-
-		yearly_costs = self.inflation_factor * unplanned_replacement_cost_inflated
-
-		for key in self.inp['Planned Replacement']:
-			defined_frequency = self.inp['Planned Replacement'][key]['Frequency (years)']
-			replacement_frequency = int(np.ceil(defined_frequency))
-			non_integer_correction = replacement_frequency / defined_frequency
-
-			replacement_cost = self.inp['Planned Replacement'][key]['Cost ($)'] * non_integer_correction * self.combined_inflator
-			replacement_cost_inflated = replacement_cost * self.inflation_correction
-
-			initial_replacement_year_idx = fn.find_nearest(self.plant_years, replacement_frequency)[0]
-
-			replacement_years = self.plant_years[initial_replacement_year_idx:][0::replacement_frequency]
-			replacement_years_idx = fn.find_nearest(self.plant_years, replacement_years)
-
-			yearly_costs[replacement_years_idx] += replacement_cost_inflated * self.inflation_factor[replacement_years_idx]
+	
+		yearly_costs = self.inp['Replacement']['Total']['Value']
 
 		self.start_idx = fn.find_nearest(self.plant_years, 0)[0]
 		yearly_costs[:self.start_idx] = 0
 		self.annual_replacement_costs = yearly_costs	
 
 		return np.npv(self.after_tax_nominal_irr, yearly_costs)
-		#return 5789124.0
 
 	def salvage_decommissioning(self):
 
@@ -287,20 +430,7 @@ class Discounted_Cash_Flow:
 	def fixed_operating_costs(self):
 		'''Fixed operating costs repair should scale'''
 
-		fix = self.inp['Fixed Operating Costs']
-
-		labor_cost = fix['staff']['Value'] * fix['labor cost']['Value'] * 2080. * self.labor_inflator * self.labor_scaling_factor
-		
-		g_and_a = fix['g&a']['Value'] * labor_cost
-
-		self.total_capital = self.depreciable_capital + self.non_depreciable_capital
-		tax_insurance = fix['property tax']['Value'] * self.total_capital
-
-		fixed_operating = labor_cost + g_and_a + tax_insurance
-
-		for key in self.inp['Other Fixed Operating Costs']:
-			fixed_operating += self.inp['Other Fixed Operating Costs'][key]['Value'] * self.combined_inflator
-
+		fixed_operating = process_input(self.inp, 'Fixed Operating Costs', 'Total', 'Value')
 		fixed_operating_inflated = fixed_operating * self.inflation_correction
 
 		self.start_up_time_idx = self.start_idx + self.fin['startup time']['Value']
@@ -313,36 +443,9 @@ class Discounted_Cash_Flow:
 
 		return np.npv(self.after_tax_nominal_irr, yearly_costs)
 
-	def industrial_electricity(self):
-
-		electricity = self.inp['Energy Feedstocks, Utilities, and Byproducts']['Industrial Electricity']
-
-		prices = np.genfromtxt('../Lookup_Tables/Industrial_Electricity_AEO_2017_Reference_Case.csv', delimiter = '	') # Fixed Reference Case
-		years_idx = fn.find_nearest(prices, self.years)
-		prices = prices[years_idx]
-
-		cost_per_kg_H2 = prices[:,1] * self.inflation_correction * electricity['Price Conversion Factor (GJ/kWh)'] * electricity['Usage (kWh/kg H2)']
-		
-		return cost_per_kg_H2
-
-	def process_water(self):
-
-		water = self.inp['Materials and Byproducts']['Process Water']
-		annual_cost_per_kg_H2 = self.inflation_correction * water['$(2016)/gal'] * water['Usage per kg H2']
-
-		cost_per_kg_H2 = np.ones(len(self.inflation_factor)) * annual_cost_per_kg_H2
-
-		return cost_per_kg_H2
-
 	def variable_operating_costs(self):
 
-		other_variable_operating_costs = 0.
-		for key in self.inp['Other Variable Operating Costs']:
-			other_variable_operating_costs += self.inp['Other Variable Operating Costs'][key]['Value']
-
-		utilities = self.output_per_year * (self.electricity_cost_per_kg + self.water_cost_per_kg)
-		variable_operating_costs = self.inflation_factor * (utilities + other_variable_operating_costs)
-
+		variable_operating_costs = self.inflation_factor * self.inp['Variable Operating Costs']['Total']['Value']
 		variable_operating_costs[:self.start_up_time_idx] = variable_operating_costs[:self.start_up_time_idx] * self.fin['startup cost variable']['Value']
 		variable_operating_costs[:self.start_idx] = 0
 
@@ -411,7 +514,7 @@ class Discounted_Cash_Flow:
 
 	def h2_sales(self):
 
-		self.annual_sales = np.ones(len(self.inflation_factor)) * self.output_per_year
+		self.annual_sales = np.ones(len(self.inflation_factor)) * self.output_per_year_at_gate
 		self.annual_sales[:self.start_up_time_idx] = self.annual_sales[:self.start_up_time_idx] * self.fin['startup revenues']['Value']
 		self.annual_sales[:self.start_idx] = 0
 
@@ -421,17 +524,18 @@ class Discounted_Cash_Flow:
 
 		self.total_tax_rate = self.fin['federal tax']['Value'] + self.fin['state tax']['Value'] * (1. - self.fin['federal tax']['Value'])
 
-		lcoe_capital_costs = self.npv_initial_equity_depreciable_capital + self.npv_non_depreciable_capital_costs + self.npv_working_capital_reserve + self.npv_replacement_costs
-		lcoe_depreciation = -self.npv_depreciation_charge * self.total_tax_rate
-		lcoe_principal_payment = self.npv_principal_payment
-		lcoe_operating_costs = (-self.npv_salvage + self.npv_decomissioning + self.npv_fixed_operating_costs + self.npv_variable_operating_costs + self.npv_interest) * (1. - self.total_tax_rate)
-		lcoe_h2_sales = self.npv_h2_sales * (1. - self.total_tax_rate)
+		lcoe_capital_costs = self.npv_dict['initial_equity_depreciable_capital'] + self.npv_dict['non_depreciable_capital_costs'] + self.npv_dict['replacement_costs'] + self.npv_dict['working_capital_reserve']
+		lcoe_depreciation = -self.npv_dict['depreciation_charge'] * self.total_tax_rate
+		lcoe_principal_payment = self.npv_dict['principal_payment']
+		lcoe_operating_costs = (-self.npv_dict['salvage'] + self.npv_dict['decomissioning'] + self.npv_dict['fixed_operating_costs'] + self.npv_dict['variable_operating_costs'] + self.npv_dict['interest']) * (1. - self.total_tax_rate)
 
-		# print(lcoe_capital_costs)
-		# print(lcoe_depreciation)
-		# print(lcoe_principal_payment)
-		# print(lcoe_operating_costs)
-		# print(lcoe_h2_sales)
+		lcoe_h2_sales = self.npv_dict['h2_sales'] * (1. - self.total_tax_rate)
+
+		# print('Capital Cost:', lcoe_capital_costs)
+		# print('Depreciation:', lcoe_depreciation)
+		# print('Principal Payment:', lcoe_principal_payment)
+		# print('Operating Costs:', lcoe_operating_costs)
+		# print('H2 Sales:', lcoe_h2_sales)
 
 		self.h2_cost_nominal = (lcoe_capital_costs + lcoe_depreciation + lcoe_principal_payment + lcoe_operating_costs)/lcoe_h2_sales * (1. + self.fin['inflation']['Value']) ** self.fin['construction time']['Value']
 		self.h2_cost = self.h2_cost_nominal/self.inflation_correction
@@ -463,25 +567,67 @@ class Discounted_Cash_Flow:
 
 	def cost_contribution(self):
 
-		revenue = self.expenses_per_kg_H2(self.npv_revenue)
+		revenue = self.expenses_per_kg_H2(self.npv_dict['revenue'])
 
-		self.contributions = {'Initial equity depreciable capital': self.expenses_per_kg_H2(self.npv_initial_equity_depreciable_capital),
-						      'Non-depreciable capital' : self.expenses_per_kg_H2(self.npv_non_depreciable_capital_costs),
-						 	  'Replacement costs' : self.expenses_per_kg_H2(self.npv_replacement_costs),
-						      'Salvage' : -self.expenses_per_kg_H2(self.npv_salvage),
-						 	  'Decomissioning' : self.expenses_per_kg_H2(self.npv_decomissioning),
-						  	  'Fixed operating costs' : self.expenses_per_kg_H2(self.npv_fixed_operating_costs),
-						 	  'Variable operating costs' : self.expenses_per_kg_H2(self.npv_variable_operating_costs),
-						 	  'Working capital reserve' : self.expenses_per_kg_H2(self.npv_working_capital_reserve),
-						   	  'Interest' : self.expenses_per_kg_H2(self.npv_interest),
-						      'Principal payment' : self.expenses_per_kg_H2(self.npv_principal_payment),
-						      'Taxes' : self.expenses_per_kg_H2(self.npv_taxes)}
+		self.contributions = {'Initial equity depreciable capital': self.expenses_per_kg_H2(self.npv_dict['initial_equity_depreciable_capital']),
+						      'Non-depreciable capital' : self.expenses_per_kg_H2(self.npv_dict['non_depreciable_capital_costs']),
+						 	  'Replacement costs' : self.expenses_per_kg_H2(self.npv_dict['replacement_costs']),
+						      'Salvage' : -self.expenses_per_kg_H2(self.npv_dict['salvage']),
+						 	  'Decomissioning' : self.expenses_per_kg_H2(self.npv_dict['decomissioning']),
+						  	  'Fixed operating costs' : self.expenses_per_kg_H2(self.npv_dict['fixed_operating_costs']),
+						 	  'Variable operating costs' : self.expenses_per_kg_H2(self.npv_dict['variable_operating_costs']),
+						 	  'Working capital reserve' : self.expenses_per_kg_H2(self.npv_dict['working_capital_reserve']),
+						   	  'Interest' : self.expenses_per_kg_H2(self.npv_dict['interest']),
+						      'Principal payment' : self.expenses_per_kg_H2(self.npv_dict['principal_payment']),
+						      'Taxes' : self.expenses_per_kg_H2(self.npv_dict['taxes'])}
 
 	def expenses_per_kg_H2(self, value):
 
-		return value/self.npv_h2_sales * (1. + self.fin['inflation']['Value']) ** self.fin['construction time']['Value'] / self.inflation_correction
+		return value/self.npv_dict['h2_sales'] * (1. + self.fin['inflation']['Value']) ** self.fin['construction time']['Value'] / self.inflation_correction
+
+	def check_processing(self):
+
+		exceptions = ['Workflow', 'Sensitivity Analysis']
+
+		for top_key in self.inp:
+			if top_key not in exceptions:
+				for middle_key in self.inp[top_key]:
+					if 'Processed' not in self.inp[top_key][middle_key]:
+						print('Warning: "{0} > {1}" has not been processed'.format(top_key, middle_key))
 
 class Sensitivity_Analysis:
+	'''
+
+	Sensitivty analysis for multiple entries: sensitivity parameter (specified in its own table), which is referenced by desired entries
+	In sensitivity analysis, that sensitivty parameter is then varied.
+
+	______________
+	Required Input
+	______________
+
+	# Sensitivity Analysis
+	Parameter | Name | Type | Values
+	--- | --- | --- | ---
+	str | str | value or factor | num (delimited by ";")
+
+	"Parameter" is a ">" delimited string that points to a location of the input file via
+	top_key > middle_key > bottom_key
+
+	"Name" is the parameter name displayed in the output plot.
+
+	"Type" is either 'value' or 'factor'. If Type == value, the entered "Values" are used as is.
+	if Type == factor, the entered "Values" are multiplied by the location value.
+
+	"Values" is a ";" delimited string, an arbitrary number of values can be entered, but typcically two are used for
+	sensitivity analysis.	
+
+	______________
+	Output
+	______________
+
+	Sensitivity_Analysis class object with attributes used for plot generation.
+
+	'''
 
 	def __init__(self, input_file):
 		self.inp = convert_input_to_dictionary(input_file)
@@ -524,12 +670,13 @@ class Sensitivity_Analysis:
 
 class Output:
 
-	def __init__(self, input_file, output_directory):
+	def __init__(self, input_file, output_directory, print_info = False):
+		self.print_info = print_info
 		self.input_file = input_file
 		self.file_name = parse_file_name(self.input_file)
 		self.output_directory = output_directory
 
-		self.base_case = Discounted_Cash_Flow(self.input_file)
+		self.base_case = Discounted_Cash_Flow(self.input_file, print_info = self.print_info)
 
 		cost_breakdown_figure = Figure(self.cost_breakdown, self.output_directory)
 		cost_breakdown_figure.save()
@@ -543,7 +690,7 @@ class Output:
 
 		self.report()
 
-	def cost_breakdown(self, label_offset = 0.5):
+	def cost_breakdown(self, label_offset = 8.5):
 
 		sorted_keys = sorted(self.base_case.contributions, key = self.base_case.contributions.get)
 		sorted_contributions = {}
@@ -556,6 +703,8 @@ class Output:
 		ax.set_xlabel(r'Levelized cost / USD per kg $H_{2}$')
 		ax.grid(color = 'grey', linestyle = '--', linewidth = 0.2)
 		cmap = plt.get_cmap('plasma')
+
+		label_offset = self.base_case.h2_cost / label_offset
 
 		for counter, key in enumerate(sorted_contributions):
 			value = sorted_contributions[key]
@@ -712,18 +861,45 @@ def run_pyH2A():
 	
 def main():
 
-	# dcf = Discounted_Cash_Flow('../Input/Future_PEC_Type_1.md')
+	# dcf = Discounted_Cash_Flow('../Input/210222_Current_Natural_Gas.md', print_info = False)
 	# print(dcf.h2_cost)
+
+	#pprint.pprint(dcf.inp['Unplanned Replacement'])
+
+	# #pprint.pprint(dcf.inp['Unplanned Replacement'])
+
+	#pprint.pprint(dcf.inp)
+
+	#start = timer()
+
+	# dcf = Discounted_Cash_Flow('../Input/Future_PEC_Type_1.md', print_info = False)
+
+	# #end = timer()
+
+	# #print(end - start)
+
+	# print(dcf.h2_cost)
+
+
+	#pprint.pprint(dcf.inp['Utilities'])
+
+
+	#pprint.pprint(dcf.inp['Direct Capital Costs - Gas Processing'])
+	#pprint.pprint(dcf.inp['Direct Capital Costs - Installation Costs'])
+
+
 
 	# sensitivity = Sensitivity_Analysis('../Input/Future_PEC_Type_2.md')
 	# print(sensitivity.results)
 
-	# output = Output('../Input/Future_PEC_Type_2.md', '../Output/Future_PEC_Type_2/')
-	# print(output.base_case.h2_cost)
+	output = Output('../Input/210222_Current_Natural_Gas.md', '../Output/210222_Current_Natural_Gas/')
+	print(output.base_case.h2_cost)
+
+
 
 	#plt.show()
 
-	run_pyH2A()
+	#run_pyH2A()
 
 if __name__ == '__main__':
 	main()
