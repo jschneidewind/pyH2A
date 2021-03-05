@@ -1,3 +1,6 @@
+![Logo](./Lookup_Tables/pyH2A.svg)
+<img src="./Lookup_Tables/pyH2A.svg">
+
 # pyH2A
 
 pyH2A is an extensible Python implementation of the H2A Hydrogen Analysis model developed by the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
