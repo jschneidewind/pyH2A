@@ -1,5 +1,4 @@
 ![Logo](./Lookup_Tables/pyH2A.svg)
-<img src="./Lookup_Tables/pyH2A.svg">
 
 # pyH2A
 
