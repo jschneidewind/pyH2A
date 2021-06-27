@@ -44,7 +44,7 @@ python pyH2A.py ../Input/Input.md ../Output/Example_Output
 
 Cost breakdown:
 
-![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1_Limit/Cost_Breankdown_Plot.png "Cost breakdown plot")
+![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1_Limit/Cost_Breakdown_Plot.png "Cost breakdown plot")
 
 Sensitivty analysis:
 
