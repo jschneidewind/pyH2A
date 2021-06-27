@@ -1,10 +1,12 @@
-<img align="right" src="./Lookup_Tables/pyH2A.svg"/>
+<img align="right" src="./Other/pyH2A.svg"/>
 
 # pyH2A
 
 pyH2A is an extensible Python implementation of the H2A Hydrogen Analysis model developed by the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
 
-`pyH2A.py` provides the basic discounted cashflow analysis functionality and it can be interfaced with different `plugins` to allow modelling of various hydrogen production technologies. It is a command line tool, with the input being provided using Markdown formatted plaintext files and the output being plots and formatted PDF reports.
+`pyH2A.py` invokes the basic discounted cash flow analysis functionality and it can be interfaced with different `plugins` to allow modelling of various hydrogen production technologies. Furthermore, different analysis modules can be applied, allowing for detailed analysis of the discounted cash flow results.
+
+It is a command line tool, with the input being provided using Markdown formatted plaintext files and the output being plots and formatted PDF reports.
 
 Note: pyH2A is currently under development and may undergo major changes in its design.
 
@@ -38,17 +40,35 @@ For example, if the input file `Input.md` is in the `../Input` directory and the
 python pyH2A.py ../Input/Input.md ../Output/Example_Output
 ```
 
-The current output is a cost breakdown plot:
+# Example output
 
-![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/cost_breakdown.png "Cost breakdown plot")
+Cost breakdown:
 
-a sensitivity analysis plot (if sensitivity analysis is requested in the input file):
+![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1_Limit/Cost_Breankdown_Plot.png "Cost breakdown plot")
 
-![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/sensitivity_box_plot.png "Sensitivity plot")
+Sensitivty analysis:
 
-and a formatted PDF file combining the plots and a summary of the computed hydrogen cost:
+![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1_Limit/Sensitivity_Box_Plot.png "Sensitivity plot")
+
+Waterfall analysis:
+
+![waterfall plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1/Waterfall_Chart.png "Waterfall plot")
+
+Monte Carlo analysis, also allowing for comparison of different production pathways:
+
+![colored scatter](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_PV_E/Monte_Carlo_Colored_Scatter.png "Colored Scatter")
+
+![comparative distance histograms](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_PV_E/Monte_Carlo_Comparative_Distance_Histogram.png "Comparative Distance Histogram")
+
+![comparative distance cost relationship](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_PV_E/Monte_Carlo_Comparative_Distance_Cost_Relationship.png "Comparative Distance Cost Relationship")
+
+A formatted PDF file combining the plots and a summary of the computed hydrogen cost:
 
 ![PDF report](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/Future_PEC_Type_2.pdf "PDF report")
+
+# To do
+
+Block diagram illustrating flow of program
 
 # License
 

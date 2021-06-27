@@ -20,18 +20,3 @@ def find_nearest(array, values):
             hits.append(idx)
 
     return(hits)
-
-
-def factorial(x):
-
-    if x < 2.0:
-        return(x)
-    else:
-        return(x*factorial(x-1))
-        
-
-#test = factorial(10)
-#print(test)
-
-
-

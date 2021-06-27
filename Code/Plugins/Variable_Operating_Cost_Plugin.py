@@ -1,4 +1,4 @@
-from input_modification import insert, sum_all_tables, process_table
+from input_modification import insert, sum_all_tables, process_table, read_textfile
 import find_nearest as fn
 import numpy as np
 
@@ -75,7 +75,7 @@ class Utility:
 	def calculate_cost_per_kg_H2(util, dictionary, self):
 		
 		if isinstance(dictionary['Cost'], str):
-			prices = np.genfromtxt(dictionary['Cost'], delimiter = '	')
+			prices = read_textfile(dictionary['Cost'], delimiter = '	')
 			years_idx = fn.find_nearest(prices, self.years)
 			prices = prices[years_idx]
 

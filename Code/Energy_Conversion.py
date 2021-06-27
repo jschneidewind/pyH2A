@@ -20,11 +20,19 @@ def kWh(value):
 	'''Converts kWh to J'''
 	return value * 3.6e6
 
+def J(value):
+	'''Convert J to J'''
+	return value
+
+def kJmol(value):
+	'''Convert kJmol to J'''
+	return (1e3 * value) / con.Avogadro
+
 class Energy:
 
 	def __init__(self, value, unit):
-		'''Input value in either nm, eV or kcalmol
-		Available units: J, eV, nm, kcal/mol and J/mol'''
+		'''Input value in either nm, eV, kcalmol, Jmol, kWh or J
+		Available units: J, eV, nm, kcal/mol, J/mol, kWh'''
 		self.unit = unit.__name__
 		self.value = value
 
@@ -34,6 +42,7 @@ class Energy:
 		self.kcalmol = self.convert_J_to_kcalmol()
 		self.Jmol = self.convert_J_to_Jmol()
 		self.kWh = self.convert_J_to_kWh()
+		self.kJmol = self.convert_J_to_kJmol()
 
 	def convert_J_to_eV(self):
 		return self.J/1.602176e-19
@@ -49,3 +58,6 @@ class Energy:
 
 	def convert_J_to_kWh(self):
 		return self.J/3.6e6
+
+	def convert_J_to_kJmol(self):
+		return (self.J * con.Avogadro) / 1e3

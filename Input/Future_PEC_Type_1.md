@@ -1,12 +1,12 @@
 # Workflow
 
-Name | Type | Description
---- | --- | ---
+Name | Type | Description | Position
+--- | --- | --- | ---
 Production_Scaling_Plugin | plugin | Computes plant output and scaling factors (if scaling is requested)
 production_scaling | function | core function to process yearly plant output
-Photocatalytic_Plugin | plugin | Computes number of required baggies, cost of baggies and catalyst cost
+Photocatalytic_Plugin | plugin | Computes number of required baggies, cost of baggies and catalyst cost | 2
 Capital_Cost_Plugin | plugin | Calculation of direct, indirect and non-depreciable capital costs
-Multiple_Modules_Plugin | plugin | Modelling of module plant modules, adjustment of labor requirement
+Multiple_Modules_Plugin | plugin | Modelling of module plant modules, adjustment of labor requirement | 3
 initial_equity_depreciable_capital | function | core function to process depreciable capital costs
 non_depreciable_capital_costs | function | core function to process non-depreciable capital costs
 Replacement_Plugin | plugin | Calculation of replacement costs
@@ -64,7 +64,7 @@ capital perc 1st | % of Capital Spent in 1st Year of Construction | 100%
 Name | Value
 --- | ---
 Cost per kg ($) | 304.0
-Concentration (kg/L) | 0.01052
+Concentration (kg/L) | 0.00001052
 Lifetime (years) | 5
 
 # Reactor Baggies
@@ -215,6 +215,35 @@ Technical Operating Parameters and Specifications > Plant Design Capacity (kg of
 Technical Operating Parameters and Specifications > Operating Capacity Factor (%) > Value | Operating Capacity Factor | value | 86%; 95%
 Solar-to-Hydrogen Efficiency > STH (%) > Value | STH Efficiency | value | 5%; 15%
 Catalyst > Cost per kg ($) > Value | Catalyst Cost | factor | 0.1; 20
-Catalyst > Lifetime (years) > Value | Catalyst Lifetime (years) | value | 1; 10 
+Catalyst > Lifetime (years) > Value | Catalyst Lifetime (years) | value | 0.3; 10 
 Other Fixed Operating Costs > repairs > Value | Repair Costs | factor | 70%; 130%
 Solar Input > Mean solar input (kWh/m2/day) > Value | Solar Input | factor | 70%; 120%
+
+# Waterfall Analysis Old
+
+Parameter | Name | Type | Value
+--- | --- | --- | ---
+Technical Operating Parameters and Specifications > Plant Design Capacity (kg of H2/day) > Value | Design Capacity (kg $H_{2}$/day) | value | 1200
+Technical Operating Parameters and Specifications > Operating Capacity Factor (%) > Value | Operating Capacity Factor | value | 86%
+Catalyst > Cost per kg ($) > Value | Catalyst Cost ($/kg) | factor | 0.1
+Catalyst > Lifetime (years) > Value | Catalyst Lifetime (years) | value | 1
+Other Fixed Operating Costs > repairs > Value | Repair Costs | factor | 70%
+Solar Input > Mean solar input (kWh/m2/day) > Value | Solar Input (kWh/$m^{2}$/ day) | factor | 70%
+Solar-to-Hydrogen Efficiency > STH (%) > Value | STH Efficiency | value | 5%
+
+# Waterfall Analysis
+
+Parameter | Name | Type | Value | Show Percent
+--- | --- | --- | --- | ---
+Catalyst > Cost per kg ($) > Value | Catalyst Cost ($/kg) | value | 6,000.0
+Solar-to-Hydrogen Efficiency > STH (%) > Value | STH Efficiency | value | 2% | True
+Catalyst > Lifetime (years) > Value | Catalyst Lifetime (years) | value | 0.1
+Catalyst > Concentration (kg/L) > Value | Catalyst Concentration (kg/L) | factor | 0.1
+
+# Monte Carlo Analysis - Parameters
+
+Parameter | Name | Type | Values
+--- | --- | --- | ---
+Solar-to-Hydrogen Efficiency > STH (%) > Value | STH Efficiency | value | 20%; 2%
+Catalyst > Cost per kg ($) > Value | Catalyst Cost | value | 100.0; 6000.0
+Catalyst > Lifetime (years) > Value | Catalyst Lifetime (years) | value | 0.1; 10

@@ -53,12 +53,17 @@ class Capital_Cost_Plugin:
 	Total Capital Costs > Total > Value
 	Total Capital Costs > Inflated > Value
 
+	______________
+	Other Output
+	______________
+
+	['Capital_Cost_Plugin'].direct_contributions attribute
+
 	'''
 
 	def __init__(capital, self, print_info):
 
 		capital.direct_capital_costs(self, print_info)
-
 		direct_inflated = capital.direct * self.combined_inflator
 
 		insert(self, 'Direct Capital Costs', 'Total', 'Value', capital.direct, __name__, print_info = print_info)
@@ -90,7 +95,7 @@ class Capital_Cost_Plugin:
 
 	def direct_capital_costs(capital, self, print_info):
 
-		capital.direct = sum_all_tables(self.inp, 'Direct Capital Cost', 'Value', insert_total = True, class_object = self, print_info = print_info)
+		capital.direct, capital.direct_contributions = sum_all_tables(self.inp, 'Direct Capital Cost', 'Value', insert_total = True, class_object = self, print_info = print_info, return_contributions = True)
 
 	def indirect_capital_costs(capital, self, print_info):
 

@@ -1,10 +1,10 @@
 # Workflow
 
-Name | Type | Description
---- | --- | ---
+Name | Type | Description | Position
+--- | --- | --- | ---
 Production_Scaling_Plugin | plugin | Computes plant output and scaling factors (if scaling is requested)
 production_scaling | function | core function to process yearly plant output
-Solar_Thermal_Plugin | plugin | Computes required land area based on STH and solar input
+Solar_Thermal_Plugin | plugin | Computes required land area based on STH and solar input | 1
 Capital_Cost_Plugin | plugin | Calculation of direct, indirect and non-depreciable capital costs
 initial_equity_depreciable_capital | function | core function to process depreciable capital costs
 non_depreciable_capital_costs | function | core function to process non-depreciable capital costs
