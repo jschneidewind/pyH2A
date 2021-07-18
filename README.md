@@ -2,9 +2,9 @@
 
 # pyH2A
 
-pyH2A is an extensible Python implementation of the H2A Hydrogen Analysis model developed by the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
+pyH2A is an extensible Python framework for the analysis of hydrogen production cost. Its discounted cash flow module is based on the H2A Hydrogen Analysis model developed by the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
 
-`pyH2A.py` invokes the basic discounted cash flow analysis functionality and it can be interfaced with different `plugins` to allow modelling of various hydrogen production technologies. Furthermore, different analysis modules can be applied, allowing for detailed analysis of the discounted cash flow results.
+`pyH2A.py` invokes the basic discounted cash flow analysis functionality and it can be interfaced with different `Plugins` to allow modelling of various hydrogen production technologies. Furthermore, different `Analysis` modules can be applied, allowing for detailed analysis of the discounted cash flow results.
 
 It is a command line tool, with the input being provided using Markdown formatted plaintext files and the output being plots and formatted PDF reports.
 
@@ -69,6 +69,8 @@ A formatted PDF file combining the plots and a summary of the computed hydrogen 
 # To do
 
 Block diagram illustrating flow of program
+Documentation
+Input requirements and output for analysis modules
 
 # License
 
