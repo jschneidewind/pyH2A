@@ -1,5 +1,5 @@
 # Redundant Files
-Redundant/
+Untracked/
 
 # docx Files
 *.docx
@@ -50,7 +50,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+doc/_build/
 
 # PyBuilder
 target/

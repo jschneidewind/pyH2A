@@ -1,0 +1,8 @@
+/* Furo theme left-aligns text, but we have better taste. */
+p {
+    text-align: justify;
+}
+
+dl.py .field-list dt {
+    text-transform: unset !important;
+}

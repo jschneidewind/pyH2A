@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 41 51"
+   height="51mm"
+   width="41mm">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1">
+    <path
+       d="M 35.440441,33.179642 A 17.323992,17.323992 0 0 1 18.254434,50.503084 17.323992,17.323992 0 0 1 0.79465567,33.455603 17.323992,17.323992 0 0 1 17.702529,15.860596 17.323992,17.323992 0 0 1 35.431649,32.627789"
+       id="path32"
+       style="fill:#1cad3d;fill-opacity:1;stroke-width:0.264583" />
+    <text
+       id="text69"
+       y="35.410637"
+       x="3.2330639"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:0;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:1.25;font-family:Helvetica;-inkscape-font-specification:Helvetica;fill:#ffffff;stroke-width:0.264583"
+         y="35.410637"
+         x="3.2330639"
+         id="tspan67">pyH<tspan
+   id="tspan894"
+   style="font-size:65%;baseline-shift:sub;fill:#ffffff">2</tspan>A</tspan></text>
+    <path
+       style="fill:#1cad3d;fill-opacity:1;stroke-width:0.264583"
+       id="path32-4"
+       d="M 40.435979,13.282259 A 7.9579592,7.9579592 0 0 1 32.541405,21.239966 7.9579592,7.9579592 0 0 1 24.52107,13.409025 7.9579592,7.9579592 0 0 1 32.287881,5.3265716 7.9579592,7.9579592 0 0 1 40.43194,13.02876" />
+    <path
+       style="fill:#1cad3d;fill-opacity:1;stroke-width:0.264583"
+       id="path32-5"
+       d="M 38.142272,3.3428051 A 2.6059408,2.6059408 0 0 1 35.557087,5.9486633 2.6059408,2.6059408 0 0 1 32.930721,3.3843163 2.6059408,2.6059408 0 0 1 35.474068,0.73760826 2.6059408,2.6059408 0 0 1 38.140949,3.2597934" />
+  </g>
+</svg>

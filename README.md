@@ -1,76 +1,78 @@
-<img align="right" src="./Other/pyH2A.svg"/>
+<img align="right" src="./src/pyH2A/Other/pyH2A.svg"/>
 
 # pyH2A
 
 pyH2A is an extensible Python framework for the analysis of hydrogen production cost. Its discounted cash flow module is based on the H2A Hydrogen Analysis model developed by the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
 
-`pyH2A.py` invokes the basic discounted cash flow analysis functionality and it can be interfaced with different `Plugins` to allow modelling of various hydrogen production technologies. Furthermore, different `Analysis` modules can be applied, allowing for detailed analysis of the discounted cash flow results.
+The basic discounted cash flow analysis functionality enables calculation of levelized cost of hydrogen (LCOH<sub>2</sub> ). It can be interfaced with different `Plugins` to allow modelling of various hydrogen production technologies. Furthermore, different `Analysis` modules can be applied, allowing for detailed analysis of the discounted cash flow results.
 
-It is a command line tool, with the input being provided using Markdown formatted plaintext files and the output being plots and formatted PDF reports.
+It is a command line tool, with the input being provided using Markdown formatted plaintext files and the output being plots (and formatted PDF reports in the future).
 
 Note: pyH2A is currently under development and may undergo major changes in its design.
 
 # Installation
 
-Currently, pyH2A has to be installed by cloning the GitHub repository:
+pyH2A can be installed using `pip`:
 
 ```bash
-git clone https://github.com/jschneidewind/pyH2A
+pip install pyH2A
 ```
-
-It is planned to enable `pip` installation in the future.
 
 # Dependencies
 
-pyH2A uses Python >3.7 with the following libraries: `NumPy` and `SciPy` as well as `Matplotlib` and `fpdf` for output generation.
+pyH2A uses Python >3.7 with the following libraries: `NumPy`, `SciPy`, `Pandas`, `Matplotlib` and `Click`
 
 # Use
 
-Input is provided using a plaintext Markdown file, which has to follow the layout of the `Input.md` template for the most part. Input files are structured by headers (designated by '#'), which are followed by Markdown style tables. Headers and tables are parsed by `pyH2A.py` to generate dictionaries which are used for computations. Certain input sections are mandatory (such as 'Technical Operating Parameters and Specifications' or 'Financial Input Values'), while plugins can be used to process additional input sections.
-
-pyH2A can be run in the command line using:
+pyH2A can be used from the command line:
 
 ```bash
-python pyH2A.py path/to/input_file path/to/output_directory
+pyH2A run -i input_file -o output_directory
 ```
 
 For example, if the input file `Input.md` is in the `../Input` directory and the output directory is `../Output/Example_Output`:
 
 ```bash
-python pyH2A.py ../Input/Input.md ../Output/Example_Output
+pyH2A run -i ../Input/Input.md -o ../Output/Example_Output
 ```
+
+Alternatively, the `pyH2A` class from `pyH2A.run_pyH2A.py` can imported and used within a Python script.
+
+Input is provided using a plaintext Markdown file. Input files are structured by headers (designated by '#'), which are followed by Markdown style tables. Headers and tables are parsed by `pyH2A.py` to generate dictionaries which are used for computations. Certain input sections are mandatory (such as `Technical Operating Parameters and Specifications` or `Financial Input Values`). Additional input sections can be processed by invoking `Plugins`, which perform additional calculations that feed into the discounted cash flow analysis. Finally, the input file can invoke `Analysis` modules to analyze and visualize the output.
+
+# Documentation
+
+Documentation for pyH2A is available at: 
 
 # Example output
 
-Cost breakdown:
+* Cost breakdown
 
-![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1_Limit/Cost_Breakdown_Plot.png "Cost breakdown plot")
+![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Cost_Breakdown_Plot.png "Cost breakdown plot")
 
-Sensitivty analysis:
+* Sensitivty analysi
 
-![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1_Limit/Sensitivity_Box_Plot.png "Sensitivity plot")
+![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Sensitivity_Box_Plot.png "Sensitivity plot")
 
-Waterfall analysis:
+* Waterfall analysis
 
-![waterfall plot](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_Future_PEC_Type_1/Waterfall_Chart.png "Waterfall plot")
+![waterfall plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Waterfall_Chart.png "Waterfall plot")
 
-Monte Carlo analysis, also allowing for comparison of different production pathways:
+* Monte Carlo analysis, also allowing for comparison of different production pathways
 
-![colored scatter](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_PV_E/Monte_Carlo_Colored_Scatter.png "Colored Scatter")
+![colored scatter](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Monte_Carlo_Colored_Scatter.png "Colored Scatter")
 
-![comparative distance histograms](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_PV_E/Monte_Carlo_Comparative_Distance_Histogram.png "Comparative Distance Histogram")
-
-![comparative distance cost relationship](https://github.com/jschneidewind/pyH2A/blob/master/Output/210627_PV_E/Monte_Carlo_Comparative_Distance_Cost_Relationship.png "Comparative Distance Cost Relationship")
-
-A formatted PDF file combining the plots and a summary of the computed hydrogen cost:
-
-![PDF report](https://github.com/jschneidewind/pyH2A/blob/master/Output/Future_PEC_Type_2/Future_PEC_Type_2.pdf "PDF report")
+![comparative distance cost relationship and histograms](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Monte_Carlo_Combined_Plot.png "Comparative distance cost relationship and histograms")
 
 # To do
 
-Block diagram illustrating flow of program
-Documentation
-Input requirements and output for analysis modules
+* Generating input file template given a defined set of plugins (comments in input file should indicate which plugin is requesting which inputs) 
+
+* Block diagram illustrating flow of program
+
+* Creation of graph showing how inputs are processed by series of plugins
+
+* Lifecycle analysis & net energy analysis?
 
 # License
 

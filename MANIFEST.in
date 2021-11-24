@@ -1,0 +1,10 @@
+include LICENSE
+include src/pyH2A/Config/*.md
+include src/pyH2A/Lookup_Tables/*.csv
+include src/pyH2A/Lookup_Tables/Hourly_Irradiation_Data/*.csv
+include src/pyH2A/Lookup_Tables/Utility_Cost/*.csv
+include src/pyH2A/Other/*.svg
+include src/pyH2A/Other/*.png
+include src/pyH2A/Example/*.md
+include src/pyH2A/Example/*.csv
+
