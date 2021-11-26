@@ -9,11 +9,11 @@ def eV(value):
 	return value*1.602176e-19
 
 def kcalmol(value):
-	'''Converts kcalmol to J'''
+	'''Converts kcal/mol to J'''
 	return (value * 4186.798188)/con.Avogadro
 
 def Jmol(value):
-	'''Converts Jmol to J'''
+	'''Converts J/mol to J'''
 	return value / con.Avogadro
 
 def kWh(value):
@@ -25,7 +25,7 @@ def J(value):
 	return value
 
 def kJmol(value):
-	'''Converts kJmol to J'''
+	'''Converts kJ/mol to J'''
 	return (1e3 * value) / con.Avogadro
 
 class Energy:
@@ -42,30 +42,14 @@ class Energy:
 
 	Notes
 	-----
-	Input value in either nm, eV, kcalmol, Jmol, kWh or J
-	Available units: J, eV, nm, kcal/mol, J/mol, kWh
+	Input value in either nm, eV, kcal/mol, J/mol, kJ/mol, kWh or J.
+	Available units: J, eV, nm, kcal/mol, J/mol, kWh, kJ/mol.
 	Once an Energy class object has been generated, the energy 
 	value in the desired unit can be retrieved using the appropriate class
 	attribute.
-
-	Methods
-	-------
-	convert_J_to_eV:
-		J to eV.
-	convert_J_to_nm:
-		J to nm.
-	convert_J_to_kcalmol:
-		J to kcal/mol.
-	convert_J_to_Jmol:
-		J to J/mol
-	convert_J_to_kWh:
-		J to kWh.
-	convert_J_to_kJmol:
-		J to kJ/mol.
 	'''
 
 	def __init__(self, value, unit):
-
 		self.unit = unit.__name__
 		self.value = value
 
@@ -78,19 +62,25 @@ class Energy:
 		self.kJmol = self.convert_J_to_kJmol()
 
 	def convert_J_to_eV(self):
+		'''Convert J to eV'''
 		return self.J/1.602176e-19
 
 	def convert_J_to_nm(self):
+		'''Convert J to nm'''
 		return ((con.h*con.c)/self.J)*1e9
 
 	def convert_J_to_kcalmol(self):
+		'''Convert J to kcal/mol'''
 		return (self.J * con.Avogadro)/4186.798188
 
 	def convert_J_to_Jmol(self):
+		'''Convert J to J/mol'''
 		return self.J * con.Avogadro
 
 	def convert_J_to_kWh(self):
+		'''Convert J to kWh'''
 		return self.J/3.6e6
 
 	def convert_J_to_kJmol(self):
+		'''Convert to J to kJ/mol'''
 		return (self.J * con.Avogadro) / 1e3

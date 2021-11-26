@@ -46,15 +46,6 @@ class Capital_Cost_Plugin:
 		Sum of depreicable and non-depreciable capital costs multiplied by combined inflator.
 	['Capital_Cost_Plugin'].direct_contributions : dict
 		Attribute containing cost contributions for "Direct Capital Cost" group.
-	
-	Methods
-	-------
-	direct_capital_costs:
-		Calculates direct capital costs.
-	indirect_capital_costs:
-		Calculates indirect capital costs.
-	non_depreciable_capital_costs:
-		Calculates non-depreciable capital costs.
 	'''
 	def __init__(self, dcf, print_info):
 

@@ -16,6 +16,8 @@ sys.path.insert(0, os.path.abspath('.'))
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('../src/'))
 
+from pyH2A import __version__
+
 
 # -- Project information -----------------------------------------------------
 
@@ -24,7 +26,7 @@ copyright = '2021, Jacob Schneidewind'
 author = 'Jacob Schneidewind'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0a1'
+release = __version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -67,34 +69,18 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-
 
 html_theme = 'furo'  #sphinx_rtd_theme
-html_static_path    = ['style']        # folders to include in output
-html_css_files      = ['custom.css']   # extra style files to apply
-
-
-# def setup(app):
-#     app.add_css_file('theme_overrides.css')
-
-#html_static_path = ['_style']
-# html_css_files   = ['custom.css']
-
-#html_static_path = ['_static']
-
 
 # These paths are either relative to html_static_path
 # or fully qualified paths (eg. https://...)
-# html_css_files = [
-#     'css/theme_overrides_does_not_exist.css',
-# ]
-
-
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ['_static']
 
+html_static_path    = ['style']        # folders to include in output
+html_css_files      = ['custom.css']   # extra style files to apply
 html_logo = './_static/pyH2A.svg'
+
+

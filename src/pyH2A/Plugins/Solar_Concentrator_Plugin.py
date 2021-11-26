@@ -26,13 +26,6 @@ class Solar_Concentrator_Plugin:
 		Total solar collection area in m2.
 	Direct Capital Costs - Solar Concentrator > Solar Concentrator Cost ($) > Value : float
 		Total cost of all solar concentrators.
-
-	Methods
-	-------
-	land_area:
-		Calculation of solar collection area and total land area requirement.
-	calculate_cost:
-		Calculation of total cost for solar concentrators.
 	'''
 
 	def __init__(self, dcf, print_info):

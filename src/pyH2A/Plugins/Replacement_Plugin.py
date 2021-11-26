@@ -23,15 +23,6 @@ class Replacement_Plugin:
 	Replacement > Total > Value : ndarray
 		Total inflated replacement costs (sum of `Planned Replacement` entries and
 		unplanned replacement costs).
-
-	Methods
-	-------
-	initialize_yearly_costs:
-		Initializes emypty yearly costs ndarray.
-	calculated_planned_replacement:
-		Iteration over all `Planned Replacement` entries, calculation of yearly costs and summation.
-	unplanned_replacement:
-		Calculation of unplanned replacement costs.
 	'''
 	def __init__(self, dcf, print_info):
 		self.initialize_yearly_costs(dcf)

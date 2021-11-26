@@ -102,13 +102,6 @@ class Figure_Lean:
 	-----
 	Provided figure is shown and/or saved in provided directory with given name by
 	running `Figure_Lean.execute()`.
-
-	Methods
-	-------
-	execute:
-		Executes desired `show` and `save` options.
-	save:
-		Saving figure in target dictionary with specified parameters.
 	'''
 	def __init__(self, name, directory, provided_figure_and_axis = None, 
 				 show = False, save = False, 

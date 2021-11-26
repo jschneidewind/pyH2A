@@ -21,12 +21,6 @@ class Solar_Thermal_Plugin:
 	-------
 	Non-Depreciable Capital Costs > Land required (acres) > Value : float
 		Total land requirement in acres.
-
-	Methods 
-	-------
-	calculate_land_area:
-		Calculation of required land area based on solar input and solar-to-hydrogen
-		efficiency.
 	'''
 	
 	def __init__(therm, dcf, print_info):

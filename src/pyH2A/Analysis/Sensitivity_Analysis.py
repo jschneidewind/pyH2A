@@ -30,15 +30,6 @@ class Sensitivity_Analysis:
 	sensitivity analysis. First column specifies path to parameter in input file 
 	(top key > middle key > bottom key format, e.g. Catalyst > Cost per kg ($) > Value).
 	Order of parameters is not relevant.
-
-	Methods
-	-------
-	perform_sensitivity_analysis:
-		Perform sensitivity analysis.
-	sort_h2_cost_values:
-		Sort H2 cost values.
-	sensitivity_box_plot:
-		Plot sensitivity box plot.
 	'''
 
 	def __init__(self, input_file):

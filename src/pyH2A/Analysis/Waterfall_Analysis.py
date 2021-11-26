@@ -34,17 +34,6 @@ class Waterfall_Analysis:
 	In the order they are provided, each parameter is changed to the provided value. 
 	The relative change of introducing each change is computed,
 	and the new H2 cost (compound result of applying all changes) is calculated.
-
-	Methods 
-	-------
-	perform_waterfall_analysis:
-		Waterfall analysis is performed.
-	modify_inp_run_dcf:
-		Modification of `inp` with values from `dic` and running discounted cash flow analysis.
-	show_percent:
-		Displaying provided `value` as percentage if `Show Percent` is in dictionary.
-	plot_waterfall_chart:
-		Plot waterfall chart.
 	'''
 
 	def __init__(self, input_file):

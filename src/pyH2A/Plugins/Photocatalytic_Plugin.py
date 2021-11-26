@@ -73,19 +73,6 @@ class Photocatalytic_Plugin:
 		Dictionary containing detailed catalyst properties calculated from provided parameters.
 	['Photocatalytic_Plugin'].catalyst_properties : dict
 		Attribute containing catalyst properties dictionary.
-	
-	Methods
-	-------
-	hydrogen_production:
-		Calculation of daily hydrogen production per day per baggie.
-	catalyst_activity:
-		Calculation of catalyst properties based on provided parameters.
-	baggie_cost:
-		Calculation of cost per baggie and number of required baggies.
-	catalyst_cost:
-		Calculation of total catalyst amount and catalyst cost.
-	land_area:
-		Calculation of total land area requirement and solar collection area.
 	'''
 
 	def __init__(self, dcf, print_info):

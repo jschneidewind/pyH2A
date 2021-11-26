@@ -36,14 +36,6 @@ class Variable_Operating_Cost_Plugin:
 		Sum of inflation corrected utilities costs.
 	Variable Operating Costs > Other > Value : float
 		Sum of `Other Variable Operating Cost` entries.
-
-	Methods
-	-------
-	calculate_utilities_cost:
-		Iterating over all utilities to compute summed yearly costs.
-	other_variable_costs:
-		Calculation of other variable operating costs by applying ``sum_all_tables()``
-		to "Other Variable Operating Cost" group.
 	'''
 
 	def __init__(self, dcf, print_info):

@@ -19,11 +19,6 @@ class Cost_Contributions_Analysis:
 	function.
 	If the name of a contribution contains a '-', the string will be split and only the part after the
 	'-' will be displayed.
-
-	Methods 
-	-------
-	cost_breakdown_plot:
-		Plotting cost breakdown plot.
 	'''
 
 	def __init__(self, input_file):

@@ -44,15 +44,6 @@ class Production_Scaling_Plugin:
 	-----
 	To scale capital or labor costs, a path to `Scaling > Capital Scaling Factor > Value`
 	or `Scaling > Labor Scaling Factor > Value` has to specified for the respective table entry.
-
-	Methods
-	-------
-	calculate_scaling:
-		If scaling is requested, calculation of scaled plant output and capital as well
-		as labor scaling factors. Else, design and maximum at gate daily outputs are returned.
-	calculate_output:
-		Calculation of yearly H2 output in kg (regular output and output at gate).
-
 	'''
 
 	def __init__(self, dcf, print_info):

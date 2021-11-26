@@ -45,15 +45,6 @@ class PEC_Plugin:
 		Total cost of all PEC cells.
 	PEC Cells > Number > Value : float
 		Number of individual PEC cells required for design H2 output capacity.
-
-	Methods
-	-------
-	hydrogen_production:
-		Calculation of daily H2 production per day.
-	PEC_cost:
-		Calculation of number of required PEC cells and total PEC cell cost.
-	land_area:
-		Calculation of totalrequired land area and solar collection area.
 	'''
 
 	def __init__(self, dcf, print_info):

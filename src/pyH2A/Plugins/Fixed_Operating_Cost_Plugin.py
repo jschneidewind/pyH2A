@@ -22,13 +22,6 @@ class Fixed_Operating_Cost_Plugin:
 		Yearly total labor cost multiplied by labor inflator.
 	Fixed Operating Costs > Total > Value : float
 		Sum of total yearly labor costs and yearly other fixed operating costs.
-
-	Methods
-	-------
-	labor_cost:
-		Calculates yearly labor cost.
-	other_cost:
-		Calculates other yearly fixed operating costs.
 	'''
 
 

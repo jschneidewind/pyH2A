@@ -60,23 +60,6 @@ class Photovoltaic_Plugin:
 		Total land required in acres.
 	Non-Depreciable Capital Costs > Solar Collection Area (m2) > Value : float
 		Solar collection area in m2.
-
-	Methods
-	-------
-	calculate_H2_production:
-		Calculation of yearly H2 production in kg based on hourly irradiation data.
-	calculate_photovoltaic_loss_correction:
-		Calculation of yearly reduction in electricity production by PV array.
-	calculate_electrolyzer_power_demand:
-		Calculation of yearly increase in electrolyzer power demand.
-	calculate_stack_replacement:
-		Calculation of electrolyzer stack replacement frequency.
-	calculate scaling_factors:
-		Calculation of CAPEX scaling factors for electrolyzer and PV array.
-	scaling_factor:
-		General function for CAPEX scaling factor calculation.
-	calculate_area:
-		Calculation of area requirement.
 	'''
 
 	def __init__(self, dcf, print_info):

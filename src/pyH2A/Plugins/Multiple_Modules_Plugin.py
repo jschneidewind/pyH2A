@@ -22,11 +22,6 @@ class Multiple_Modules_Plugin:
 	-------
 	Fixed Operating Costs > staff > Value : float
 		Number of 8-hour equivalent staff required for operating one plant module.
-
-	Methods
-	-------
-	required_staff:
-		Calculation of staff required for operating one plant module.
 	''' 
 
 	def __init__(self, dcf, print_info):

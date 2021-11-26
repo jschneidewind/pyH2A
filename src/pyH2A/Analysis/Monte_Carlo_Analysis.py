@@ -118,51 +118,6 @@ class Monte_Carlo_Analysis:
 	(top key > middle key > bottom key format, e.g. Catalyst > Cost per kg ($) > Value).
 	Order of parameters can be changed, which for example affects the mapping onto different
 	axis in `plot_colored_scatter` (first parameter is on x axis, second on y axis, etc.).
-
-	Methods
-	-------
-	process_parameters:
-		Parameters to be varied in Monte Carlo analysis are processed.
-	perform_h2_cost_calculation:
-		Evaluation of model with varied parameters to determine H2 cost.
-	perform_monte_carlo_multiprocessing:
-		Monte Carlo analysis with parallelization across all available CPUs.
-	perform_full_monte_carlo:
-		Monte Carlo analysis for provided parameter variations is performed.
-	save_results:
-		Monte Carlo analysis results are saved into output file.
-	read_resutls:
-		Monte Carlo analysis results are read from input file.
-	check_parameter_integrity:
-		Integrity check of parameters in `self.results`.
-	generate_parameter_string_table:
-		Generation of string for parameter table to be displayed in plots.
-	render_parameter_table:
-		Paramter table is rendered for plotting.
-	target_price_components:
-		Models within target price range are selected.
-	determine_principal_components:
-		Converting parameters to list sorted by input index.
-	target_price_2D_region:
-		Determining largest region spanned by first two parameters within which target
-		prices can be achieved.
-	calculate_distance:
-		Calculation of distance of datapoints to reference.
-	development_distance:
-		Calculation of development distance for models within target price range.
-	full_distance_cost_relationship:
-		Calculation of distance for all Monte Carlo analysis results.
-	plot_complete_histogram:
-		Plot of complete histogram for price distribution of Monte Carlo analysis
-		results.
-	plot_colored_scatter:
-		Colored scatter plot for models within target price range.
-	plot_colored_scatter:
-		3D colored scatter plot for models within target price range.
-	plot_distance_histogram:
-		Plot of development distance as histogram.
-	plot_distance_cost_relationship:
-		Plotting distance/H2 cost relationship.
 	'''
 
 	def __init__(self, input_file):
