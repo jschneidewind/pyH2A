@@ -1,5 +1,7 @@
 <img align="right" src="./src/pyH2A/Other/pyH2A.svg"/>
 
+[![Documentation Status](https://readthedocs.org/projects/pyh2a/badge/?version=latest)](https://pyh2a.readthedocs.io/en/latest/?badge=latest)
+
 # pyH2A
 
 pyH2A is an extensible Python framework for the analysis of hydrogen production cost. Its discounted cash flow module is based on the H2A Hydrogen Analysis model developed by the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
@@ -50,7 +52,7 @@ Documentation for pyH2A is available at:
 
 ![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Cost_Breakdown_Plot.png "Cost breakdown plot")
 
-* Sensitivity analysi
+* Sensitivity analysis
 
 ![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Sensitivity_Box_Plot.png "Sensitivity plot")
 
