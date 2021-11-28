@@ -67,6 +67,9 @@ src/pyH2A/Config/__init__.py
 src/pyH2A/Example/210511_Future_PEC_Type_4.md
 src/pyH2A/Example/210613_PV_E.md
 src/pyH2A/Example/211109_Future_PEC_Type_1_Figure_Test.md
+src/pyH2A/Example/Future_PEC_Type_1_Monte_Carlo.csv
+src/pyH2A/Example/Future_PEC_Type_4_Monte_Carlo.csv
+src/pyH2A/Example/PV_E_Monte_Carlo.csv
 src/pyH2A/Example/__init__.py
 src/pyH2A/Lookup_Tables/GDP_Implicit_Deflator_Price_Index.csv
 src/pyH2A/Lookup_Tables/Labor_Index.csv
@@ -112,9 +115,3 @@ src/pyH2A/Utilities/find_nearest.py
 src/pyH2A/Utilities/input_modification.py
 src/pyH2A/Utilities/output_utilities.py
 src/pyH2A/Utilities/plugin_input_output_processing.py
-src/pyH2A_jschneidewind.egg-info/PKG-INFO
-src/pyH2A_jschneidewind.egg-info/SOURCES.txt
-src/pyH2A_jschneidewind.egg-info/dependency_links.txt
-src/pyH2A_jschneidewind.egg-info/entry_points.txt
-src/pyH2A_jschneidewind.egg-info/requires.txt
-src/pyH2A_jschneidewind.egg-info/top_level.txt

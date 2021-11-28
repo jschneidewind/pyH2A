@@ -1,4 +1,4 @@
-<img align="right" src="./src/pyH2A/Other/pyH2A.svg"/>
+<img align="right" src="https://github.com/jschneidewind/pyH2A/blob/master/src/pyH2A/Other/pyH2A.svg?raw=true"/>
 
 [![Documentation Status](https://readthedocs.org/projects/pyh2a/badge/?version=latest)](https://pyh2a.readthedocs.io/en/latest/?badge=latest)
 
@@ -26,7 +26,7 @@ Documentation for pyH2A is available at: https://pyh2a.readthedocs.io/en/latest/
 
 # Dependencies
 
-pyH2A uses Python >3.7 with the following libraries: `NumPy`, `SciPy`, `Pandas`, `Matplotlib` and `Click`
+pyH2A uses Python >=3.7 with the following libraries: `NumPy`, `SciPy`, `Pandas`, `Matplotlib` and `Click`
 
 # Use
 

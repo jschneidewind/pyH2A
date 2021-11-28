@@ -68,21 +68,21 @@ Input is provided using a plaintext Markdown file. Input files are structured by
 
 * Cost breakdown
 
-![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Cost_Breakdown_Plot.png "Cost breakdown plot")
+![cost breakdown plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Cost_Breakdown_Plot.png?raw=True "Cost breakdown plot")
 
 * Sensitivity analysis
 
-![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Sensitivity_Box_Plot.png "Sensitivity plot")
+![sensitivity plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Sensitivity_Box_Plot.png?raw=true "Sensitivity plot")
 
 * Waterfall analysis
 
-![waterfall plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Waterfall_Chart.png "Waterfall plot")
+![waterfall plot](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Waterfall_Chart.png?raw=true "Waterfall plot")
 
 * Monte Carlo analysis, also allowing for comparison of different production pathways
 
-![colored scatter](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Monte_Carlo_Colored_Scatter.png "Colored Scatter")
+![colored scatter](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Monte_Carlo_Colored_Scatter.png?raw=true "Colored Scatter")
 
-![comparative distance cost relationship and histograms](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Monte_Carlo_Combined_Plot.png "Comparative distance cost relationship and histograms")
+![comparative distance cost relationship and histograms](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Monte_Carlo_Combined_Plot.png?raw=true "Comparative distance cost relationship and histograms")
 
 # To do
 
