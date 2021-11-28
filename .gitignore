@@ -52,6 +52,9 @@ instance/
 # Sphinx documentation
 doc/_build/
 
+# PyPI distribution build
+dist/
+
 # PyBuilder
 target/
 
