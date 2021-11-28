@@ -1,0 +1,3 @@
+[console_scripts]
+pyH2A = pyH2A.cli_pyH2A:cli
+

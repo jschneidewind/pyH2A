@@ -194,7 +194,7 @@ unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of to
 Name | Value
 --- | ---
 Samples | 1000
-Target Price Range ($) | 1.5; 1.54
+Target Price Range ($) | 1.5; 2.5
 Input File | pyH2A.Example~Future_PEC_Type_1_Monte_Carlo.csv
 
 # Parameters - Monte_Carlo_Analysis
@@ -250,7 +250,7 @@ Name | Method Name | Arguments
 --- | --- | ---
 comparative_distance_histogram | plot_comparative_distance_histogram | {'show': False, 'save': False, 'pdf': True}
 comparative_distance_cost_relationship | plot_comparative_distance_cost_relationship | {'show': False, 'save': False, 'dist_kwargs': {'log_scale': True}}
-comparative_distance_combined | plot_combined_distance | {'show': False, 'save': False, 'left': 0.06, 'fig_width': 13, 'dist_kwargs': {'legend_loc': 'upper right', 'log_scale': True}, 'table_kwargs': {'colWidths': [0.65, 0.25, 0.12, 0.25]}, 'hist_kwargs': {'title_string': 'Target price range:'}}
+comparative_distance_combined | plot_combined_distance | {'show': True, 'save': False, 'left': 0.06, 'fig_width': 13, 'dist_kwargs': {'legend_loc': 'upper right', 'log_scale': True}, 'table_kwargs': {'colWidths': [0.65, 0.25, 0.12, 0.25]}, 'hist_kwargs': {'title_string': 'Target price range:'}}
 
 # Cost_Contributions_Analysis
 

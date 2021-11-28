@@ -197,8 +197,8 @@ PEC Cells > Lifetime (years) > Value | PEC Cell Lifetime (years) | value | 5; 20
 
 Name | Value
 --- | ---
-Samples | 50000
-Target Price Range ($) | 1.5; 1.54
+Samples | 1000
+Target Price Range ($) | 1.5; 2.5
 Input File | pyH2A.Example~Future_PEC_Type_4_Monte_Carlo.csv
 
 # Parameters - Monte_Carlo_Analysis
@@ -215,4 +215,4 @@ Solar Concentrator > Cost ($/m2) > Value | \$ / $m^{2}$(Solar Concentrator) | va
 Name | Method Name | Arguments
 --- | --- | ---
 distance_histogram | plot_distance_histogram | {'show': False}
-distance_cost_relationship | plot_distance_cost_relationship | {'show'; True}
+distance_cost_relationship | plot_distance_cost_relationship | {'show': False}
