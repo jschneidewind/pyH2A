@@ -20,6 +20,10 @@ pyH2A can be installed using `pip`:
 pip install pyH2A
 ```
 
+# Documentation
+
+Documentation for pyH2A is available at: https://pyh2a.readthedocs.io/en/latest/
+
 # Dependencies
 
 pyH2A uses Python >3.7 with the following libraries: `NumPy`, `SciPy`, `Pandas`, `Matplotlib` and `Click`
@@ -41,10 +45,6 @@ pyH2A run -i ../Input/Input.md -o ../Output/Example_Output
 Alternatively, the `pyH2A` class from `pyH2A.run_pyH2A.py` can imported and used within a Python script.
 
 Input is provided using a plaintext Markdown file. Input files are structured by headers (designated by '#'), which are followed by Markdown style tables. Headers and tables are parsed by `pyH2A.py` to generate dictionaries which are used for computations. Certain input sections are mandatory (such as `Technical Operating Parameters and Specifications` or `Financial Input Values`). Additional input sections can be processed by invoking `Plugins`, which perform additional calculations that feed into the discounted cash flow analysis. Finally, the input file can invoke `Analysis` modules to analyze and visualize the output.
-
-# Documentation
-
-Documentation for pyH2A is available at: 
 
 # Example output
 
