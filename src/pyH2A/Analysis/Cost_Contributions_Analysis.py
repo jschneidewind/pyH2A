@@ -59,11 +59,17 @@ class Cost_Contributions_Analysis:
 		-------
 		figure : matplotlib.fig or None
 			matplotlib.fig is returned if `figure_lean` is True.
+
+		Notes
+		-----
+		Names of contributions are split at '-' symbols and only the last
+		part is displayed. For example: `Direct Capital Costs - Installation`
+		is displayed only as `Installation`.
 		'''
 
 		kwargs = {**{'left': 0.4, 'top': 0.96, 
 					 'name': 'Cost_Breakdown_Plot'}, 
-	 			  **kwargs, **plot_kwargs}
+				  **kwargs, **plot_kwargs}
 
 		if ax is None:
 			figure = Figure_Lean(**kwargs)

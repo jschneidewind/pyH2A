@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pyH2A
-Version: 0.0a3
+Version: 0.0a4
 Summary: A framework for the analysis of hydrogen production cost
 Home-page: https://github.com/jschneidewind/pyH2A
 Author: Jacob Schneidewind
@@ -16,11 +16,15 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 License-File: LICENSE-CC-BY.txt
 
-<img align="right" src="./src/pyH2A/Other/pyH2A.svg"/>
+<img align="right" src="https://github.com/jschneidewind/pyH2A/blob/master/src/pyH2A/Other/pyH2A.svg?raw=true"/>
 
 [![Documentation Status](https://readthedocs.org/projects/pyh2a/badge/?version=latest)](https://pyh2a.readthedocs.io/en/latest/?badge=latest)
 
 # pyH2A
+
+- **PyPI:** https://pypi.org/project/pyH2A
+- **Documentation:** https://pyh2a.readthedocs.io
+- **Source code:** https://github.com/jschneidewind/pyH2A
 
 pyH2A is an extensible Python framework for the analysis of hydrogen production cost. Its discounted cash flow module is based on the H2A Hydrogen Analysis model developed by the [U.S. Department of Energy](https://www.hydrogen.energy.gov/h2a_analysis.html)/[NREL](https://www.nrel.gov/hydrogen/h2a-production-models.html).
 
@@ -40,11 +44,11 @@ pip install pyH2A
 
 # Documentation
 
-Documentation for pyH2A is available at: https://pyh2a.readthedocs.io/en/latest/
+Documentation for pyH2A is available at: https://pyh2a.readthedocs.io
 
 # Dependencies
 
-pyH2A uses Python >3.7 with the following libraries: `NumPy`, `SciPy`, `Pandas`, `Matplotlib` and `Click`
+pyH2A uses Python >=3.7 with the following libraries: `NumPy`, `SciPy`, `Pandas`, `Matplotlib` and `Click`
 
 # Use
 

@@ -53,7 +53,7 @@ class Photovoltaic_Plugin:
 	Electrolyzer > Scaling Factor > Value : float
 		CAPEX scaling factor for electrolyzer calculated based on CAPEX multiplier, 
 		reference and nominal power.
-	Electrolyzer > Scaling Factor > Value : float
+	Photovoltaic > Scaling Factor > Value : float
 		CAPEX scaling factor for PV array calculated based on CAPEX multiplier, 
 		reference and nominal power.
 	Non-Depreciable Capital Costs > Land required (acres) > Value : float
@@ -79,7 +79,8 @@ class Photovoltaic_Plugin:
 				1., __name__, print_info = print_info)
 	
 		insert(dcf, 'Planned Replacement', 'Electrolyzer Stack Replacement', 'Frequency (years)', 
-				self.replacement_frequency, __name__, print_info = print_info)
+				self.replacement_frequency, __name__, print_info = print_info, add_processed = False,
+				insert_path = False)
 
 		insert(dcf, 'Electrolyzer', 'Scaling Factor', 'Value', 
 				self.electrolyzer_scaling_factor, __name__, print_info = print_info)
@@ -148,6 +149,7 @@ class Photovoltaic_Plugin:
 		stack_usage = cumulative_running_time / dcf.inp['Electrolyzer']['Replacement time (h)']['Value']
 
 		number_of_replacements = np.floor_divide(stack_usage[-1], 1)
+
 		self.replacement_frequency = len(stack_usage) / (number_of_replacements + 1.)
 
 	def calculate_scaling_factors(self, dcf):

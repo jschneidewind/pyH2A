@@ -66,7 +66,7 @@ def coordinate_position(x_reference, x_values, y_reference, y_values):
 	'''
 
 	if x_reference - select_non_reference_value(x_reference, x_values) > 0:
-		xtext = 0.85
+		xtext = 0.81
 	else:
 		xtext = 0.05
 
@@ -156,7 +156,7 @@ class Monte_Carlo_Analysis:
 		self.check_parameter_integrity(self.results)
 		self.target_price_components()
 		self.determine_principal_components()
-		self.generate_parameter_string_table()
+		#self.generate_parameter_string_table()
 		self.development_distance()
 		self.full_distance_cost_relationship()
 
@@ -432,7 +432,8 @@ class Monte_Carlo_Analysis:
 			assert minimum >= parameter['Values'][0], 'Minimum value of {0} ({1}) is smaller than specified range ({2}).'.format(name, minimum, parameter['Values'])
 			assert maximum <= parameter['Values'][1], 'Maximum value of {0} ({1}) is larger than specified range ({2}).'.format(name, maximum, parameter['Values']) 
 
-	def generate_parameter_string_table(self, base_string = 'Base', limit_string = 'Limit'):
+	def generate_parameter_string_table(self, base_string = 'Base', limit_string = 'Limit', 
+										format_cutoff = 6):
 		'''String of parameter table is generated, used in `self.render_parameter_table`.
 
 		Parameters 
@@ -441,6 +442,9 @@ class Monte_Carlo_Analysis:
 			String used to label base column.
 		limit_string : str, optinal
 			String used to label limit column.
+		format_cutoff : int
+			Length of number string at which it is converted to 
+			scientific/millified representation.
 		'''
 
 		self.parameter_string = make_bold(self.display_name) + '\n'
@@ -449,9 +453,10 @@ class Monte_Carlo_Analysis:
 												make_bold(limit_string)]], 'Row Labels': []}
 
 		for key, value in self.parameters.items():
-			reference_value = dynamic_value_formatting(value['Reference'])
+			reference_value = dynamic_value_formatting(value['Reference'], cutoff = format_cutoff)
 			limit_value = dynamic_value_formatting(select_non_reference_value(value['Reference'], 
-																			  value['Values']))
+																			  value['Values']), 
+																		   cutoff = format_cutoff)
 
 			string = key + ': ' + reference_value + r'$\rightarrow$' + limit_value + '\n'
 			self.parameter_string += string
@@ -460,11 +465,13 @@ class Monte_Carlo_Analysis:
 													   r'$\longrightarrow$', limit_value])
 			self.parameter_table['Row Labels'].append(key)
 
+
 	def render_parameter_table(self, ax, xpos = 1.05, ypos = 0.0, height = 1.0, 
 							   colWidths = [0.55, 0.25, 0.07, 0.25],
 							   left_pad = 0.01, edge_padding = 0.02, 
 							   fontsize = 12, base_string = 'Base',
-							   limit_string = 'Limit'):
+							   limit_string = 'Limit',
+							   format_cutoff = 7):
 		'''Rendering table of parameters which are varied during Monte Carlo analysis.
 
 		Parameters
@@ -497,7 +504,8 @@ class Monte_Carlo_Analysis:
 		Table is rendered in provided matplotlib.axes object.
 		'''
 
-		self.generate_parameter_string_table(base_string = base_string)
+		self.generate_parameter_string_table(base_string = base_string, limit_string = limit_string,
+											 format_cutoff = format_cutoff)
 
 		bbox = [xpos, ypos, sum(colWidths), height]
 		number_of_rows = len(self.parameter_table['Table Data'])
@@ -635,6 +643,9 @@ class Monte_Carlo_Analysis:
 			Dictionary specifying ranges for each parameter.
 		selection: list
 			List of parameters names used for distance calculation.
+		metric : str
+			Metric used for distance calculation (e.g. 'cityblock' or
+			'euclidean').
 
 		Returns
 		-------
@@ -693,6 +704,17 @@ class Monte_Carlo_Analysis:
 		Distances are normalized by the number of dimensions, so that the maximum distance is always 1.'''
 
 		self.distances = self.calculate_distance(self.target_price_data, self.parameters, self.principal, metric = metric)
+
+		target_distances = np.c_[self.target_price_data, self.distances]
+		self.target_distances_sorted = target_distances[np.argsort(target_distances[:,-1])]
+
+		self.shortest_target_distance = {}
+
+		for key, item in self.parameters.items():
+			self.shortest_target_distance[key] = self.target_distances_sorted[0][item['Index']]
+
+		self.shortest_target_distance['H2 Cost ($/kg)'] = self.target_distances_sorted[0][-2]
+		self.shortest_target_distance['Distance'] = self.target_distances_sorted[0][-1]
 
 	def full_distance_cost_relationship(self, metric = 'cityblock', reduction_factor = 25, 
 										poly_order = 4):
@@ -797,7 +819,7 @@ class Monte_Carlo_Analysis:
 		return figure.fig
 
 	def plot_colored_scatter(self, limit_extension = 0.03,   
-							 title_string = 'Target Price Range: ', 
+							 title_string = 'Target cost range: ', 
 							 base_string = 'Base',
 							 image_kwargs = {}, plot_kwargs = {},  
 							 **kwargs):
@@ -884,11 +906,14 @@ class Monte_Carlo_Analysis:
 					par[pc[1]]['Reference']), xytext = (xtext, ytext), 
 					textcoords = 'axes fraction')
 
-		ax.set_title(make_bold(title_string) + '{0} - {1} \$/kg'.format(
-											self.target_price_range[0], 
-											self.target_price_range[1]))
+		# ax.set_title(title_string + ' {0} - {1} \$/kg'.format(
+		# 									self.target_price_range[0], 
+		# 									self.target_price_range[1]))
+		ax.set_title(title_string + f' {self.target_price_range[0]} - {self.target_price_range[1]} \$/kg($H_{2}$)')
 
 		ax.grid(color = 'grey', linestyle = '--', linewidth = 0.2, zorder = 0)
+
+		#ax.set_aspect('equal')
 
 		if image_kwargs['path'] is not None:
 			insert_image(ax = ax, **image_kwargs)
@@ -898,7 +923,7 @@ class Monte_Carlo_Analysis:
 		return figure.fig
 
 	def plot_colored_scatter_3D(self, limit_extension = 0.03,   
-							 	title_string = 'Target Price Range: ',
+							 	title_string = 'Target cost range: ',
 							 	**kwargs):
 		'''3D colored scatter plot of models within target price range.
 	
@@ -953,9 +978,11 @@ class Monte_Carlo_Analysis:
 
 	def plot_distance_histogram(self, ax = None, bins = 25, 
 								figure_lean = True, xlabel = False, title = True,
-								xlabel_string = 'Normalized Distance',
+								xlabel_string = 'Development distance',
 								ylabel_string = 'Frequency',
-								title_string = 'Target Price Range',
+								title_string = 'Target cost range:',
+								show_parameter_table = True,
+								show_mu = True, mu_x = 0.2, mu_y = 0.5,
 								table_kwargs = {}, image_kwargs = {}, plot_kwargs = {},
 								 **kwargs):
 
@@ -973,10 +1000,20 @@ class Monte_Carlo_Analysis:
 			Flag to control if x axis label is displayed or not.
 		title : bool, optional
 			Flag to control if title is displayed or not.
+		title_string : str, optional
+			String for title.
 		x_label_string : str, optional
 			String for x axis label.
 		y_label_string : str, optional
 			String for y axis label.
+		show_parameter_table : bool, optional
+			Flag to control if parameter table is shown.
+		show_mu : bool, optional
+			Flag to control if mu and sigma values of normal distribution are shown.
+		mu_x : float, optional
+			x axis coordinate of shown mu and sigma values in axis coordinates.
+		mu_y : float, optional
+			y axis coordinate of shown mu and sigma values in axis coordinates.
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
 			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
@@ -1002,7 +1039,7 @@ class Monte_Carlo_Analysis:
 	 			     'name': 'Monte_Carlo_Distance_Histogram'}, 
 	 			  **kwargs, **plot_kwargs}
 
-		table_kwargs = {**{'colWidths': [0.55, 0.25, 0.07, 0.25]}, 
+		table_kwargs = {**{'colWidths': [0.55, 0.25, 0.07, 0.25], 'format_cutoff': 7}, 
 						**table_kwargs}
 
 		image_kwargs = {**{'path': None, 'x': -0.35, 'y': 0.5, 'zoom': 0.08}, 
@@ -1013,8 +1050,7 @@ class Monte_Carlo_Analysis:
 			ax = figure.ax
 
 		if title is True:
-			ax.title.set_text(title_string + ' {0} - {1} \$/kg'.format(self.target_price_range[0], 
-																       self.target_price_range[1]))
+			ax.title.set_text(title_string + f' {self.target_price_range[0]} - {self.target_price_range[1]} \$/kg($H_{2}$)')
 
 		yhist, xhist, rectangle = ax.hist(self.distances, bins = bins, density=False, 
 										  color=self.color, edgecolor = 'black')
@@ -1032,10 +1068,15 @@ class Monte_Carlo_Analysis:
 			ax.set_xlabel(xlabel_string)
 		ax.set_ylabel(ylabel_string)
 
+		if show_mu:
+			ax.annotate(f'$\mu$ = {mu:.2f}\n$\sigma$ = {std:.3f}', xy = (mu_x, mu_y),
+						va = 'center', ha = 'center', xycoords = ax.transAxes)
+
 		if image_kwargs['path'] is not None:
 			insert_image(ax = ax, **image_kwargs)
 
-		self.render_parameter_table(ax, **table_kwargs)
+		if show_parameter_table:
+			self.render_parameter_table(ax, **table_kwargs)
 	
 		if figure_lean is True:
 			figure.execute()
@@ -1045,8 +1086,9 @@ class Monte_Carlo_Analysis:
 										parameter_table = True, 
 	 									legend_loc = 'upper left',
 	 									log_scale = False, 
-	 									xlabel_string = 'Normalized Distance',
-	 									ylabel_string = r'Levelized $H_{2}$ Cost / \$/kg',
+	 									xlabel_string = 'Development distance',
+	 									ylabel_string = r'Levelized $H_{2}$ cost / \$/kg',
+	 									markersize = 0.2, marker_alpha = 0.2,
 	 									table_kwargs = {}, image_kwargs = {}, plot_kwargs = {},
 	 									**kwargs):
 		'''Plotting relationship of development distance and H2 cost.
@@ -1069,6 +1111,10 @@ class Monte_Carlo_Analysis:
 			String for x axis label.
 		y_label_string : str, optional
 			String for y axis label.
+		markersize : float
+			Size of markers in scatter plot.
+		marker_alpha : float
+			Transparency of markers in scatter plot (0: maximum transpareny, 1: no transparency).
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
 			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
@@ -1104,9 +1150,9 @@ class Monte_Carlo_Analysis:
 			ax = figure.ax
 
 		ax.plot(self.results_distances_sorted[:,-1], self.results_distances_sorted[:,-2], '.', 
-				markersize = 1, color = self.color, alpha = 0.2)
+				markersize = markersize, color = self.color, alpha = marker_alpha)
 		ax.plot(self.distances_cost_savgol[:,0], self.distances_cost_savgol[:,1], color = self.color, 
-			label = self.display_name)
+			    label = self.display_name)
 
 		if log_scale:
 			ax.set_yscale('log')
@@ -1130,4 +1176,41 @@ class Monte_Carlo_Analysis:
 		if figure_lean is True:
 			figure.execute()
 			return figure.fig
+
+	def plot_target_parameters_by_distance(self, ax = None, figure_lean = True,
+										   table_kwargs = {}, image_kwargs = {}, plot_kwargs = {},
+	 									   **kwargs):
+		'''
+
+		'''
+
+		kwargs = {**{'left': 0.1, 'right': 0.9, 'bottom': 0.1, 'top': 0.95,
+	 			     'fig_width': 7, 'fig_height': 4, 'font_size': 12,
+	 			     'name': 'Monte_Carlo_Distance_Cost_Relationship'}, 
+	 			  **kwargs, **plot_kwargs}
+
+		table_kwargs = {**{'xpos': 1.4, 'height': 0.23, 'edge_padding': 0.0}, 
+						**table_kwargs}
+
+		image_kwargs = {**{'path': None, 'x': 0.5, 'y': 0.8, 'zoom': 0.08}, 
+						**image_kwargs}
+
+		if ax is None:
+			figure = Figure_Lean(**kwargs)
+			ax = figure.ax
+
+
+		#ax.plot(self.target_distances_sorted[:,-1], self.target_distances_sorted[:,4], '.')
+		ax.plot(self.results_distances_sorted[:,3], self.results_distances_sorted[:,-1], '.')
+
+		if figure_lean is True:
+			figure.execute()
+			return figure.fig
+
+
+
+
+
+
+
 

@@ -58,6 +58,8 @@ class Comparative_MC_Analysis:
 			model_range = self.models[model_key]['Model'].target_price_range
 			assert np.array_equal(target_price_range, model_range), 'Target price ranges differ between input files. Reference: {0}, model: {1}'.format(target_price_range, model_range)
 
+		self.target_price_range = target_price_range
+
 	def plot_comparative_distance_histogram(self, ax = None, figure_lean = True, 
 											table_kwargs = {}, image_kwargs = {}, 
 											plot_kwargs = {}, hist_kwargs = {},
@@ -190,14 +192,17 @@ class Comparative_MC_Analysis:
 		dist_kwargs = {**{'log_scale': False, 'ylim': 8, 'legend_loc': 'upper right'},
 					   **dist_kwargs}
 
+		table_kwargs = {**{'height': 0.23}, **table_kwargs}
+
 		if ax is None:
 			figure = Figure_Lean(**kwargs)
 			ax = figure.ax
 
-		ax.plot([0, 1], [target_line, target_line], '--', color = 'black')
+		#ax.plot([0, 1], [target_line, target_line], '--', color = 'black')
+		ax.axhspan(self.target_price_range[0], self.target_price_range[1], color = 'grey', alpha = 0.7)
 
 		for counter, (model_name, model) in enumerate(self.models.items()):
-			ycoord = 1 - 1.1 * (counter / model_number) - 0.23
+			ycoord = 1 - 1.1 * (counter / model_number) - table_kwargs['height']
 
 			table_kwargs['ypos'] = ycoord
 
@@ -289,7 +294,8 @@ class Comparative_MC_Analysis:
 											     image_kwargs = image_kwargs,
 											     hist_kwargs = hist_kwargs)
 
-		ax0.plot([0, 1], [target_line, target_line], '--', color = 'black')
+		#ax0.plot([0, 1], [target_line, target_line], '--', color = 'black')
+		ax0.axhspan(self.target_price_range[0], self.target_price_range[1], color = 'grey', alpha = 0.7)
 
 		ax0.text(-0.16, 1.04, 'A', transform=ax0.transAxes, size = 24, weight='bold')
 		ax0.text(1.36, 1.04, 'B', transform=ax0.transAxes, size = 24, weight='bold')

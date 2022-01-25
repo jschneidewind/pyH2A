@@ -15,14 +15,14 @@ class Hourly_Irradiation_Plugin:
 		Tilt of irradiated module in degrees.
 	Irradiance Area Parameters > Array Azimuth (degrees) > Value : float
 		Azimuth angle of irradiated module in degrees.
-	Irradiance Area Parameters > Nominal Operating Temperature (Celcius) : foat
-		Nominal operating temperature of irradiated module in degrees Celcius.
+	Irradiance Area Parameters > Nominal Operating Temperature (Celsius) > Value : f;oat
+		Nominal operating temperature of irradiated module in degrees Celsius.
 	Irradiance Area Parameters > Mismatch Derating > Value : float
 		Derating value due to mismatch (percentage or value between 0 and 1).
 	Irradiance Area Parameters > Dirt Derating > Value : float
 		Derating value due to dirt buildup (percentage or value between 0 and 1).
-	Irradiance Area Parameters > Temperature Coefficienct (per Celcius) > Value : float
-		Performance decrease of irradiated module per degree Celcius increase.
+	Irradiance Area Parameters > Temperature Coefficient (per Celsius) > Value : float
+		Performance decrease of irradiated module per degree Celsius increase.
 
 	Returns
 	-------
@@ -57,8 +57,8 @@ class Hourly_Irradiation_Plugin:
 
 		self.power_kW, self.power_sat_kW, self.power_dat_kW = calculate_PV_power_ratio(dcf.inp['Hourly Irradiation']['File']['Value'],
 											pv['Module Tilt (degrees)']['Value'], pv['Array Azimuth (degrees)']['Value'],
-											pv['Nominal Operating Temperature (Celcius)']['Value'], 
-											pv['Temperature Coefficienct (per Celcius)']['Value'],
+											pv['Nominal Operating Temperature (Celsius)']['Value'], 
+											pv['Temperature Coefficient (per Celsius)']['Value'],
 											pv['Mismatch Derating']['Value'], pv['Dirt Derating']['Value'])
 
 		insert(dcf, 'Hourly Irradiation', 'No Tracking (kW)', 'Value', 

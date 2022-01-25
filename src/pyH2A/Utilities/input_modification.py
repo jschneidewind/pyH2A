@@ -7,9 +7,42 @@ import ast
 import operator
 import numpy as np
 
+def import_plugin(plugin_name, plugin_module):
+	'''Importing module.
+
+	Parameters
+	----------
+	plugin_name : str
+		Name of module.
+	plugin_module : bool, optional
+		Flag to differentiate between plugins and analysis modules. If `True`,
+		module is imported from `Plugins.` directory. If `False`, it is
+		imported from `Analysis.` directory.
+
+	Returns
+	-------
+	plugin_class:
+		Class from imported module.
+
+	Notes
+	-----
+	Module `plugin_name` is imported. It is assumed that the module contains 
+	a class with the same name as `plugin_name`
+	'''
+
+	if plugin_module is True:
+		prefix = 'pyH2A.Plugins.'
+	else:
+		prefix = 'pyH2A.Analysis.'
+
+	plugin = import_module(prefix + plugin_name)
+	plugin_class = getattr(plugin, plugin_name)
+
+	return plugin_class
+
 def execute_plugin(plugin_name, plugs_dict, plugin_module = True, 
 				   nested_dictionary = False, **kwargs):
-	'''Importing and executing module.
+	'''Executing module.
 
 	Parameters
 	----------
@@ -39,13 +72,7 @@ def execute_plugin(plugin_name, plugs_dict, plugin_module = True,
 	using `**kwargs`. The class object is then stored in `plugs_dict`.
 	'''
 
-	if plugin_module is True:
-		prefix = 'pyH2A.Plugins.'
-	else:
-		prefix = 'pyH2A.Analysis.'
-
-	plugin = import_module(prefix + plugin_name)
-	plugin_class = getattr(plugin, plugin_name)
+	plugin_class = import_plugin(plugin_name, plugin_module)
 	plugin_object = plugin_class(**kwargs)
 
 	if nested_dictionary is True:
@@ -55,6 +82,25 @@ def execute_plugin(plugin_name, plugs_dict, plugin_module = True,
 		plugs_dict[plugin_name] = plugin_object
 
 	return plugin_object
+
+def check_for_meta_module(key):
+	'''Checks if `key` is a meta module that is to be executed.
+
+	Notes
+	-----
+	Meta module is identified by checking if `key` contains the substring
+	'Analysis' and does not contain any of the substrings in `exceptions`.
+	'''
+
+	exceptions = ['Parameters', 'Methods', 'Arguments', 'Deactivate']
+	indicators = ['Analysis']
+
+	if any(exception in key for exception in exceptions):
+		return False
+	elif any(indicator in key for indicator in indicators):
+		return True
+	else:
+		return False
 
 def file_import(file_name, mode = 'rb', return_path = False):
 	'''Importing package file or file at arbitrary path and returning typing.TextIO
@@ -142,7 +188,7 @@ def num(s):
 	if s[-1] != '}':  # String is not a dictionary string
 		s = s.replace(',', '')
 
-	if s[-1] == '%' and ';' not in s:  #String endd with '%' but is not a semicolon seperated list of values
+	if s[-1] == '%' and ';' not in s:  #String ends with '%' but is not a semicolon seperated list of values
 		return num(s[:-1])/100.
 	else:
 		try:
@@ -218,7 +264,12 @@ def convert_file_to_dictionary(file):
 
 			for i in zip(header_entries[1:], table_entries[1:]):
 				header_entry = i[0].strip(' \n')
-				table_entry = num(i[1].strip(' \n'))
+
+				if i[1].strip(' \n') == '':
+					table_entry = 'n/a'
+				else:
+					table_entry = num(i[1].strip(' \n'))
+
 				inp[variable_name][table_entries[0].strip(' ')][header_entry] = table_entry 
 
 	file.close()
@@ -276,7 +327,7 @@ def merge(a, b, path=None, update=True):
 			a[key] = b[key]
 	return a
 
-def convert_input_to_dictionary(file, default = 'pyH2A.Config~Defaults.md'):
+def convert_input_to_dictionary(file, default = 'pyH2A.Config~Defaults.md', merge_default = True):
 	'''Reads provided input file (file) and default file, converting both to dictionaries.
 	The dictionaries are merged, with the input file having priority.
 
@@ -286,17 +337,23 @@ def convert_input_to_dictionary(file, default = 'pyH2A.Config~Defaults.md'):
 		Path to input file.
 	default : str, optional
 		Path to default file.
+	merge_default : bool
+		Flag to control if input is merged with default file.
 
 	Returns
 	-------
 	inp : dict
-		Merged dictionary.
+		Input dictionary.
 	'''
 
-	inp_default = convert_file_to_dictionary(file_import(default, mode = 'r'))
 	inp_file = convert_file_to_dictionary(file_import(file, mode = 'r'))
 
-	return merge(inp_default, inp_file)
+	if merge_default is False:
+		return inp_file
+
+	else:
+		inp_default = convert_file_to_dictionary(file_import(default, mode = 'r'))
+		return merge(inp_default, inp_file)
 
 def get_by_path(root, items):
 	'''Access a nested object in `root` by item sequence.'''
@@ -317,7 +374,7 @@ def set_by_path(root, items, value, value_type = 'value'):
 		get_by_path(root, items[:-1])[items[-1]] = value
 
 def insert(class_object, top_key, middle_key, bottom_key, value, name, 
-		   print_info = True, add_processed = True):
+		   print_info = True, add_processed = True, insert_path = True):
 	'''Insert function used in plugins. 
 
 	Parameters
@@ -338,6 +395,8 @@ def insert(class_object, top_key, middle_key, bottom_key, value, name,
 		Flag to control if information on action of ``insert()`` is printed.
 	add_processed : bool, optional
 		Flag to control if 'Processed' key is added.
+	insert_path : bool, optional
+		Flog to control if 'Path' key is added.
 
 	Notes
 	-----
@@ -353,7 +412,8 @@ def insert(class_object, top_key, middle_key, bottom_key, value, name,
 
 	try:
 		class_object.inp[top_key][middle_key][bottom_key] = value
-		class_object.inp[top_key][middle_key]['Path'] = 'None' # setting path to "None" to avoid processing
+		if insert_path is True: 
+			class_object.inp[top_key][middle_key]['Path'] = 'None' # setting path to "None" to avoid processing
 		if print_info is True: print("'{0} > {1} > {2}' is being overwritten by {3}".format(top_key, 
 																							middle_key, 
 																							bottom_key, 
@@ -432,14 +492,6 @@ def parse_parameter_to_array(key, delimiter = '>', dictionary = None, top_key = 
 						 cell = i, print_processing_warning = False))
 
 	return np.asarray(array)
-
-# def parse_file_name(name):
-# 	'''File name is extracted from provided path + file_name + extension'''
-
-# 	file_name = name.split('/')
-# 	file_name = file_name[-1].split('.')
-
-# 	return file_name[0]
 
 def process_path(dictionary, path, top_key, key, bottom_key, print_processing_warning = True):
 	'''Processing provided path. Checks are performed to see if path is valid.
@@ -641,9 +693,9 @@ def process_table(dictionary, top_key, bottom_key, path_key = 'Path'):
 	top_key : str
 		Top key.
 	bottom_key : str, ndarray or list
-		Bottom key.
-	path_key : str, optional
-		Key used for path column. Defaults to 'Path'.
+		Bottom key(s).
+	path_key : str or ndarray, optional
+		Key(s) used for path column(s). Defaults to 'Path'.
 	
 	Notes
 	-----

@@ -48,6 +48,8 @@ class Photocatalytic_Plugin:
 		Solar-to-hydrogen efficiency in percentage or as a value between 0 and 1.
 	Solar Input > Mean solar input (kWh/m2/day) > Value : float
 		Mean solar input in kWh/m2/day, ``process_table()`` is used.
+	Solar Input > Hourly (kWh/m2) > Value : ndarray
+		Hourly irradiation data.
 
 	Returns
 	-------
@@ -73,6 +75,8 @@ class Photocatalytic_Plugin:
 		Dictionary containing detailed catalyst properties calculated from provided parameters.
 	['Photocatalytic_Plugin'].catalyst_properties : dict
 		Attribute containing catalyst properties dictionary.
+	Water Volume > Volume (liters) > Value : float
+		Total water volume in liters.
 	'''
 
 	def __init__(self, dcf, print_info):
@@ -112,8 +116,12 @@ class Photocatalytic_Plugin:
 		insert(dcf, 'Direct Capital Costs - Photocatalyst', 'Catalyst Cost ($)', 'Value', 
 				self.catalyst_cost, __name__, print_info = print_info)
 
-		insert(dcf, 'Reactor Baggies', 'Number', 'Value', self.baggie_number, __name__, print_info = print_info)
-		insert(dcf, 'Catalyst', 'Properties', 'Value', self.catalyst_properties, __name__, print_info = print_info)
+		insert(dcf, 'Reactor Baggies', 'Number', 'Value', self.baggie_number, 
+				__name__, print_info = print_info)
+		insert(dcf, 'Catalyst', 'Properties', 'Value', self.catalyst_properties, 
+				__name__, print_info = print_info)
+		insert(dcf, 'Water Volume', 'Volume (liters)', 'Value', self.total_volume_liters, 
+				__name__, print_info = print_info)
 
 	def hydrogen_production(self, dcf):
 		'''Calculation of hydrogen produced per day per baggie (in kg).
@@ -184,7 +192,7 @@ class Photocatalytic_Plugin:
 				catalyst_properties['Homogeneous']['Absorbance'] = absorbance
 				catalyst_properties['Homogeneous']['Absorbed light (%)'] = 100 * (1 - 10**(-absorbance))
 
-			kg_H2_per_day_TOF_calculation = 1000 * self.catalyst_amount / dcf.inp['Catalyst']['Molar Weight (g/mol)']['Value'] * average_TOF_daily * 2. / 1000.
+			kg_H2_per_day_TOF_calculation = 1000 * self.catalyst_amount_kg / dcf.inp['Catalyst']['Molar Weight (g/mol)']['Value'] * average_TOF_daily * 2. / 1000.
 			kg_H2_per_day_baggie_calculation = self.kg_H2_per_baggie * self.baggie_number
 
 			assert abs(kg_H2_per_day_TOF_calculation - kg_H2_per_day_baggie_calculation) < 1e-6, 'Difference between baggie and TOF calculation for daily H2 production: TOF: {0}, Baggie: {0}.'.format(
@@ -216,10 +224,12 @@ class Photocatalytic_Plugin:
 		baggie_volume_m3 = baggie['Length (m)']['Value'] * baggie['Width (m)']['Value'] * baggie['Height (m)']['Value']
 		baggie_volume_liters = baggie_volume_m3 * 1000
 
-		self.catalyst_amount_per_baggie = baggie_volume_liters * dcf.inp['Catalyst']['Concentration (g/L)']['Value']/1000.
-		self.catalyst_amount = self.catalyst_amount_per_baggie * self.baggie_number
+		self.total_volume_liters = baggie_volume_liters * self.baggie_number
 
-		self.catalyst_cost = self.catalyst_amount * dcf.inp['Catalyst']['Cost per kg ($)']['Value']
+		self.catalyst_amount_per_baggie_kg = baggie_volume_liters * dcf.inp['Catalyst']['Concentration (g/L)']['Value']/1000.
+		self.catalyst_amount_kg = self.catalyst_amount_per_baggie_kg * self.baggie_number
+
+		self.catalyst_cost = self.catalyst_amount_kg * dcf.inp['Catalyst']['Cost per kg ($)']['Value']
 
 	def land_area(self, dcf):
 		'''Calculation of total required land area and solar collection area.

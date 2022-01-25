@@ -97,6 +97,11 @@ class Figure_Lean:
 		Font size.
 	sharex : bool, optional
 		Flag to control if x axis is shared between subplots.
+	input_file_name : str, optional
+		Name of input file.
+	append_file_name ; bool, optional
+		Flag to control if `input_file_name` is appended
+		to file name of figure.
 
 	Notes
 	-----
@@ -105,11 +110,12 @@ class Figure_Lean:
 	'''
 	def __init__(self, name, directory, provided_figure_and_axis = None, 
 				 show = False, save = False, 
-				 pdf = False, dpi = 150, transparent = False,
+				 pdf = True, dpi = 300, transparent = False,
 				 nrows = 1, ncols = 1, fig_width = 6.4, fig_height = 4.8, 
 				 left = 0.125, right = 0.9, top = 0.88, bottom = 0.11, 
 				 wspace = 0.2, hspace = 0.2, font_family = 'sans-serif',
-				 font = 'Arial', font_size = 12, sharex = False):
+				 font = 'Arial', font_size = 12, sharex = False,
+				 input_file_name = None, append_file_name = True):
 
 		set_font(font_family, font, font_size)
 
@@ -126,7 +132,6 @@ class Figure_Lean:
 		self.fig = fig
 		self.ax = ax
 
-		self.name = name
 		self.directory = directory
 
 		self.show = show
@@ -134,6 +139,11 @@ class Figure_Lean:
 		self.pdf = pdf
 		self.dpi = dpi
 		self.transparent = transparent
+
+		if append_file_name and input_file_name is not None:
+			self.name = f'{name}_{input_file_name}'
+		else:
+			self.name = name
 
 	def execute(self):
 		'''Running `self.execute()` executes desired 

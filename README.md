@@ -70,9 +70,15 @@ Input is provided using a plaintext Markdown file. Input files are structured by
 
 ![comparative distance cost relationship and histograms](https://github.com/jschneidewind/pyH2A/blob/master/Example_Output/Monte_Carlo_Combined_Plot.png?raw=true "Comparative distance cost relationship and histograms")
 
+# Publication data 
+
+Data for the accompanying publication can be found in the `data` directory.
+
 # To do
 
-* Generating input file template given a defined set of plugins (comments in input file should indicate which plugin is requesting which inputs) 
+* Importing plugins and analysis modules from arbitrary location
+
+* Enabling use of Default.md file in arbitrary location
 
 * Block diagram illustrating flow of program
 

@@ -5,9 +5,9 @@ class Fixed_Operating_Cost_Plugin:
 
 	Parameters
 	----------
-	Fixed Operating Costs > staff > Value : float or int
+	Fixed Operating Costs > staff > Value : float
 		Number of staff, ``process_table()`` is used.
-	Fixed Operating Costs > hourly labor cost > value : float
+	Fixed Operating Costs > hourly labor cost > Value : float
 		Hourly labor cost of staff, ``process_table()`` is used.
 	[...] Other Fixed Operating Cost [...] >> Value : float
 		Yearly other fixed operating costs, ``sum_all_tables()`` is used.

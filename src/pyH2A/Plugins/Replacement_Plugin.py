@@ -1,4 +1,4 @@
-from pyH2A.Utilities.input_modification import insert, process_input, sum_all_tables
+from pyH2A.Utilities.input_modification import insert, process_input, sum_all_tables, process_table
 import pyH2A.Utilities.find_nearest as fn
 import numpy as np
 
@@ -9,10 +9,12 @@ class Replacement_Plugin:
 	----------
 	Planned Replacement > [...] > Frequency (years) : float
 		Replacement frequency of [...] in years. 
-		Iteration over all entries in `Planned Replacement` table.
+		Iteration over all entries in `Planned Replacement` table. No path key
+		available.
 	Planned Replacement > [...] > Cost ($) : float
 		One-time replacement cost of [...].
-		Iteration over all entries in `Planned Replacment` table. 
+		Iteration over all entries in `Planned Replacement` table. Path key
+		is 'Path'.
 	[...] Unplanned Replacement [...] >> Value : float
 		``sum_all_tables()`` is used.
 
@@ -25,6 +27,9 @@ class Replacement_Plugin:
 		unplanned replacement costs).
 	'''
 	def __init__(self, dcf, print_info):
+		# process_table(dcf.inp, 'Planned Replacement', ['Cost ($)', 'Frequency (years)'], 
+		# 				path_key = ['Path', 'Frequency Path'])
+
 		self.initialize_yearly_costs(dcf)
 		self.calculate_planned_replacement(dcf)
 		self.unplanned_replacement(dcf, print_info)

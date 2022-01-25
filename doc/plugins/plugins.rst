@@ -6,6 +6,7 @@ Plugins
    :caption: Plugins
 
    Capital_Cost_Plugin
+   Catalyst_Separation_Plugin
    Fixed_Operating_Cost_Plugin
    Hourly_Irradiation_Plugin
    Multiple_Modules_Plugin

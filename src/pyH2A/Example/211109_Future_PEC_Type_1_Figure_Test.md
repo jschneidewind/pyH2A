@@ -4,7 +4,8 @@ Name | Type | Description | Position
 --- | --- | --- | ---
 Hourly_Irradiation_Plugin | plugin | Plugin to calculate solar irradiation from typical meteorological year data | 0
 Photocatalytic_Plugin | plugin | Computes number of required baggies, cost of baggies and catalyst cost | 2
-Multiple_Modules_Plugin | plugin | Modelling of module plant modules, adjustment of labor requirement | 3
+Catalyst_Separation_Plugin | plugin | Computes cost of catalyst separation | 2
+Multiple_Modules_Plugin | plugin | Modelling of multiple plant modules, adjustment of labor requirement | 3
 
 # Display Parameters
 
@@ -92,6 +93,12 @@ Other Costs ($) | 610.7
 Markup factor | 1.5
 Additional land area (%) | 30.0%
 Lifetime (years) | 5
+
+# Catalyst Separation
+
+Name | Value | Comment
+--- | --- | ---
+Filtration cost ($/m3) | 0.24 | Cost of nanofiltration per m3 of water
 
 # Direct Capital Costs - Equipment
 
@@ -250,7 +257,7 @@ Name | Method Name | Arguments
 --- | --- | ---
 comparative_distance_histogram | plot_comparative_distance_histogram | {'show': False, 'save': False, 'pdf': True}
 comparative_distance_cost_relationship | plot_comparative_distance_cost_relationship | {'show': False, 'save': False, 'dist_kwargs': {'log_scale': True}}
-comparative_distance_combined | plot_combined_distance | {'show': True, 'save': False, 'left': 0.06, 'fig_width': 13, 'dist_kwargs': {'legend_loc': 'upper right', 'log_scale': True}, 'table_kwargs': {'colWidths': [0.65, 0.25, 0.12, 0.25]}, 'hist_kwargs': {'title_string': 'Target price range:'}}
+comparative_distance_combined | plot_combined_distance | {'show': False, 'save': False, 'left': 0.06, 'fig_width': 13, 'dist_kwargs': {'legend_loc': 'upper right', 'log_scale': True}, 'table_kwargs': {'colWidths': [0.65, 0.25, 0.12, 0.25]}, 'hist_kwargs': {'title_string': 'Target price range:'}}
 
 # Cost_Contributions_Analysis
 

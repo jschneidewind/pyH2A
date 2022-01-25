@@ -21,7 +21,7 @@ class PEC_Plugin:
 		Angle of PEC cells from the ground, in degrees.
 	Land Area Requirement > South Spacing (m) > Value : float
 		South spacing of PEC cells in m.
-	Land Ares Requirement > East/West Spacing (m) > Value : float
+	Land Area Requirement > East/West Spacing (m) > Value : float
 		East/West Spacing of PEC cells in m.
 	Solar-to-Hydrogen Efficiency > STH (%) > Value : float
 		Solar-to-hydrogen efficiency in percentage or as a value between 0 and 1.
@@ -87,6 +87,7 @@ class PEC_Plugin:
 
 		mol_H2_per_cell = (cell_insolation.J * dcf.inp['Solar-to-Hydrogen Efficiency']['STH (%)']['Value']) / Energy(2*1.229, eV).Jmol
 		self.kg_H2_per_cell = (2 * mol_H2_per_cell) / 1000.
+		self.mol_H2_per_m2_per_day = mol_H2_per_cell / self.cell_area
 
 	def PEC_cost(self, dcf):
 		'''Calculation of cost per cell, number of required cells and total cell cost.

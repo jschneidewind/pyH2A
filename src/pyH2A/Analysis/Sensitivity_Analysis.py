@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from pyH2A.Discounted_Cash_Flow import Discounted_Cash_Flow
 from pyH2A.Utilities.input_modification import num, convert_input_to_dictionary, parse_parameter, get_by_path, set_by_path
-from pyH2A.Utilities.output_utilities import make_bold, Figure_Lean
+from pyH2A.Utilities.output_utilities import make_bold, Figure_Lean, dynamic_value_formatting
+
+import pprint
 
 class Sensitivity_Analysis:
 	'''Sensitivity analysis for multiple parameters.
@@ -35,10 +37,15 @@ class Sensitivity_Analysis:
 	def __init__(self, input_file):
 		self.inp = convert_input_to_dictionary(input_file)
 		self.base_case = Discounted_Cash_Flow(input_file, print_info = False)
-		self.results = self.perform_sensitivity_analysis()
+		#self.results = self.perform_sensitivity_analysis()
 
-	def perform_sensitivity_analysis(self):
+	def perform_sensitivity_analysis(self, format_cutoff = 7):
 		'''Perform sensitivity analysis.
+
+		Parameters
+		----------
+		format_cutoff : int
+			Length of number string above which dyanmic formatting is applied.
 		'''
 
 		sensitivity_results = {}
@@ -47,8 +54,11 @@ class Sensitivity_Analysis:
 			parameters = parse_parameter(key)
 			name = self.inp['Sensitivity_Analysis'][key]['Name']
 
+
+
 			sensitivity_results[name] = {}
-			sensitivity_results[name]['Base'] = get_by_path(self.inp, parameters)
+			sensitivity_results[name]['Base'] = dynamic_value_formatting(get_by_path(self.inp, parameters),
+																		 cutoff = format_cutoff)
 			sensitivity_results[name]['Values'] = {}
 
 			values = parse_parameter(self.inp['Sensitivity_Analysis'][key]['Values'], 
@@ -66,10 +76,16 @@ class Sensitivity_Analysis:
 					sensitivity_results[name]['Base'] = '1.0x'
 					shown_value = '{0}x'.format(numerical_value)
 				else:
-					shown_value = value
-					if '%' in shown_value:
-						sensitivity_results[name]['Base'] = '{0}%'.format(get_by_path(self.inp, 
-																					  parameters) * 100)
+					
+					if '%' in value:
+						shown_value = value
+						sensitivity_results[name]['Base'] = '{0}%'.format(dynamic_value_formatting(
+																		   get_by_path(self.inp, 
+																					   parameters) * 100),
+																			cutoff = format_cutoff)
+					else:
+						shown_value = dynamic_value_formatting(numerical_value, cutoff = format_cutoff)
+
 
 				dcf = Discounted_Cash_Flow(input_dict, print_info = False)
 
@@ -97,8 +113,8 @@ class Sensitivity_Analysis:
 
 	def sensitivity_box_plot(self, ax = None, figure_lean = True,
 							 height = 0.8, label_offset = 0.1, 
-						     lim_extra = 0.2, plot_kwargs = {},
-						     **kwargs):
+						     lim_extra = 0.2, format_cutoff = 7,
+						     plot_kwargs = {}, **kwargs):
 		'''Plot sensitivity box plot.
 
 		Parameters
@@ -113,6 +129,8 @@ class Sensitivity_Analysis:
 			Offset for bar labels.
 		lim_extra : float, optional
 			Fractional increase of x axis limits.
+		format_cutoff : int
+			Length of number string above which dyanmic formatting is applied.
 		plot_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
 			:func:`~pyH2A.Utilities.output_utilities.Figure_Lean`, has priority over `**kwargs`.
@@ -130,7 +148,10 @@ class Sensitivity_Analysis:
 		In plot, parameters are sorted by descending cost increase magnitude.
 		'''
 
+		self.results = self.perform_sensitivity_analysis(format_cutoff = format_cutoff)		
+
 		data = copy.deepcopy(self.results)
+
 		self.sort_h2_cost_values(data)
 
 		df = pd.DataFrame.from_dict(data)

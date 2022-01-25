@@ -41,6 +41,7 @@ class Waterfall_Analysis:
 		self.base_case = Discounted_Cash_Flow(input_file, print_info = False)
 		self.results = self.perform_waterfall_analysis()
 
+
 	def perform_waterfall_analysis(self):
 		'''Perform waterfall analysis
 		'''

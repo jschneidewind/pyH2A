@@ -146,91 +146,14 @@ class Discounted_Cash_Flow:
 
 	Parameters
 	----------
-	Workflow > initial_equity_depreciable_capital > Type : function
-		Initial equity depreciable capital function.
-	Workflow > initial_equity_depreciable_capital > Position : int
-		Position of initial equity depreciable capital function.
-	Workflow > non_depreciable_capital_costs > Type : function
-		Non-depreciable capital costs function.
-	Workflow > non_depreciable_capital_costs > Position : int
-		Position of non-depreciable capital costs function.
-	Workflow > replacement_costs > Type : function
-		Replacement costs function.
-	Workflow > replacement_costs > Position : int
-		Position of replacement costs function.	
-	Workflow > fixed_operating_costs > Type : function
-		Fixed operating costs function.
-	Workflow > fixed_operating_costs > Position : int
-		Position of fixed operating costs function.
-	Workflow > variable_operating_costs > Type : function
-		Variable operating costs function.
-	Workflow > variable_operating_costs > Position : int
-		Position of variable operating costs function.
-	Workflow > [...] > Type : plugin, optional
-		Plugin to be executed.
-	Workflow > [...] > Position : int, optional
-		Position of plugin to be executed.
-	Technical Operating Parameters and Specifications > Output per Year at Gate > Value : float
-		Output per year at gate in kg.
-	Financial Input Values > ref year > Value : int
-		Financial reference year.
-	Financial Input Values > startup year > Value : int
-		Startup year for plant.
-	Financial Input Values > basis year > Value : int
-		Financial basis year.
-	Financial Input Values > current year capital costs > Value : int
-		Current year for capital costs.
-	Financial Input Values > startup time > Value : int
-		Startup time in years. 
-	Financial Input Values > plant life > Value : int
-		Plant life in years.
-	Financial Input Values > analysis period > Value : int
-		Analysis period in years.
-	Financial Input Values > depreciation length > Value : int
-		Depreciation length in years.
-	Financial Input Values > depreciation type > Value : str
-		Type of depreciation, currently only MACRS is implemented.
-	Financial Input Values > equity > Value : float
-		Percentage of equity financing.
-	Financial Input Values > interest > Value : float
-		Interest rate on debt.
-	Financial Input Values > debt > Value : str
-		Debt period, currently only constant debt is implemented.
-	Financial Input Values > startup cost fixed > Value : float
-		Percentage of fixed operating costs during start-up.
-	Financial Input Values > startup revenues > Value : float
-		Percentage of revenues during start-up.
-	Financial Input Values > startup cost variable > Value : float
-		Percentage of variable operating costs during start-up.
-	Financial Input Values > decommissioning > Value : float
-		Decomissioning cost in percentage of depreciable capital investment.
-	Financial Input Values > salvage > Value : float
-		Salvage value in percentage of total capital investment.
-	Financial Input Values > inflation > Value : float
-		Inflation rate.
-	Financial Input Values > irr > Value : float
-		After tax real internal rate of return.
-	Financial Input Values > state tax > Value : float
-		State tax.
-	Financial Input Values > federal tax > Value : float
-		Federal tax.
-	Financial Input Values > working capital > Value : float
-		Working capital as percentage of yearly change in operating costs.
-	Construction > [...] > Value : float
-		Percentage of capital spent in given year of construction. Number of entries 
-		determines construction period in year (each entry corresponds to one year).
-		Have to be in order (first entry corresponds to first construction year etc.)
-		Values of all entries have to sum to 100%.
-	Depreciable Capital Costs > Inflated > Value : float
-		Inflated depreciable capital costs.
-	Non-Depreciable Capital Costs > Inflated > Value : float
-		Inflated non-depreciable capital costs.
-	Replacement > Total > Value : float
-		Total replacement costs.
-	Fixed Operating Costs > Total > Value : float
-		Total fixed operating costs.
-	Variable Operating Costs > Total > Value : float
-		Total variable operating costs.
+	input_file : str or dict
+		Path to input file or dictionary containing input file data.
+	print_info : bool
+		Boolean flag to control if detailed info on action of plugins is printed.
+	check_processing : bool
+		Boolean flag to control if `check_processing` is run at the end of discounted 
+		cash flow analysis, which checks if all tables in input file have been processed
+		during run.
 
 	Returns
 	-------
@@ -319,24 +242,68 @@ class Discounted_Cash_Flow:
 		self.npv_dict = {}	
 		self.plugs = {}
 
-		self.time()
-		self.inflation()
-
+		self.pre_workflow()
 		self.workflow(self.inp, self.npv_dict, self.plugs)  # execution of all functions and plugins specified in "Workflow"
-
-		self.npv_dict['salvage'], self.npv_dict['decomissioning'] = self.salvage_decommissioning()		
-		self.npv_dict['working_capital_reserve'] = self.working_capital_reserve_calc()
-		self.npv_dict['interest'], self.npv_dict['principal_payment'] = self.debt_financing()
-		self.npv_dict['depreciation_charge'] = self.depreciation_charge()
-		self.npv_dict['h2_sales'] = self.h2_sales()
-		self.h2_cost()
-		self.npv_dict['revenue'] = self.h2_revenue()
-		self.npv_dict['pre_depreciation_income'], self.npv_dict['taxable_income'], self.npv_dict['taxes'], self.npv_dict['after_tax_income'] = self.income()
-		self.cash_flow()
-		self.cost_contribution()
+		self.post_workflow()
 
 		if check_processing is True:
 			self.check_processing()
+
+	def pre_workflow(self):
+		'''Functions executed before workflow.
+
+		Parameters
+		----------
+		Workflow > initial_equity_depreciable_capital > Type : function
+			Initial equity depreciable capital function.
+		Workflow > initial_equity_depreciable_capital > Position : int
+			Position of initial equity depreciable capital function.
+		Workflow > non_depreciable_capital_costs > Type : function
+			Non-depreciable capital costs function.
+		Workflow > non_depreciable_capital_costs > Position : int
+			Position of non-depreciable capital costs function.
+		Workflow > replacement_costs > Type : function
+			Replacement costs function.
+		Workflow > replacement_costs > Position : int
+			Position of replacement costs function.	
+		Workflow > fixed_operating_costs > Type : function
+			Fixed operating costs function.
+		Workflow > fixed_operating_costs > Position : int
+			Position of fixed operating costs function.
+		Workflow > variable_operating_costs > Type : function
+			Variable operating costs function.
+		Workflow > variable_operating_costs > Position : int
+			Position of variable operating costs function.
+		Workflow > [...] > Type : plugin, optional
+			Plugin to be executed.
+		Workflow > [...] > Position : int, optional
+			Position of plugin to be executed.
+		Financial Input Values > ref year > Value : int
+			Financial reference year.
+		Financial Input Values > startup year > Value : int
+			Startup year for plant.
+		Financial Input Values > basis year > Value : int
+			Financial basis year.
+		Financial Input Values > current year capital costs > Value : int
+			Current year for capital costs.
+		Financial Input Values > plant life > Value : int
+			Plant life in years.
+		Financial Input Values > inflation > Value : float
+			Inflation rate.
+		Construction > [...] > Value : float
+			Percentage of capital spent in given year of construction. Number of entries 
+			determines construction period in year (each entry corresponds to one year).
+			Have to be in order (first entry corresponds to first construction year etc.).
+			Values of all entries have to sum to 100%.
+
+		Returns 
+		-------
+		Financial Input Values > construction time > Value : int
+			Construction time in years.
+		'''
+
+		self.time()
+		self.inflation()
 
 	def workflow(self, inp, npv_dict, plugs_dict):
 		'''Executing plugins and functions for discounted cash flow.
@@ -349,7 +316,46 @@ class Discounted_Cash_Flow:
 				self.execute_function(key, npv_dict)
 			else:
 				execute_plugin(key, plugs_dict, print_info = self.print_info, dcf = self)
-	
+
+	def post_workflow(self):
+		'''Functions executed after workflow.
+
+		Parameters
+		----------
+		Financial Input Values > depreciation length > Value : int
+			Depreciation length in years.
+		Financial Input Values > depreciation type > Value : str
+			Type of depreciation, currently only MACRS is implemented.		
+		Financial Input Values > interest > Value : float
+			Interest rate on debt.
+		Financial Input Values > debt > Value : str
+			Debt period, currently only constant debt is implemented.
+		Financial Input Values > startup revenues > Value : float
+			Percentage of revenues during start-up.
+		Financial Input Values > decommissioning > Value : float
+			Decomissioning cost in percentage of depreciable capital investment.
+		Financial Input Values > salvage > Value : float
+			Salvage value in percentage of total capital investment.
+		Financial Input Values > state tax > Value : float
+			State tax.
+		Financial Input Values > federal tax > Value : float
+			Federal tax.
+		Financial Input Values > working capital > Value : float
+			Working capital as percentage of yearly change in operating costs.
+
+		'''
+
+		self.npv_dict['salvage'], self.npv_dict['decomissioning'] = self.salvage_decommissioning()		
+		self.npv_dict['working_capital_reserve'] = self.working_capital_reserve_calc()
+		self.npv_dict['interest'], self.npv_dict['principal_payment'] = self.debt_financing()
+		self.npv_dict['depreciation_charge'] = self.depreciation_charge()
+		self.npv_dict['h2_sales'] = self.h2_sales()
+		self.h2_cost()
+		self.npv_dict['revenue'] = self.h2_revenue()
+		self.npv_dict['pre_depreciation_income'], self.npv_dict['taxable_income'], self.npv_dict['taxes'], self.npv_dict['after_tax_income'] = self.income()
+		self.cash_flow()
+		self.cost_contribution()
+
 	def execute_function(self, function_name, npv_dict):
 		'''Execute class function named `function_name` and store output in `npv_dict`'''
 
@@ -409,6 +415,11 @@ class Discounted_Cash_Flow:
 
 	def production_scaling(self):
 		'''Get plant outpuer per year at gate.
+
+		Parameters
+		----------
+		Technical Operating Parameters and Specifications > Output per Year at Gate > Value : float
+			Output per year at gate in kg.
 		'''
 
 		self.output_per_year_at_gate = process_input(self.inp, 
@@ -420,6 +431,15 @@ class Discounted_Cash_Flow:
 
 	def initial_equity_depreciable_capital(self):
 		'''Calculate initial equity depreciable capital.
+
+		Parameters
+		----------
+		Financial Input Values > equity > Value : float
+			Percentage of equity financing.
+		Financial Input Values > irr > Value : float
+			After tax real internal rate of return.
+		Depreciable Capital Costs > Inflated > Value : float
+			Inflated depreciable capital costs.
 		'''
 
 		self.depreciable_capital = process_input(self.inp, 'Depreciable Capital Costs', 'Inflated', 'Value')
@@ -443,6 +463,11 @@ class Discounted_Cash_Flow:
 
 	def non_depreciable_capital_costs(self):
 		'''Calculate non-depreciable capital costs.
+
+		Parameters
+		----------
+		Non-Depreciable Capital Costs > Inflated > Value : float
+			Inflated non-depreciable capital costs.
 		'''
 		
 		self.non_depreciable_capital = process_input(self.inp, 'Non-Depreciable Capital Costs', 'Inflated', 'Value')
@@ -456,6 +481,11 @@ class Discounted_Cash_Flow:
 
 	def replacement_costs(self):
 		'''Calculate replacement costs.
+
+		Parameters
+		----------
+		Replacement > Total > Value : ndarray
+			Total replacement costs.
 		'''
 	
 		yearly_costs = self.inp['Replacement']['Total']['Value']
@@ -466,25 +496,17 @@ class Discounted_Cash_Flow:
 
 		return numpy_npv(self.after_tax_nominal_irr, yearly_costs)
 
-	def salvage_decommissioning(self):
-		'''Calculate salvage and decomissioning costs.
-		'''
-
-		self.total_capital_inflated = self.depreciable_capital_inflation + self.non_depreciable_capital_inflated
-
-		decommissioning = self.depreciable_capital_inflation * self.fin['decommissioning']['Value']
-		salvage = self.total_capital_inflated * self.fin['salvage']['Value']
-
-		self.decommissioning_costs = np.zeros(len(self.plant_years))
-		self.decommissioning_costs[-1] = decommissioning * self.inflation_factor[-1]
-
-		self.salvage_income = np.zeros(len(self.plant_years))
-		self.salvage_income[-1] = salvage * self.inflation_factor[-1]
-
-		return numpy_npv(self.after_tax_nominal_irr, self.salvage_income), numpy_npv(self.after_tax_nominal_irr, self.decommissioning_costs)
-
 	def fixed_operating_costs(self):
 		'''Calculate fixed operating costs.
+
+		Parameters
+		----------
+		Financial Input Values > startup time > Value : int
+			Startup time in years. 
+		Financial Input Values > startup cost fixed > Value : float
+			Percentage of fixed operating costs during start-up.
+		Fixed Operating Costs > Total > Value : float
+			Total fixed operating costs.
 		'''
 
 		fixed_operating = process_input(self.inp, 'Fixed Operating Costs', 'Total', 'Value')
@@ -502,6 +524,13 @@ class Discounted_Cash_Flow:
 
 	def variable_operating_costs(self):
 		'''Calculate variable operating costs.
+
+		Parameters
+		----------
+		Financial Input Values > startup cost variable > Value : float
+			Percentage of variable operating costs during start-up.
+		Variable Operating Costs > Total > Value : ndarray
+			Total variable operating costs.
 		'''
 
 		variable_operating_costs = self.inflation_factor * self.inp['Variable Operating Costs']['Total']['Value']
@@ -511,6 +540,23 @@ class Discounted_Cash_Flow:
 		self.variable_operating_costs = variable_operating_costs
 
 		return numpy_npv(self.after_tax_nominal_irr, variable_operating_costs)
+
+	def salvage_decommissioning(self):
+		'''Calculate salvage and decomissioning costs.
+		'''
+
+		self.total_capital_inflated = self.depreciable_capital_inflation + self.non_depreciable_capital_inflated
+
+		decommissioning = self.depreciable_capital_inflation * self.fin['decommissioning']['Value']
+		salvage = self.total_capital_inflated * self.fin['salvage']['Value']
+
+		self.decommissioning_costs = np.zeros(len(self.plant_years))
+		self.decommissioning_costs[-1] = decommissioning * self.inflation_factor[-1]
+
+		self.salvage_income = np.zeros(len(self.plant_years))
+		self.salvage_income[-1] = salvage * self.inflation_factor[-1]
+
+		return numpy_npv(self.after_tax_nominal_irr, self.salvage_income), numpy_npv(self.after_tax_nominal_irr, self.decommissioning_costs)
 
 	def working_capital_reserve_calc(self):
 		'''Calculate working capital reserve.
@@ -655,3 +701,4 @@ class Discounted_Cash_Flow:
 				for middle_key in self.inp[top_key]:
 					if 'Processed' not in self.inp[top_key][middle_key]:
 						print('Warning: "{0} > {1}" has not been processed'.format(top_key, middle_key))
+

@@ -1,0 +1,1520 @@
+{
+  "id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+  "version": "1.1.0",
+  "updatedOn": 1640891985379,
+  "name": "C3N4 (1)",
+  "estimate_equipment": [
+    {
+      "id": "f46954f7-0098-4419-8fc3-81871f4b81d8",
+      "version": "1.0.0",
+      "updatedOn": 1611382716895,
+      "equipment_id": "b997d7ff-09d9-4acd-9919-dab39dfd628f",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "F-101",
+      "construction_material": {
+        "name": "Carbon steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 53.3181,
+      "equipment": {
+        "id": "b997d7ff-09d9-4acd-9919-dab39dfd628f",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Bin",
+        "category": "Solids Handling (Seider)",
+        "size_unit": "Volume, ft3",
+        "size_min": 10,
+        "size_max": 100000,
+        "a": 0,
+        "b": 646,
+        "c": 0.46,
+        "d": null,
+        "e": null,
+        "n": 0.46,
+        "function_type": "Power Law",
+        "source": "Seider 2017",
+        "cepci": 567,
+        "nf_refinery": null,
+        "year": "2013",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Copper",
+            "factor": 1.2
+          },
+          {
+            "name": "Stainless steel",
+            "factor": 2
+          },
+          {
+            "name": "Nickel",
+            "factor": 2.5
+          },
+          {
+            "name": "Monel",
+            "factor": 2.7
+          },
+          {
+            "name": "Titanium clad",
+            "factor": 3
+          },
+          {
+            "name": "Titanium",
+            "factor": 6
+          }
+        ],
+        "bm_factor": null,
+        "installation_factor": 1,
+        "labor_factor": 0,
+        "note": "Carbon steel at atmospheric pressure"
+      }
+    },
+    {
+      "id": "cd92c8fe-357f-42ad-a78c-8a760f489f48",
+      "version": "1.0.0",
+      "updatedOn": 1611382746095,
+      "equipment_id": "34fe9b36-ad8e-41b2-ab9a-74280752dc71",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "F-102",
+      "construction_material": {
+        "name": "Carbon steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 35.6631,
+      "equipment": {
+        "id": "34fe9b36-ad8e-41b2-ab9a-74280752dc71",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Feeder, belt",
+        "category": "Solids Handling (Seider)",
+        "size_unit": "Volumetric flow rate, ft3/hr",
+        "size_min": 120,
+        "size_max": 500,
+        "a": 0,
+        "b": 813,
+        "c": 0.38,
+        "d": null,
+        "e": null,
+        "n": 0.38,
+        "function_type": "Power Law",
+        "source": "Seider 2017",
+        "cepci": 567,
+        "nf_refinery": null,
+        "year": "2013",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Copper",
+            "factor": 1.2
+          },
+          {
+            "name": "Stainless steel",
+            "factor": 2
+          },
+          {
+            "name": "Nickel",
+            "factor": 2.5
+          },
+          {
+            "name": "Monel",
+            "factor": 2.7
+          },
+          {
+            "name": "Titanium clad",
+            "factor": 3
+          },
+          {
+            "name": "Titanium",
+            "factor": 6
+          }
+        ],
+        "bm_factor": 1.74,
+        "installation_factor": 1.72,
+        "labor_factor": 0.1,
+        "note": "Includes motor and drive belt"
+      }
+    },
+    {
+      "id": "489211ef-937e-499f-bd59-9d182426a6cb",
+      "version": "1.0.0",
+      "updatedOn": 1611382785242,
+      "equipment_id": "036a4aaa-eff2-49fd-b060-611fb834a8fa",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "R-101",
+      "construction_material": {
+        "name": "316 stainless steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 136,
+      "equipment": {
+        "id": "036a4aaa-eff2-49fd-b060-611fb834a8fa",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Reactor, jacketed, agitated",
+        "category": "Reactors (also see autoclaves)",
+        "size_unit": "volume, m3",
+        "size_min": 0.5,
+        "size_max": 100,
+        "a": 61500,
+        "b": 32500,
+        "c": 0.8,
+        "d": null,
+        "e": null,
+        "n": 0.8,
+        "function_type": "Power Law",
+        "source": "Sinnott 2013",
+        "cepci": 532.9,
+        "nf_refinery": 2281.6,
+        "year": "2010",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 0.7692307692307692
+          },
+          {
+            "name": "Aluminum and bronze",
+            "factor": 0.8230769230769232
+          },
+          {
+            "name": "Cast steel",
+            "factor": 0.8461538461538461
+          },
+          {
+            "name": "304 stainless steel",
+            "factor": 1
+          },
+          {
+            "name": "316 stainless steel",
+            "factor": 1
+          },
+          {
+            "name": "321 stainless steel",
+            "factor": 1.1538461538461537
+          },
+          {
+            "name": "Hastelloy C",
+            "factor": 1.1923076923076923
+          },
+          {
+            "name": "Monel",
+            "factor": 1.2692307692307692
+          },
+          {
+            "name": "Nickel and Inconel",
+            "factor": 1.3076923076923077
+          },
+          {
+            "name": "Rubber-lined",
+            "factor": 1
+          }
+        ],
+        "bm_factor": null,
+        "installation_factor": 1.7,
+        "labor_factor": 0.3,
+        "note": null
+      }
+    },
+    {
+      "id": "13958183-c12e-426e-be99-edf1eb6170ca",
+      "version": "1.0.0",
+      "updatedOn": 1611382831587,
+      "equipment_id": "036a4aaa-eff2-49fd-b060-611fb834a8fa",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "R-102",
+      "construction_material": {
+        "name": "316 stainless steel",
+        "factor": 1
+      },
+      "quantity": 3,
+      "size": 170,
+      "equipment": {
+        "id": "036a4aaa-eff2-49fd-b060-611fb834a8fa",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Reactor, jacketed, agitated",
+        "category": "Reactors (also see autoclaves)",
+        "size_unit": "volume, m3",
+        "size_min": 0.5,
+        "size_max": 100,
+        "a": 61500,
+        "b": 32500,
+        "c": 0.8,
+        "d": null,
+        "e": null,
+        "n": 0.8,
+        "function_type": "Power Law",
+        "source": "Sinnott 2013",
+        "cepci": 532.9,
+        "nf_refinery": 2281.6,
+        "year": "2010",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 0.7692307692307692
+          },
+          {
+            "name": "Aluminum and bronze",
+            "factor": 0.8230769230769232
+          },
+          {
+            "name": "Cast steel",
+            "factor": 0.8461538461538461
+          },
+          {
+            "name": "304 stainless steel",
+            "factor": 1
+          },
+          {
+            "name": "316 stainless steel",
+            "factor": 1
+          },
+          {
+            "name": "321 stainless steel",
+            "factor": 1.1538461538461537
+          },
+          {
+            "name": "Hastelloy C",
+            "factor": 1.1923076923076923
+          },
+          {
+            "name": "Monel",
+            "factor": 1.2692307692307692
+          },
+          {
+            "name": "Nickel and Inconel",
+            "factor": 1.3076923076923077
+          },
+          {
+            "name": "Rubber-lined",
+            "factor": 1
+          }
+        ],
+        "bm_factor": null,
+        "installation_factor": 1.7,
+        "labor_factor": 0.3,
+        "note": null
+      }
+    },
+    {
+      "id": "83572cfa-d29c-42bc-a6a8-8f32c710befa",
+      "version": "1.0.0",
+      "updatedOn": 1611382910039,
+      "equipment_id": "e58c8565-657e-437c-9765-34cee73484a6",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "H-101",
+      "construction_material": {
+        "name": "Carbon steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 0.54,
+      "equipment": {
+        "id": "e58c8565-657e-437c-9765-34cee73484a6",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Heat exchanger, U-tube shell and tube",
+        "category": "Heat Exchangers (Sinnott)",
+        "size_unit": "area, m2",
+        "size_min": 10,
+        "size_max": 1000,
+        "a": 28000,
+        "b": 54,
+        "c": 1.2,
+        "d": null,
+        "e": null,
+        "n": 1.2,
+        "function_type": "Power Law",
+        "source": "Sinnott 2013",
+        "cepci": 532.9,
+        "nf_refinery": 2281.6,
+        "year": "2010",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Aluminum and bronze",
+            "factor": 1.07
+          },
+          {
+            "name": "Cast steel",
+            "factor": 1.1
+          },
+          {
+            "name": "304 stainless steel",
+            "factor": 1.3
+          },
+          {
+            "name": "316 stainless steel",
+            "factor": 1.3
+          },
+          {
+            "name": "321 stainless steel",
+            "factor": 1.5
+          },
+          {
+            "name": "Hastelloy C",
+            "factor": 1.55
+          },
+          {
+            "name": "Monel",
+            "factor": 1.65
+          },
+          {
+            "name": "Nickel and Inconel",
+            "factor": 1.7
+          }
+        ],
+        "bm_factor": 3.17,
+        "installation_factor": 1.61,
+        "labor_factor": 0.05,
+        "note": ""
+      }
+    },
+    {
+      "id": "1ff21483-1ca3-449d-b68c-bf56c3332d61",
+      "version": "1.0.0",
+      "updatedOn": 1611382959228,
+      "equipment_id": "2502f696-d0da-4b7d-be0f-d36fe4ea437b",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "C-101",
+      "construction_material": {
+        "name": "Cast iron",
+        "factor": 1
+      },
+      "quantity": 2,
+      "size": 85.8,
+      "equipment": {
+        "id": "2502f696-d0da-4b7d-be0f-d36fe4ea437b",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Compressor, rotary twin-screw, electric motor (preferred)",
+        "category": "Pumps, Motors, Fans (Seider)",
+        "size_unit": "Consumed power, hp",
+        "size_min": 10,
+        "size_max": 750,
+        "a": 8.2496,
+        "b": 0.7243,
+        "c": 0,
+        "d": 0,
+        "e": 0,
+        "n": 0,
+        "function_type": "Poly Exp",
+        "source": "Seider 2017",
+        "cepci": 567,
+        "nf_refinery": null,
+        "year": "2013",
+        "pricing_basis_materials": [
+          {
+            "name": "Cast iron",
+            "factor": 1
+          },
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Stainless steel",
+            "factor": 2.5
+          },
+          {
+            "name": "Nickel alloy",
+            "factor": 5
+          }
+        ],
+        "bm_factor": 2.15,
+        "installation_factor": 1.49,
+        "labor_factor": 0.1,
+        "note": "Includes drive and electric motor"
+      }
+    },
+    {
+      "id": "b71aa9e0-37ff-433c-a3ed-4d836677d67b",
+      "version": "1.0.0",
+      "updatedOn": 1611382983767,
+      "equipment_id": "6b4a19b9-0869-49ba-b99b-01b8720a7549",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "C-102",
+      "construction_material": {
+        "name": "Carbon steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 16.9,
+      "equipment": {
+        "id": "6b4a19b9-0869-49ba-b99b-01b8720a7549",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Fan, centrifugal backward-curved, 0–4 in H2O head",
+        "category": "Pumps, Motors, Fans (Seider)",
+        "size_unit": "Actual cubic feet per minute (ACFM)",
+        "size_min": 1000,
+        "size_max": 100000,
+        "a": 11.4152,
+        "b": -1.3805,
+        "c": 0.1139,
+        "d": 0,
+        "e": 0,
+        "n": 0.1139,
+        "function_type": "Poly Exp",
+        "source": "Seider 2017",
+        "cepci": 567,
+        "nf_refinery": null,
+        "year": "2013",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Fiberglass",
+            "factor": 1.8
+          },
+          {
+            "name": "Stainless steel",
+            "factor": 2.5
+          },
+          {
+            "name": "Nickel alloy",
+            "factor": 5
+          }
+        ],
+        "bm_factor": 2.15,
+        "installation_factor": 1.61,
+        "labor_factor": 0.05,
+        "note": "Includes drive and electric motor; a \"fan\" applies to near-ambient suction pressures and less than 10% pressure increases"
+      }
+    },
+    {
+      "id": "8ae0ab07-659c-4e40-a558-7c13a70fb604",
+      "version": "1.0.0",
+      "updatedOn": 1611383007991,
+      "equipment_id": "3c321b19-358c-437a-9b36-55a91fa3642d",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "S-101",
+      "construction_material": {
+        "name": "Carbon steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 200,
+      "equipment": {
+        "id": "3c321b19-358c-437a-9b36-55a91fa3642d",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Tank, cone roof (Seider)",
+        "category": "Tanks",
+        "size_unit": "Volume, gal",
+        "size_min": 1000,
+        "size_max": 1000000,
+        "a": 0,
+        "b": 265,
+        "c": 0.513,
+        "d": null,
+        "e": null,
+        "n": 0.513,
+        "function_type": "Power Law",
+        "source": "Seider 2017",
+        "cepci": 567,
+        "nf_refinery": null,
+        "year": "2013",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Copper",
+            "factor": 1.2
+          },
+          {
+            "name": "Stainless steel",
+            "factor": 2
+          },
+          {
+            "name": "Nickel",
+            "factor": 2.5
+          },
+          {
+            "name": "Monel",
+            "factor": 2.7
+          },
+          {
+            "name": "Titanium clad",
+            "factor": 3
+          },
+          {
+            "name": "Titanium",
+            "factor": 6
+          }
+        ],
+        "bm_factor": null,
+        "installation_factor": 1.88,
+        "labor_factor": 0,
+        "note": "Carbon steel, pressure up to 3 psig"
+      }
+    },
+    {
+      "id": "deda8b83-c241-4887-a93b-26027f7318ba",
+      "version": "1.0.0",
+      "updatedOn": 1611383033045,
+      "equipment_id": "3c321b19-358c-437a-9b36-55a91fa3642d",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "S-102",
+      "construction_material": {
+        "name": "Carbon steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 20000,
+      "equipment": {
+        "id": "3c321b19-358c-437a-9b36-55a91fa3642d",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Tank, cone roof (Seider)",
+        "category": "Tanks",
+        "size_unit": "Volume, gal",
+        "size_min": 1000,
+        "size_max": 1000000,
+        "a": 0,
+        "b": 265,
+        "c": 0.513,
+        "d": null,
+        "e": null,
+        "n": 0.513,
+        "function_type": "Power Law",
+        "source": "Seider 2017",
+        "cepci": 567,
+        "nf_refinery": null,
+        "year": "2013",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Copper",
+            "factor": 1.2
+          },
+          {
+            "name": "Stainless steel",
+            "factor": 2
+          },
+          {
+            "name": "Nickel",
+            "factor": 2.5
+          },
+          {
+            "name": "Monel",
+            "factor": 2.7
+          },
+          {
+            "name": "Titanium clad",
+            "factor": 3
+          },
+          {
+            "name": "Titanium",
+            "factor": 6
+          }
+        ],
+        "bm_factor": null,
+        "installation_factor": 1.88,
+        "labor_factor": 0,
+        "note": "Carbon steel, pressure up to 3 psig"
+      }
+    },
+    {
+      "id": "d1a1a8dc-7eb8-4306-9c44-e0087f77f25c",
+      "version": "1.0.0",
+      "updatedOn": 1611383064162,
+      "equipment_id": "3c321b19-358c-437a-9b36-55a91fa3642d",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "user_label": "S-103",
+      "construction_material": {
+        "name": "Carbon steel",
+        "factor": 1
+      },
+      "quantity": 1,
+      "size": 22000,
+      "equipment": {
+        "id": "3c321b19-358c-437a-9b36-55a91fa3642d",
+        "version": "1.0.0",
+        "updatedOn": 1539277442,
+        "name": "Tank, cone roof (Seider)",
+        "category": "Tanks",
+        "size_unit": "Volume, gal",
+        "size_min": 1000,
+        "size_max": 1000000,
+        "a": 0,
+        "b": 265,
+        "c": 0.513,
+        "d": null,
+        "e": null,
+        "n": 0.513,
+        "function_type": "Power Law",
+        "source": "Seider 2017",
+        "cepci": 567,
+        "nf_refinery": null,
+        "year": "2013",
+        "pricing_basis_materials": [
+          {
+            "name": "Carbon steel",
+            "factor": 1
+          },
+          {
+            "name": "Copper",
+            "factor": 1.2
+          },
+          {
+            "name": "Stainless steel",
+            "factor": 2
+          },
+          {
+            "name": "Nickel",
+            "factor": 2.5
+          },
+          {
+            "name": "Monel",
+            "factor": 2.7
+          },
+          {
+            "name": "Titanium clad",
+            "factor": 3
+          },
+          {
+            "name": "Titanium",
+            "factor": 6
+          }
+        ],
+        "bm_factor": null,
+        "installation_factor": 1.88,
+        "labor_factor": 0,
+        "note": "Carbon steel, pressure up to 3 psig"
+      }
+    }
+  ],
+  "estimate_materials": [
+    {
+      "id": "8b6f3bac-368a-4fe6-a741-490be055063a",
+      "version": "1.1.0",
+      "updatedOn": 1640617396820,
+      "category": "support",
+      "name": "",
+      "material_unit_price": {
+        "high": 1.12,
+        "low": 0.61
+      },
+      "quantity": {
+        "baseline": 10,
+        "high": null,
+        "low": null
+      },
+      "quantity_unit": "kg",
+      "material_id": "3f4e20de-6fba-45cc-80b4-2d0372e7acd6",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "material": {
+        "id": "3f4e20de-6fba-45cc-80b4-2d0372e7acd6",
+        "version": "1.1.0",
+        "updatedOn": 1476079200,
+        "name": "Urea, granular, US Gulf, spot f.o.b. USG",
+        "density": null,
+        "molecularWeight": null,
+        "concentration": 100,
+        "purchase_basis": 1000,
+        "purchase_basis_unit": "kg",
+        "price": {
+          "year": "2008",
+          "source": "ICIS",
+          "date": "10/10/2016",
+          "bulk_quote_units": "tons",
+          "type": "quote",
+          "quote": {
+            "price": 590,
+            "quantity": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "0e12dcbf-1418-4195-952c-fb7f4b1c7d25",
+      "version": "1.1.0",
+      "updatedOn": 1640617553397,
+      "category": "metal",
+      "name": "",
+      "material_unit_price": {
+        "high": 3.47,
+        "low": 1.87
+      },
+      "quantity": {
+        "baseline": 10,
+        "high": null,
+        "low": null
+      },
+      "quantity_unit": "kg",
+      "material_id": "a01bccc9-18d1-424c-8e0b-91f62323ab94",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "material": {
+        "id": "a01bccc9-18d1-424c-8e0b-91f62323ab94",
+        "version": "1.1.0",
+        "updatedOn": 1476079200,
+        "name": "Melamine, US Gulf, dom. bulk",
+        "density": null,
+        "molecularWeight": null,
+        "concentration": 100,
+        "purchase_basis": 1000,
+        "purchase_basis_unit": "kg",
+        "price": {
+          "year": "2008",
+          "source": "ICIS",
+          "date": "10/10/2016",
+          "bulk_quote_units": "lb",
+          "type": "quote",
+          "quote": {
+            "price": 0.91,
+            "quantity": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "4aa5bcd6-2b49-4ccc-9c1b-9d5f24ea36b9",
+      "version": "1.1.0",
+      "updatedOn": 1640618016865,
+      "category": "metal",
+      "name": "",
+      "material_unit_price": {
+        "high": 11366.62,
+        "low": 6120.49
+      },
+      "quantity": {
+        "baseline": 0.005,
+        "high": null,
+        "low": null
+      },
+      "quantity_unit": "kg",
+      "material_id": "c7edf767-c2c1-4c28-b28f-9938fe7e6905",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+      "material": {
+        "id": "c7edf767-c2c1-4c28-b28f-9938fe7e6905",
+        "version": "1.1.0",
+        "updatedOn": 1535349600,
+        "name": "Ruthenium",
+        "density": null,
+        "molecularWeight": null,
+        "concentration": 100,
+        "purchase_basis": 1000,
+        "purchase_basis_unit": "kg",
+        "price": {
+          "year": "2018",
+          "source": "infomine.com",
+          "date": "08/27/2018",
+          "bulk_quote_units": "oz t",
+          "type": "quote",
+          "quote": {
+            "price": 260,
+            "quantity": 1
+          }
+        }
+      }
+    }
+  ],
+  "estimate_spent_cat_metal": {
+    "id": "cf8684ab-6e8e-4207-9a58-794685f803d5",
+    "version": "1.1.0",
+    "updatedOn": 1640618461679,
+    "spent_cat_metal_id": "8d59d3c9-17d4-441f-8160-23add6f562bd",
+    "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+    "metal_weight": {
+      "baseline": 0.5,
+      "high": null,
+      "low": null
+    },
+    "cat_bulk_density": {
+      "baseline": 672.77546196,
+      "high": null,
+      "low": null
+    },
+    "cat_bulk_density_unit": "kg/m3",
+    "has_trace_element": "No",
+    "spent_cat_metal": {
+      "id": "8d59d3c9-17d4-441f-8160-23add6f562bd",
+      "version": "1.1.0",
+      "updatedOn": 1539275222,
+      "name": "Ruthenium",
+      "loss": {
+        "baseline": 20,
+        "high": 25,
+        "low": 15
+      },
+      "refining_charge": 20,
+      "has_refining_charge": "yes",
+      "note": null,
+      "spot_price": 260,
+      "unit": "oz t",
+      "year": "2018",
+      "source": "infomine.com"
+    }
+  },
+  "estimate_spent_cat_hazard": {
+    "id": "817e3adc-9b99-47a3-86f0-f8ca1b986e29",
+    "version": "1.1.0",
+    "updatedOn": 1640618461679,
+    "spent_cat_hazard_id": "d3478641-b194-4003-9c0d-8a37b01c341f",
+    "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+    "spent_cat_hazard": {
+      "id": "d3478641-b194-4003-9c0d-8a37b01c341f",
+      "version": "1.1.0",
+      "updatedOn": 1539275222,
+      "name": "PGM/Noble metal",
+      "landfill_fee": {
+        "baseline": 2,
+        "high": 3,
+        "low": 1
+      },
+      "sale_value": {
+        "baseline": 1.15,
+        "high": 1.3,
+        "low": 1
+      },
+      "note": "e.g. to smelter or refiner, typically <0.2% PGM"
+    }
+  },
+  "estimate_spent_cat_support": {
+    "id": "f8580fa5-d285-4acd-8fed-156e16e8a146",
+    "version": "1.1.0",
+    "updatedOn": 1640618461679,
+    "spent_cat_support_id": "855140ba-015b-44b6-8930-61ac5cfc55b9",
+    "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+    "planned_use": "Slurry/Fluidized Bed",
+    "spent_cat_support": {
+      "id": "855140ba-015b-44b6-8930-61ac5cfc55b9",
+      "version": "1.1.0",
+      "updatedOn": 1539275222,
+      "name": "Carbon",
+      "loss_of_catalyst_solids_fixed": 2,
+      "loss_of_metal_fixed": 2.5,
+      "loss_of_catalyst_solids_slurry": 6,
+      "loss_of_metal_slurry": 5,
+      "thermal_ox_fee": {
+        "baseline": 0.1375,
+        "high": 0.15,
+        "low": 0.125
+      },
+      "incoming_fee": {
+        "baseline": 104.5,
+        "high": 115,
+        "low": 94
+      },
+      "metal_contaminant_fee": {
+        "baseline": 18,
+        "high": 21,
+        "low": 15
+      }
+    }
+  },
+  "estimate_spent_cat_bulk_density": {
+    "id": "838e692d-3af9-4286-a276-735d7d3ef499",
+    "version": "1.1.0",
+    "updatedOn": 1640618461679,
+    "spent_cat_bulk_density_id": "ded8fe0d-946c-40f3-abe9-e75b084b0f1e",
+    "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707",
+    "spent_cat_bulk_density": {
+      "id": "ded8fe0d-946c-40f3-abe9-e75b084b0f1e",
+      "version": "1.1.0",
+      "updatedOn": 1539275222,
+      "name": "Activated C powder",
+      "density": 42,
+      "density_unit": "lb/ft3",
+      "note": "containing 50% moisture"
+    }
+  },
+  "process_utilities": [
+    {
+      "id": "e1da1c83-529d-47ab-ac21-f881a29d8a1c",
+      "version": "1.1.0",
+      "updatedOn": 1640617782098,
+      "name": "Cooling Water",
+      "consumption": {
+        "baseline": 0.00026155,
+        "high": null,
+        "low": null
+      },
+      "consumption_unit": "kgal",
+      "unit_cost": {
+        "baseline": 0.14,
+        "high": null,
+        "low": null
+      },
+      "unit_cost_unit": "$/kgal",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "bfa5e673-5dfe-4699-a7db-9859a5765734",
+      "version": "1.1.0",
+      "updatedOn": 1640617782099,
+      "name": "Process Water",
+      "consumption": {
+        "baseline": 0.000151561,
+        "high": null,
+        "low": null
+      },
+      "consumption_unit": "kgal",
+      "unit_cost": {
+        "baseline": 1.3,
+        "high": null,
+        "low": null
+      },
+      "unit_cost_unit": "$/kgal",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "a37f33da-d1e8-410c-9dee-52aa7772f545",
+      "version": "1.1.0",
+      "updatedOn": 1640617782100,
+      "name": "Steam, 150 psig",
+      "consumption": {
+        "baseline": 0.00019845,
+        "high": null,
+        "low": null
+      },
+      "consumption_unit": "ton",
+      "unit_cost": {
+        "baseline": 5,
+        "high": null,
+        "low": null
+      },
+      "unit_cost_unit": "$/ton",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "519410ae-c88e-49c6-9dc4-54bdc7c233c9",
+      "version": "1.1.0",
+      "updatedOn": 1640617782100,
+      "name": "Steam, 600 psig",
+      "consumption": {
+        "baseline": 0.00098594,
+        "high": null,
+        "low": null
+      },
+      "consumption_unit": "ton",
+      "unit_cost": {
+        "baseline": 5.7,
+        "high": null,
+        "low": null
+      },
+      "unit_cost_unit": "$/ton",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "94d548c6-7b32-4e51-970e-3f231aa26447",
+      "version": "1.1.0",
+      "updatedOn": 1640617850342,
+      "name": "Electricity",
+      "consumption": {
+        "baseline": 60.0801501,
+        "high": null,
+        "low": null
+      },
+      "consumption_unit": "kWh",
+      "unit_cost": {
+        "baseline": 0.055,
+        "high": null,
+        "low": null
+      },
+      "unit_cost_unit": "$/kWh",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "5937a4c8-ad3f-4818-af52-654c342be1b5",
+      "version": "1.1.0",
+      "updatedOn": 1640617782101,
+      "name": "Natural Gas",
+      "consumption": {
+        "baseline": 0.006645533,
+        "high": null,
+        "low": null
+      },
+      "consumption_unit": "MMBtu",
+      "unit_cost": {
+        "baseline": 3,
+        "high": null,
+        "low": null
+      },
+      "unit_cost_unit": "$/MMBtu",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    }
+  ],
+  "factored_capital_costs": [
+    {
+      "id": "225c0c6d-fbe8-42f7-9e07-f013be6808ba",
+      "version": "1.1.0",
+      "updatedOn": 1640891985378,
+      "name": "Purchased Equipment",
+      "percent_purchase_cost": {
+        "baseline": 100,
+        "high": 125,
+        "low": 75
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "34e19fa7-abcf-4f93-8c0b-dd43d1315ed3",
+      "version": "1.1.0",
+      "updatedOn": 1640891985365,
+      "name": "Installation",
+      "percent_purchase_cost": {
+        "baseline": 68.75134724501473,
+        "high": 81,
+        "low": 55
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "4f19a002-27d3-4a05-aaf1-141dad9b3421",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Instrumentation and Controls",
+      "percent_purchase_cost": {
+        "baseline": 26,
+        "high": 36,
+        "low": 18
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "793f6fcc-329e-4620-8ed0-f203ccf2f4b9",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Piping",
+      "percent_purchase_cost": {
+        "baseline": 31,
+        "high": 68,
+        "low": 16
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "a3f955f3-4ef1-40e9-a37c-344420dd75e9",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Electrical",
+      "percent_purchase_cost": {
+        "baseline": 10,
+        "high": 11,
+        "low": 10
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "2b63a49c-0f6b-4442-afbe-d8eaefb27649",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Buildings",
+      "percent_purchase_cost": {
+        "baseline": 29,
+        "high": 47,
+        "low": 7
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "70184563-ad94-4c65-b844-a76f51d603db",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Yard Improvements",
+      "percent_purchase_cost": {
+        "baseline": 12,
+        "high": 15,
+        "low": 10
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "9e86a17b-ced8-4760-b83a-f6783bf56ede",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Service Facilities",
+      "percent_purchase_cost": {
+        "baseline": 55,
+        "high": 70,
+        "low": 40
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "83e955a7-c343-4a58-a8e3-5a889391a316",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Waste Treatment",
+      "percent_purchase_cost": {
+        "baseline": 5,
+        "high": 6,
+        "low": 2
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "81388da2-4292-4f9d-a71f-36bfe0e467e4",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Land",
+      "percent_purchase_cost": {
+        "baseline": 6,
+        "high": 8,
+        "low": 4
+      },
+      "category": "direct",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "5861e0b6-24e8-4ca2-bf59-36253ad9d96a",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Engineering and Supervision",
+      "percent_purchase_cost": {
+        "baseline": 32,
+        "high": 33,
+        "low": 32
+      },
+      "category": "indirect",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "80204112-ef62-4542-8334-c9e2e0ed252f",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Construction Expenses",
+      "percent_purchase_cost": {
+        "baseline": 34,
+        "high": 41,
+        "low": 34
+      },
+      "category": "indirect",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "722521e2-04e4-44e5-addb-e04cb7033fbc",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Legal Expenses",
+      "percent_purchase_cost": {
+        "baseline": 4,
+        "high": 4,
+        "low": 4
+      },
+      "category": "indirect",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "5bc0c488-9d80-491f-b6d3-803ec72e475c",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Contractor Fee",
+      "percent_purchase_cost": {
+        "baseline": 19,
+        "high": 22,
+        "low": 17
+      },
+      "category": "indirect",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "1f130bff-1a1d-419e-8f5d-6caea3ab0431",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Contingency",
+      "percent_purchase_cost": {
+        "baseline": 37,
+        "high": 44,
+        "low": 35
+      },
+      "category": "indirect",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "dee0c964-0bf9-4999-9db8-d7396775ac5a",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Working Capital",
+      "percent_purchase_cost": {
+        "baseline": 75,
+        "high": 85,
+        "low": 65
+      },
+      "category": "other",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    }
+  ],
+  "factored_operating_costs": [
+    {
+      "id": "78771b3c-97df-42cd-b28b-4a167dd292cb",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Direct Labor",
+      "factor": {
+        "baseline": 100,
+        "high": null,
+        "low": null
+      },
+      "_relative_path": "estimate.direct_labor_total_cost",
+      "category": "direct",
+      "unit": "% of DL",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "07ad71cf-07b1-4835-8bee-7bfad57e5888",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Supervisory and Clerical Labor",
+      "factor": {
+        "baseline": 18,
+        "high": 20,
+        "low": 10
+      },
+      "_relative_path": "estimate.direct_labor_total_cost",
+      "category": "direct",
+      "unit": "% of DL",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "c43a8ac5-3e39-4f12-b20e-70b4aa7aa52a",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Laboratory Charges",
+      "factor": {
+        "baseline": 15,
+        "high": 20,
+        "low": 10
+      },
+      "_relative_path": "estimate.direct_labor_total_cost",
+      "category": "direct",
+      "unit": "% of DL",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "30f25117-b1f2-4f33-8ad0-659de6b3ad32",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Maintenance and Repair (M&R)",
+      "factor": {
+        "baseline": 5,
+        "high": 9,
+        "low": 5
+      },
+      "_relative_path": "estimate.fixed_capital_investment_total_cost",
+      "category": "direct",
+      "unit": "% of FCI",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "441c4c8e-b9b6-4a86-bda7-f385afcc0fc1",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Operating Supplies",
+      "factor": {
+        "baseline": 15,
+        "high": 20,
+        "low": 10
+      },
+      "_relative_path": "estimate.ref_operating_cost_maintenance_and_repair",
+      "category": "direct",
+      "unit": "% of M&R",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "d5000821-a8ec-4c25-9488-95f0a92711a8",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Local Taxes",
+      "factor": {
+        "baseline": 2.5,
+        "high": 4,
+        "low": 1
+      },
+      "_relative_path": "estimate.fixed_capital_investment_total_cost",
+      "category": "indirect",
+      "unit": "% of FCI",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "90e2c3ef-9ca4-4569-82b0-75ea5bbe4e68",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Insurance",
+      "factor": {
+        "baseline": 0.8,
+        "high": 1,
+        "low": 0.4
+      },
+      "_relative_path": "estimate.fixed_capital_investment_total_cost",
+      "category": "indirect",
+      "unit": "% of FCI",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "44643317-4c26-4199-9a71-b17b5938f89a",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Rent",
+      "factor": {
+        "baseline": 10,
+        "high": 12,
+        "low": 8
+      },
+      "_relative_path": "estimate.ref_capital_cost_land",
+      "category": "indirect",
+      "unit": "% of value of land",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "64c7c215-4a51-4655-a959-7402cecacb77",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Plant Overhead",
+      "factor": {
+        "baseline": 60,
+        "high": 70,
+        "low": 50
+      },
+      "_relative_path": "estimate.direct_operating_total_cost",
+      "category": "indirect",
+      "unit": "% of LSM",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "8b9ccf7a-a8cb-4d02-a492-c55a28a9afd4",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Administration",
+      "factor": {
+        "baseline": 20,
+        "high": 30,
+        "low": 12
+      },
+      "_relative_path": "estimate.direct_operating_total_cost",
+      "category": "other",
+      "unit": "% of LSM",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "792afd5d-bebe-4f23-b902-eb2d738de850",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Distribution and Marketing",
+      "factor": {
+        "baseline": 10,
+        "high": 20,
+        "low": 2
+      },
+      "_relative_path": "",
+      "category": "other",
+      "unit": "% of op. costs excluding precious metals content",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    },
+    {
+      "id": "3b2f563d-81d0-4ebc-964e-59c9261c11db",
+      "version": "1.1.0",
+      "updatedOn": 0,
+      "name": "Research and Development",
+      "factor": {
+        "baseline": 5,
+        "high": 8,
+        "low": 4
+      },
+      "_relative_path": "",
+      "category": "other",
+      "unit": "% of op. costs excluding precious metals content",
+      "estimate_id": "74c837a8-7938-44e7-bc5b-4cd454e14707"
+    }
+  ],
+  "basis_year": "2021",
+  "currency": "USD, $",
+  "mass_unit": "kg",
+  "equip_mass_unit": "kg",
+  "equip_time_unit": "hr",
+  "catalyst_or_AP": "catalyst",
+  "yield_type": "Catalyst Mass",
+  "yield": {
+    "baseline": 1
+  },
+  "stoichiometric_ratio": {
+    "baseline": 1
+  },
+  "active_phase_molecular_weight": {
+    "baseline": 500
+  },
+  "active_phase_weight_percent": {
+    "baseline": 0.5
+  },
+  "losses_waste_spoilage": {
+    "baseline": 3,
+    "high": 4,
+    "low": 2
+  },
+  "reference_design_production": 1000,
+  "design_production": {
+    "baseline": 100000,
+    "high": null,
+    "low": null
+  },
+  "capacity_factor": {
+    "baseline": 90,
+    "high": null,
+    "low": null
+  },
+  "operating_hours_labor": {
+    "baseline": 8760,
+    "high": null,
+    "low": null
+  },
+  "ROI": {
+    "baseline": 25,
+    "high": 30,
+    "low": 20
+  },
+  "stream_factor": {
+    "baseline": 90,
+    "high": 95,
+    "low": 85
+  },
+  "direct_labor_operators": {
+    "baseline": 2,
+    "high": null,
+    "low": null
+  },
+  "direct_labor_rate": {
+    "baseline": 48,
+    "high": 55.2,
+    "low": 43.2
+  },
+  "output_time_unit": "year",
+  "output_currency": "dollars",
+  "plant_lifetime": 20,
+  "selling_margin_calculation_method": "ROI",
+  "flat_margin": {
+    "baseline": null,
+    "high": null,
+    "low": null
+  },
+  "utilities_mass_unit": "kg",
+  "utilities_catalyst_or_AP": "catalyst"
+}

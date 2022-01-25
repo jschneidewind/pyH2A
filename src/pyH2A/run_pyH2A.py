@@ -1,9 +1,12 @@
 import sys
 import ast
+import os
 from pyH2A.Discounted_Cash_Flow import Discounted_Cash_Flow
-from pyH2A.Utilities.input_modification import convert_input_to_dictionary, execute_plugin, convert_dict_to_kwargs_dict #, parse_file_name
+from pyH2A.Utilities.input_modification import convert_input_to_dictionary, execute_plugin, convert_dict_to_kwargs_dict, check_for_meta_module
 
 from timeit import default_timer as timer
+
+import pprint
 
 class pyH2A:
 	'''pyH2A class that performs discounted cash flow analysis and executes analysis modules.
@@ -35,14 +38,17 @@ class pyH2A:
 	'''
 
 	def __init__(self, input_file, output_directory, print_info = False):
+
 		self.input_file = input_file
+		self.file_name = os.path.basename(input_file).split('.')[0]
 		self.output_directory = output_directory
-		#self.file_name = parse_file_name(self.input_file)
 		self.inp = convert_input_to_dictionary(self.input_file)
 		self.base_case = Discounted_Cash_Flow(self.input_file, print_info = print_info)
 
 		self.meta_modules = {}
 		self.meta_workflow(self.meta_modules)
+
+		print(f'Levelized cost of hydrogen (base case): {self.base_case.h2_cost} $/kg')
 
 	def meta_workflow(self, meta_dict):
 		'''Meta modules (analysis modules) are identified and executed
@@ -53,8 +59,7 @@ class pyH2A:
 		`Analysis` and the last part of the string (seperated by spaces) has to be the module name'''
 
 		for key in self.inp:
-			if self.check_for_meta_module(key) is True:
-
+			if check_for_meta_module(key) is True:
 				module_name = key.split(' ')[-1]
 				self.execute_meta_module(module_name, meta_dict)
 
@@ -83,6 +88,7 @@ class pyH2A:
 
 			if self.check_for_plotting_method(method_name) is True:
 				arguments['directory'] = self.output_directory
+				arguments['input_file_name'] = self.file_name
 
 			meta_dict[module_name][row_name] = method(**arguments)
 
@@ -94,6 +100,7 @@ class pyH2A:
 		try:
 			arguments = table['Arguments']
 		except KeyError:
+
 			return {}
 
 		try:
@@ -109,25 +116,6 @@ class pyH2A:
 		plotting_indicators = ['plot', 'figure', 'chart']
 
 		if any(indicator in method_name for indicator in plotting_indicators):
-			return True
-		else:
-			return False
-
-	def check_for_meta_module(self, key):
-		'''Checks if `key` is a meta module that is to be executed.
-
-		Notes
-		-----
-		Meta module is identified by checking if `key` contains the substring
-		'Analysis' and does not contain any of the substrings in `exceptions`.
-		'''
-
-		exceptions = ['Parameters', 'Methods', 'Arguments']
-		indicators = ['Analysis']
-
-		if any(exception in key for exception in exceptions):
-			return False
-		elif any(indicator in key for indicator in indicators):
 			return True
 		else:
 			return False
