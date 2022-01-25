@@ -50,10 +50,10 @@ Name | Value | Comment
 --- | --- | ---
 Module Tilt (degrees) | 0
 Array Azimuth (degrees) | 0
-Nominal Operating Temperature (Celcius) | 45
+Nominal Operating Temperature (Celsius) | 45
 Mismatch Derating | 98%
 Dirt Derating | 98% | Values taken from Chang 2020, analogues to silicon PV
-Temperature Coefficienct (per Celcius) | 0.0%
+Temperature Coefficient (per Celsius) | 0.0%
 
 # Solar Input
 

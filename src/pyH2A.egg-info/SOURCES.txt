@@ -97,6 +97,7 @@ src/pyH2A/Other/pyH2A.png
 src/pyH2A/Other/pyH2A.svg
 src/pyH2A/Other/pyH2A_source.svg
 src/pyH2A/Plugins/Capital_Cost_Plugin.py
+src/pyH2A/Plugins/Catalyst_Separation_Plugin.py
 src/pyH2A/Plugins/Fixed_Operating_Cost_Plugin.py
 src/pyH2A/Plugins/Hourly_Irradiation_Plugin.py
 src/pyH2A/Plugins/Multiple_Modules_Plugin.py
