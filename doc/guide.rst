@@ -2,6 +2,11 @@
 Getting started
 ===============
 
+.. contents:: Table of Contents
+    :depth: 2
+    :local:
+    :class: this-will-duplicate-information-and-it-is-still-useful-here
+
 Installation
 ============
 
@@ -11,11 +16,8 @@ pyH2A can be installed using ``pip``:
 
 	pip install pyH2A
 
-Guide
-=====
-
 Choose configuration
---------------------
+====================
 
 First, the configuration of the hydrogen production technology should be specified. This is done by selecting the appropiate plugins, which together form the desired production pathway. For example, in case of photovoltaic + electrolysis (PV+E), the :class:`~pyH2A.Plugins.Hourly_Irradiation_Plugin` and :class:`~pyH2A.Plugins.Photovoltaic_Plugin` may be used: `Hourly_Irradiation_Plugin` models the irradiation in specified location, while `Photovoltaic_Plugin` models electricity production using PV based on the hourly irradiation data and subsequent production of hydrogen from electrolysis. Changing the plugins changes the technology configuration and new configurations (e.g. including battery storage) can be modelled by creating new plugins (see :ref:`plugin_guide_label` for information on how to create new plugins).
 
@@ -41,7 +43,7 @@ At this point one may also specify the analysis modules which are to be used. Th
 This header request the :class:`~pyH2A.Analysis.Monte_Carlo_Analysis` module.
 
 Generate input file template
-----------------------------
+============================
 
 The input file containing the ``Workflow`` tabe and possible analysis headings is the starting point to generate the full input file template.
 
@@ -69,7 +71,7 @@ The ``--origin`` flag includes information in the template on which plugin/modul
 The thus generated file ``input_full.md`` can be used to enter the model information. 
 
 Enter model information
------------------------
+=======================
 
 The input file template specifies which model information has to be entered for the selected technology configuration. For example, ``Hourly_Irradiation_Plugin`` requests a file containg hourly irradiation data:
 
@@ -118,7 +120,7 @@ Instead of entering actual values, it is also possible to enter references to ot
 In this case, the ``Path`` column of ``Photovoltaic > Nominal Power (kW) > Value`` references ``Electrolyzer > Nominal Power (kW) > Value ``. Because the reference is in the ``Path`` column, the referenced value is multiplied by the value in ``Photovoltaic > Nominal Power (kW) > Value``. In this case, use of referencing ensures that the photovoltaic nominal power is a factor of 1.5 higher than the electrolyzer nominal power (and it is automatically updated when the electrolyzer nominal power is changed).
 
 Run pyH2A
----------
+=========
 
 Once all the model information has been entered, pyH2A can be run to perform the actual techno-economic analysis. This can be done using the command line interface:
 
@@ -135,7 +137,7 @@ Upon completion, pyH2A prints the levelized cost of hydrogen, for example:
 	Levelized cost of hydrogen (base case): 3.5777931317137512 $/kg
 
 Generate plots, save results, access information
-------------------------------------------------
+================================================
 
 The power of pyH2A lies in the ability to interface the core techno-economic analysis with different analysis modules to perform in-depth analysis of the results. For example, when the ``Monte_Carlo_Analysis`` module is requested in the input file, Monte Carlo analysis is performed in which selected input parameters are randomly varied to analyze the future hydrogen cost trajectory. Typically, analysis modules contain methods to generate plots of the analysis results. These are requested by adding a ``Methods`` table to the input file. For example:
 
@@ -147,7 +149,7 @@ The power of pyH2A lies in the ability to interface the core techno-economic ana
 	--- | --- | ---
 	distance_cost_relationship | plot_distance_cost_relationship | Arguments - MC Analysis - distance_cost
 
-Including this table in the input file requests that the :func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_cost_relationship` method is executed. Arguments can be passed to the method in the ``Arguments`` column. In this case, a simple string is included ``Arguments - MC Analysis - distance_cost``. This directs pyH2A to another table in the input file which ontains the method arguments:
+Including this table in the input file requests that the :func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_cost_relationship` method is executed. Arguments can be passed to the method in the ``Arguments`` column. In this case, a simple string is included ``Arguments - MC Analysis - distance_cost``. This directs pyH2A to another table in the input file which contains the method arguments:
 
 .. code-block:: markdown
 	
