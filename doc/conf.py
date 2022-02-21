@@ -22,7 +22,7 @@ from pyH2A import __version__
 # -- Project information -----------------------------------------------------
 
 project = 'pyH2A'
-copyright = '2021, Jacob Schneidewind'
+copyright = '2022, Jacob Schneidewind'
 author = 'Jacob Schneidewind'
 
 # The full version, including alpha/beta/rc tags
@@ -38,6 +38,7 @@ extensions = ['sphinx.ext.autodoc',
 			  'sphinx.ext.autosummary',
    			  'sphinx.ext.todo',
     		  'sphinx.ext.coverage',
+    		  'sphinx.ext.viewcode',
     		  'numpydoc',
     		  'autodocsumm'
 ]

@@ -189,7 +189,7 @@ class Comparative_MC_Analysis:
 		image_kwargs = {**{'path': None, 'x': 1.2, 'y': 0.5, 'zoom': 0.08}, 
 						**image_kwargs}
 
-		dist_kwargs = {**{'log_scale': False, 'ylim': 8, 'legend_loc': 'upper right'},
+		dist_kwargs = {**{'log_scale': False, 'legend_loc': 'upper right'},
 					   **dist_kwargs}
 
 		table_kwargs = {**{'height': 0.23}, **table_kwargs}
@@ -270,7 +270,7 @@ class Comparative_MC_Analysis:
 		image_kwargs = {**{'x': -0.4}, 
 						**image_kwargs}
 
-		dist_kwargs = {**{'log_scale': False, 'ylim': 8, 'legend_loc': 'upper right'},
+		dist_kwargs = {**{'log_scale': False, 'legend_loc': 'upper right'},
 					   **dist_kwargs}
 
 		gs = gridspec.GridSpec(model_number, 2)

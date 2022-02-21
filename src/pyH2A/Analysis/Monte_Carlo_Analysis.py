@@ -11,7 +11,7 @@ import matplotlib.ticker as mticker
 from matplotlib.transforms import Bbox
 
 import pyH2A.Utilities.find_nearest as fn
-from pyH2A.Utilities.input_modification import convert_input_to_dictionary,parse_parameter, parse_parameter_to_array, get_by_path, set_by_path, read_textfile, file_import
+from pyH2A.Utilities.input_modification import convert_input_to_dictionary,parse_parameter, parse_parameter_to_array, get_by_path, set_by_path, read_textfile, file_import, reverse_parameter_to_string
 from pyH2A.Discounted_Cash_Flow import Discounted_Cash_Flow
 from pyH2A.Utilities.output_utilities import make_bold, format_scientific, dynamic_value_formatting, insert_image, Figure_Lean
 
@@ -38,16 +38,85 @@ def divide_into_batches(array, batch_size):
 
 	return batches
 
-def normalize_parameter(parameter, range_arr):
-	'''Linear normalization of parameter (float or array) based on 
-	range_arr (lower limit: range_arr[0],
-	upper limit: range_arr[1])
+def normalize_parameter(parameter, base, limit, log_normalize = False):
+	'''Linear of log normalization of parameter (float or array) based on 
+	base and limit values.
 	'''
 
-	range_covered = range_arr[1] - range_arr[0]
-	scaled = (parameter - range_arr[0]) / range_covered
+	if log_normalize:
+		ratio = limit / base
+		parameter_ratio = parameter / base
+		scaled = np.log10(parameter_ratio) / np.log10(ratio)
+
+	else:
+		range_covered = limit - base
+		scaled = (parameter - base) / range_covered
 
 	return scaled
+
+def calculate_distance(data, parameters, selection, metric = 'cityblock', log_normalize = False,
+					   sum_distance = False):
+	'''
+	Distance of datapoints to reference is calculated using the specified metric.
+
+	Parameters
+	----------
+	data : ndarray
+		2D array of datapoints containing parameter values for each model.
+	parameters : dict
+		Dictionary specifying ranges for each parameter.
+	selection : list
+		List of parameters names used for distance calculation.
+	metric : str, optional
+		Metric used for distance calculation (e.g. 'cityblock' or
+		'euclidean'). Default is 'cityblock'.
+	log_normalize : bool, optional
+		Flag to control if log normalization is used instead of linear normalization.
+	sum_distance : bool, optional
+		Flag to control if distance is calculated by simply summing individual 
+		normalized values (equal to cityblock distance but without using absolute values,
+		hence distance can be negative).
+
+	Returns
+	-------
+	distances: ndarray
+		Array containing distance for each model.
+
+	Notes
+	-----
+	Parameter ranges and the reference parameters are scaled to be within 
+	a n-dimensional unit cube.
+	Distances are normalized by the number of dimensions, so that the maximum 
+	distance is always 1.
+	'''
+
+	number_of_parameters = len(selection)
+
+	reference = []
+	data_scaled = np.empty((len(data), number_of_parameters))
+
+	for counter, key in enumerate(selection):
+		idx = parameters[key]['Index']
+		data_scaled[:,counter] = normalize_parameter(data[:,idx], parameters[key]['Reference'],
+													 parameters[key]['Limit'], 
+													 log_normalize = log_normalize)
+		reference.append(normalize_parameter(parameters[key]['Reference'], parameters[key]['Reference'],
+											 parameters[key]['Limit'],
+											 log_normalize = log_normalize))
+										
+	reference_scaled = np.array([reference])
+
+	if sum_distance:
+		distances = np.sum(data_scaled, axis = 1)
+	else:
+		distances = scipy_distance.cdist(data_scaled, reference_scaled, metric = metric)
+
+	if metric is 'cityblock':
+		distances = distances / number_of_parameters
+	else:
+		distances = distances / np.sqrt(number_of_parameters)
+
+	return distances
 
 def extend_limits(limits_original, extension):
 	'''Extend limits_original in both directions by muliplying with extensions'''
@@ -156,7 +225,6 @@ class Monte_Carlo_Analysis:
 		self.check_parameter_integrity(self.results)
 		self.target_price_components()
 		self.determine_principal_components()
-		#self.generate_parameter_string_table()
 		self.development_distance()
 		self.full_distance_cost_relationship()
 
@@ -199,10 +267,12 @@ class Monte_Carlo_Analysis:
 
 			path = parse_parameter(key)
 			reference = get_by_path(self.inp, path)
+			limit = select_non_reference_value(reference, values_range)
 		
 			parameters[monte[key]['Name']] = {'Parameter': path, 'Type': monte[key]['Type'], 
 											  'Values': values_range, 'Reference': reference, 
-											  'Index': counter, 'Input Index': counter}
+											  'Index': counter, 'Input Index': counter,
+											  'Limit': limit}
 	
 		self.values = values
 		self.parameters = parameters
@@ -394,7 +464,9 @@ class Monte_Carlo_Analysis:
 
 		for key in parameters:
 			parameters[key]['Reference'] = get_by_path(self.inp, parameters[key]['Parameter'])
-		
+			parameters[key]['Limit'] = select_non_reference_value(parameters[key]['Reference'],
+																  parameters[key]['Values'])
+
 		self.parameters = parameters
 		self.target_price_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis']['Target Price Range ($)']['Value'], delimiter = ';')
 
@@ -419,10 +491,15 @@ class Monte_Carlo_Analysis:
 			else:
 				raise KeyError('Difference between input parameter names and those stored in Monte Carlo File, no index for mapping specified.')
 
+		for name, parameter in self.parameters.items():
+			if reverse_parameter_to_string(parameter['Parameter']) not in self.inp['Parameters - Monte_Carlo_Analysis']:
+				raise KeyError(f'Input file contains {name} which is not included in Parameter - Monte_Carlo_Analysis table.')
+
 	def check_parameter_integrity(self, values):
 		'''Checking that parameters in `self.results` are within 
 		ranges specified in `self.parameters['Values']`.
 		'''
+
 		for name, parameter in self.parameters.items():
 			results = values[:,parameter['Index']]
 			
@@ -431,6 +508,13 @@ class Monte_Carlo_Analysis:
 
 			assert minimum >= parameter['Values'][0], 'Minimum value of {0} ({1}) is smaller than specified range ({2}).'.format(name, minimum, parameter['Values'])
 			assert maximum <= parameter['Values'][1], 'Maximum value of {0} ({1}) is larger than specified range ({2}).'.format(name, maximum, parameter['Values']) 
+
+			reference = parameter['Reference']
+			limit = parameter['Limit']
+			values_range = parameter['Values']
+
+			assert reference in values_range, f'Reference value {reference} not found in value range {values_range} for {name}'
+			assert limit in values_range, f'Limit value {limit} not found in value range {values_range} for {name}'
 
 	def generate_parameter_string_table(self, base_string = 'Base', limit_string = 'Limit', 
 										format_cutoff = 6):
@@ -631,59 +715,7 @@ class Monte_Carlo_Analysis:
 
 		self.target_price_2D_region = {'Grid Values': grid_values, 'H2 Cost 2D': h2_cost_2D}
 
-	def calculate_distance(self, data, parameters, selection, metric):
-		'''
-		Distance of datapoints to reference is calculated using the specified metric.
-
-		Parameters
-		----------
-		data: ndarray
-			2D array of datapoints containing parameter values for each model.
-		parameters: dict
-			Dictionary specifying ranges for each parameter.
-		selection: list
-			List of parameters names used for distance calculation.
-		metric : str
-			Metric used for distance calculation (e.g. 'cityblock' or
-			'euclidean').
-
-		Returns
-		-------
-		distances: ndarray
-			Array containing distance for each model.
-
-		Notes
-		-----
-		Parameter ranges and the reference parameters are scaled to be within 
-		a n-dimensional unit cube.
-		Distances are normalized by the number of dimensions, so that the maximum 
-		distance is always 1.
-		'''
-
-		number_of_parameters = len(selection)
-
-		reference = []
-		data_scaled = np.empty((len(data), number_of_parameters))
-
-		for counter, key in enumerate(selection):
-			range_arr = parameters[key]['Values']
-
-			idx = parameters[key]['Index']
-			data_scaled[:,counter] = normalize_parameter(data[:,idx], range_arr)
-			reference.append(normalize_parameter(parameters[key]['Reference'], range_arr))
-
-		reference_scaled = np.array([reference])
-
-		distances = scipy_distance.cdist(data_scaled, reference_scaled, metric = metric)
-
-		if metric is 'cityblock':
-			distances = distances / number_of_parameters
-		else:
-			distances = distances / np.sqrt(number_of_parameters)
-
-		return distances
-
-	def development_distance(self, metric = 'cityblock'):
+	def development_distance(self, metric = 'cityblock', log_normalize = False, sum_distance = False):
 		'''Calculation of development distance for models within target price range.
 
 		Parameters
@@ -703,7 +735,10 @@ class Monte_Carlo_Analysis:
 		Parameter ranges and the reference parameters are scaled to be within a n-dimensional unit cube.
 		Distances are normalized by the number of dimensions, so that the maximum distance is always 1.'''
 
-		self.distances = self.calculate_distance(self.target_price_data, self.parameters, self.principal, metric = metric)
+		self.distances = calculate_distance(self.target_price_data, self.parameters, 
+											self.principal, metric = metric,
+											log_normalize = log_normalize,
+											sum_distance = sum_distance)
 
 		target_distances = np.c_[self.target_price_data, self.distances]
 		self.target_distances_sorted = target_distances[np.argsort(target_distances[:,-1])]
@@ -717,7 +752,7 @@ class Monte_Carlo_Analysis:
 		self.shortest_target_distance['Distance'] = self.target_distances_sorted[0][-1]
 
 	def full_distance_cost_relationship(self, metric = 'cityblock', reduction_factor = 25, 
-										poly_order = 4):
+										poly_order = 4, log_normalize = False, sum_distance = False):
 		'''Calculation of development distance for all datapoints from Monte Carlo Analysis and
 		calculation of Savitzky-Golay filter.
 
@@ -744,7 +779,10 @@ class Monte_Carlo_Analysis:
 		if window_length % 2 == 0:
 			window_length += 1
 
-		distances = self.calculate_distance(self.results, self.parameters, self.principal, metric = metric)
+		distances = calculate_distance(self.results, self.parameters, 
+									   self.principal, metric = metric,
+									   log_normalize = log_normalize,
+									   sum_distance = sum_distance)
 
 		results_distances = np.c_[self.results, distances]
 		self.results_distances_sorted = results_distances[np.argsort(results_distances[:,-1])]
@@ -906,9 +944,6 @@ class Monte_Carlo_Analysis:
 					par[pc[1]]['Reference']), xytext = (xtext, ytext), 
 					textcoords = 'axes fraction')
 
-		# ax.set_title(title_string + ' {0} - {1} \$/kg'.format(
-		# 									self.target_price_range[0], 
-		# 									self.target_price_range[1]))
 		ax.set_title(title_string + f' {self.target_price_range[0]} - {self.target_price_range[1]} \$/kg($H_{2}$)')
 
 		ax.grid(color = 'grey', linestyle = '--', linewidth = 0.2, zorder = 0)
@@ -1002,9 +1037,9 @@ class Monte_Carlo_Analysis:
 			Flag to control if title is displayed or not.
 		title_string : str, optional
 			String for title.
-		x_label_string : str, optional
+		xlabel_string : str, optional
 			String for x axis label.
-		y_label_string : str, optional
+		ylabel_string : str, optional
 			String for y axis label.
 		show_parameter_table : bool, optional
 			Flag to control if parameter table is shown.
@@ -1082,7 +1117,8 @@ class Monte_Carlo_Analysis:
 			figure.execute()
 			return figure.fig
 								
-	def plot_distance_cost_relationship(self, ax = None, ylim = None, figure_lean = True, 
+	def plot_distance_cost_relationship(self, ax = None, ylim = None, xlim = None, 
+										figure_lean = True, 
 										parameter_table = True, 
 	 									legend_loc = 'upper left',
 	 									log_scale = False, 
@@ -1097,8 +1133,10 @@ class Monte_Carlo_Analysis:
 		----------
 		ax : matplotlib.axes, optional
 			Axes object in which plot is drawn. Default is None, creating new plot.
-		ylim : float, optional
-			Limit value for y axis, deactivated when log scale is used. Deafault is None.
+		ylim : array, optional
+			Ordered limit values for y axis. Default is None.
+		xlim : array, optional
+			Ordered limit values for x axis. Default is None.
 		figure_lean : bool, optional
 			If figure_lean is True, matplotlib.fig object is returned.
 		parameter_table : bool, optional
@@ -1107,13 +1145,13 @@ class Monte_Carlo_Analysis:
 			Controls location of legend in plot. Defaults to 'upper left'.
 		log_scale : bool, optional
 			If log_scale is True, the y axis will use a log scale.
-		x_label_string : str, optional
+		xlabel_string : str, optional
 			String for x axis label.
-		y_label_string : str, optional
+		ylabel_string : str, optional
 			String for y axis label.
-		markersize : float
+		markersize : float, optional
 			Size of markers in scatter plot.
-		marker_alpha : float
+		marker_alpha : float, optional
 			Transparency of markers in scatter plot (0: maximum transpareny, 1: no transparency).
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
@@ -1154,13 +1192,18 @@ class Monte_Carlo_Analysis:
 		ax.plot(self.distances_cost_savgol[:,0], self.distances_cost_savgol[:,1], color = self.color, 
 			    label = self.display_name)
 
+		ax.axhspan(self.target_price_range[0], self.target_price_range[1], color = 'grey', alpha = 0.7)
+
 		if log_scale:
 			ax.set_yscale('log')
 			fmt = mticker.StrMethodFormatter("{x:g}")
 			ax.yaxis.set_major_formatter(fmt)
-		else:
-			if ylim is not None:
-				ax.set_ylim(0.1, ylim)
+		#else:
+		if ylim is not None:
+			ax.set_ylim(ylim[0], ylim[1])
+		
+		if xlim is not None:
+			ax.set_xlim(xlim[0], xlim[1])
 
 		ax.set_xlabel(xlabel_string)
 		ax.set_ylabel(ylabel_string)

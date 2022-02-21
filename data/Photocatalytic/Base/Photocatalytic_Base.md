@@ -250,7 +250,6 @@ image_kwargs | {'x': -0.4, 'zoom': 0.09, 'y': 0.5, 'path': 'pyH2A.Other~Photocat
 
 Name | Value
 --- | ---
-ylim | 20
 legend_loc | upper right
 log_scale | True
 plot_kwargs | {'show': False, 'save': False, 'dpi': 300, 'left': 0.09, 'right': 0.5, 'bottom': 0.15, 'top': 0.95, 'fig_width': 9, 'fig_height': 3.5}

@@ -146,7 +146,7 @@ Name | Value | Comment
 --- | --- | ---
 Samples | 50,000 | Number of samples in Monte Carlo simulation.
 Target Price Range ($) | 1.5; 1.6
-Input File | ./PV_E/Base/Monte_Carlo_Output.csv
+Input File | /Users/Jacob/Documents/Water_Splitting/Techno_Economic_Analysis/data/PV_E/Base/Monte_Carlo_Output.csv
 
 # Parameters - Monte_Carlo_Analysis
 
@@ -156,6 +156,12 @@ Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | \$ / kW(PV) | value | Base
 Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$ / kW(Electrolyzer) | value | Base; 200 | 1 | CAPEX reduction to 200 $/kW in 2050 based on IRENA Green Hydrogen 2020, learning curve model Waldau 2021 (using their cost reduction factor of ca. 4-5 until 2050 due to learning).
 Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Electricity) | value | Base; 0.025 | 2 | Maximum efficiency: 0.02538 kg H2/kWh, Chang 2020 (based on reaction enthalpy).
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. (fr. E-CAPEX) | value | Base; 20% | 3 | Decreasing stack replacement cost to 20% of electrolyzer CAPEX.
+
+# Development_Distance_Time_Analysis
+
+Name | Value
+--- | ---
+Input File | /Users/Jacob/Documents/Water_Splitting/Techno_Economic_Analysis/Untracked/Testing/historical_data_test.csv
 
 # Cost_Contributions_Analysis - Deactivate
 
@@ -204,13 +210,14 @@ image_kwargs | {'x': -0.41, 'zoom': 0.092, 'y': 0.5, 'path': 'pyH2A.Other~PV_E_C
 
 Name | Value
 --- | ---
+ylim | [0.1, 20]
 legend_loc | upper right
 log_scale | True
 plot_kwargs | {'show': False, 'save': False, 'dpi': 300, 'left': 0.09, 'right': 0.5, 'bottom': 0.15, 'top': 0.95, 'fig_width': 9, 'fig_height': 3.5}
 table_kwargs | {'ypos': 0.5, 'xpos': 1.05, 'height': 0.5}
 image_kwargs | {'path': 'pyH2A.Other~PV_E_Clipart.png', 'x': 1.6, 'zoom': 0.095, 'y': 0.2}
 
-# Comparative_MC_Analysis - Deactivate
+# Comparative_MC_Analysis
 
 Name | Value | Image
 --- | --- | ---
@@ -222,39 +229,39 @@ pv_e | ./PV_E/Base/PV_E_Base.md | pyH2A.Other~PV_E_Clipart.png
 
 Name | Method Name | Arguments
 --- | --- | ---
-comparative_distance_histogram | plot_comparative_distance_histogram | Arguments - Comparative MC Analysis - distance_histogram
 comparative_distance_cost_relationship | plot_comparative_distance_cost_relationship | Arguments - Comparative MC Analysis - distance_cost
+comparative_distance_histogram | plot_comparative_distance_histogram | Arguments - Comparative MC Analysis - distance_histogram
 comparative_distance_combined | plot_combined_distance | {'show': False, 'save': False, 'left': 0.06, 'fig_width': 13, 'dist_kwargs': {'legend_loc': 'upper right', 'log_scale': True}, 'table_kwargs': {'colWidths': [0.65, 0.25, 0.12, 0.25]}, 'hist_kwargs': {'title_string': 'Target cost range:'}}
 
 # Arguments - Comparative MC Analysis - distance_cost
 
 Name | Value
 --- | ---
-show | False
+show | True
 save | False
+name | Comparative_Distance_Cost_Index_3
 pdf | False
 dpi | 300 
 fig_height | 5
 fig_width | 9
 top | 0.98
 bottom | 0.1
-dist_kwargs | {'log_scale': True, 'ylabel_string': 'Levelized cost of $H_{2}$ / \$/kg($H_{2}$)'}
+dist_kwargs | {'log_scale': True, 'ylabel_string': 'Levelized cost of $H_{2}$ / \$/kg($H_{2}$)', 'ylim': [0.6, 150]}
 table_kwargs | {'format_cutoff': 7, 'height': 0.3, 'colWidths': [0.65, 0.2, 0.09, 0.2]}
 
 # Arguments - Comparative MC Analysis - distance_histogram
 
 Name | Value
 --- | ---
-show | False
+show | True
 save | False
 pdf | True
 dpi | 500
-fig_width | 5.5
+fig_width | 9.5
 fig_height | 4.5
-left | 0.35
-right | 0.97
+left | 0.21
+right | 0.57
 bottom | 0.12
 top | 0.93
-hist_kwargs | {'show_parameter_table': False}
+hist_kwargs | {'show_parameter_table': True}
 image_kwargs | {'x': -0.38}
-

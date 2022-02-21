@@ -15,7 +15,7 @@ class Hourly_Irradiation_Plugin:
 		Tilt of irradiated module in degrees.
 	Irradiance Area Parameters > Array Azimuth (degrees) > Value : float
 		Azimuth angle of irradiated module in degrees.
-	Irradiance Area Parameters > Nominal Operating Temperature (Celsius) > Value : f;oat
+	Irradiance Area Parameters > Nominal Operating Temperature (Celsius) > Value : float
 		Nominal operating temperature of irradiated module in degrees Celsius.
 	Irradiance Area Parameters > Mismatch Derating > Value : float
 		Derating value due to mismatch (percentage or value between 0 and 1).

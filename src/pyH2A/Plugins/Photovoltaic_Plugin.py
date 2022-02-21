@@ -6,7 +6,7 @@ class Photovoltaic_Plugin:
 
 	Parameters
 	----------
-	Financial Input Values > construction time > Value : float
+	Financial Input Values > construction time > Value : int
 		Construction time of hydrogen production plant in years.
 	Irradiation Used > Data > Value : str or ndarray
 		Hourly power ratio data for electricity production calculation. Either a 

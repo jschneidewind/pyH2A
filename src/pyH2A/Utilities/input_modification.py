@@ -182,20 +182,22 @@ def num(s):
 
 	Notes
 	-----
-	Input strings can contain commas as thousands seperators, which will be removed.
+	Input strings can contain commas as thousands seperators, which will be removed if the string 
+	is otherwise a valid number (float or int).
 	If the input string ends with a "%" sign, it will be converted to a number divided by 100.
 	'''
-	if s[-1] != '}':  # String is not a dictionary string
-		s = s.replace(',', '')
 
-	if s[-1] == '%' and ';' not in s:  #String ends with '%' but is not a semicolon seperated list of values
-		return num(s[:-1])/100.
+	if s[-1] == '%': #String ends with '%', trying to convert percentage into regular value
+		try:
+			return num(s[:-1])/100.
+		except TypeError:
+			pass
 	else:
 		try:
-			return int(s)
+			return int(s.replace(',', ''))
 		except ValueError:
 			try:
-				return float(s)
+				return float(s.replace(',', ''))
 			except ValueError:
 				return str(s)
 
@@ -447,6 +449,16 @@ def parse_parameter(key, delimiter = '>'):
 	for i in path_components:
 		output.append(i.strip(' '))
 		
+	return output
+
+def reverse_parameter_to_string(parameter):
+	'''Reverts processed parameter list to string.'''
+
+	output = str(parameter[0])
+
+	for item in parameter[1:]:
+		output += f' > {item}'
+
 	return output
 
 def parse_parameter_to_array(key, delimiter = '>', dictionary = None, top_key = None, 

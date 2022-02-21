@@ -120,26 +120,6 @@ Name | Cost ($) | Path | Comment
 --- | --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | Based on Chang 2020
 
-# Sensitivity_Analysis - Deactivate
-
-Parameter | Name | Type | Values
---- | --- | --- | ---
-Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. cost (% of E-CAPEX) | value | 20%; 80%
-Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | PV CAPEX (\$/kW) | value | 400; 1600
-Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | Electrolyzer CAPEX (\$/kW) | value | 400; 1600
-Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | Electrolyzer efficiency (kg H_{2}/kWh) | value | 0.015; 0.025
-Photovoltaic > Power loss per year > Value | PV power loss per year | value | 0.25%; 1.0%
-Electrolyzer > Power requirement increase per year > Value | Electrolyzer power increase per year | value | 0.15%; 0.6%
-
-# Waterfall_Analysis - Deactivate
-
-Parameter | Name | Type | Value | Show Percent
---- | --- | --- | --- | ---
-Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$)/ kWh(Electricity) | value | 0.025
-Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | \$/kW(PV) | value | 220
-Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$/kW(Electro- lyzer) | value | 200
-Planned Replacement > Electrolyzer Stack Replacement > Cost ($)| Stack replacement (%E-CAPEX) | value | 20% | True
-
 # Monte_Carlo_Analysis
 
 Name | Value | Comment
@@ -157,60 +137,64 @@ Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$ / k
 Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Electricity) | value | Base; 0.025 | 2 | Maximum efficiency: 0.02538 kg H2/kWh, Chang 2020 (based on reaction enthalpy).
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. (fr. E-CAPEX) | value | Base; 20% | 3 | Decreasing stack replacement cost to 20% of electrolyzer CAPEX.
 
-# Cost_Contributions_Analysis - Deactivate
+# Development_Distance_Time_Analysis
 
-# Methods - Cost_Contributions_Analysis 
+Name | Value
+--- | ---
+Input File | ./PV_E/Historical_Data/PV_E_Historical_Data.csv
+Log Normalization | True
+Base Year | 2020
+Extrapolation Limit Year | 2060
 
-Name | Method Name | Arguments
---- | --- | ---
-cost_breakdown_plot_total | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot', 'show': False, 'save': False}
-cost_breakdown_plot_capital | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot_Capital', 'show': False, 'save': False, 'plugin': 'Capital_Cost_Plugin', 'plugin_property': 'direct_contributions', 'fig_height': 3, 'bottom': 0.2}
-
-# Methods - Sensitivity_Analysis
-
-Name | Method Name | Arguments
---- | --- | ---
-sensitivity_box_plot | sensitivity_box_plot | {'show': False, 'save': False, 'fig_width': 8, 'label_offset': 0.12, 'lim_extra': 0.25, 'fig_height': 5.4, 'bottom': 0.1, 'top': 0.98, 'format_cutoff': 7}
-
-# Methods - Waterfall_Analysis
+# Methods - Development_Distance_Time_Analysis
 
 Name | Method Name | Arguments
 --- | --- | ---
-waterfall_chart | plot_waterfall_chart | {'show': True, 'save': False, 'fig_width': 9, 'width': 0.55}
+plot_distance_histogram_log | plot_distance_histogram | {'show': True, 'save': False, 'dpi': 400, 'pdf': True, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
+plot_distance_cost_log | plot_distance_cost_relationship | {'show': True, 'save': False, 'dpi': 300, 'pdf': False, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
+plot_distance_time | plot_distance_time_relationship | Arguments - Time Analysis - distance_time_plot
+
+# Arguments - Time Analysis - distance_time_plot
+
+Name | Value
+--- | ---
+show | True
+save | False
+dpi | 500
+pdf | True
+image_kwargs | {'path': 'pyH2A.Other~PV_E_Clipart.png'}
 
 # Methods - Monte_Carlo_Analysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 distance_cost_relationship | plot_distance_cost_relationship | Arguments - MC Analysis - distance_cost
-distance_histogram | plot_distance_histogram | {'show': False, 'xlabel': True, 'save': False, 'pdf': True, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
-colored_scatter | plot_colored_scatter | Arguments - MC Analysis - colored_scatter
+distance_histogram | plot_distance_histogram | Arguments - MC Analysis - distance_histogram
 target_parameters | plot_target_parameters_by_distance | {'show': False}
 
-# Arguments - MC Analysis - colored_scatter
+# Arguments - MC Analysis - distance_histogram
 
 Name | Value
 --- | ---
 show | False
 save | False
 pdf | True
-dpi | 500
-base_string | Base
-title_string | Target cost range: 
-plot_kwargs | {'left': 0.32, 'right': 0.94, 'bottom': 0.13, 'top': 0.92, 'fig_width': 6.5, 'fig_height': 4.0}
-image_kwargs | {'x': -0.41, 'zoom': 0.092, 'y': 0.5, 'path': 'pyH2A.Other~PV_E_Clipart.png'}
+xlabel | True
+image_kwargs | {'path': 'pyH2A.Other~PV_E_Clipart.png'}
 
 # Arguments - MC Analysis - distance_cost
 
 Name | Value
 --- | ---
+show | True
+save | False
 legend_loc | upper right
-log_scale | True
-plot_kwargs | {'show': False, 'save': False, 'dpi': 300, 'left': 0.09, 'right': 0.5, 'bottom': 0.15, 'top': 0.95, 'fig_width': 9, 'fig_height': 3.5}
+log_scale | False
+plot_kwargs | {'dpi': 150, 'pdf': False, 'left': 0.09, 'right': 0.5, 'bottom': 0.15, 'top': 0.95, 'fig_width': 9, 'fig_height': 3.5}
 table_kwargs | {'ypos': 0.5, 'xpos': 1.05, 'height': 0.5}
 image_kwargs | {'path': 'pyH2A.Other~PV_E_Clipart.png', 'x': 1.6, 'zoom': 0.095, 'y': 0.2}
 
-# Comparative_MC_Analysis - Deactivate
+# Comparative_MC_Analysis
 
 Name | Value | Image
 --- | --- | ---
@@ -222,8 +206,8 @@ pv_e | ./PV_E/Base/PV_E_Base.md | pyH2A.Other~PV_E_Clipart.png
 
 Name | Method Name | Arguments
 --- | --- | ---
-comparative_distance_histogram | plot_comparative_distance_histogram | Arguments - Comparative MC Analysis - distance_histogram
 comparative_distance_cost_relationship | plot_comparative_distance_cost_relationship | Arguments - Comparative MC Analysis - distance_cost
+comparative_distance_histogram | plot_comparative_distance_histogram | Arguments - Comparative MC Analysis - distance_histogram
 comparative_distance_combined | plot_combined_distance | {'show': False, 'save': False, 'left': 0.06, 'fig_width': 13, 'dist_kwargs': {'legend_loc': 'upper right', 'log_scale': True}, 'table_kwargs': {'colWidths': [0.65, 0.25, 0.12, 0.25]}, 'hist_kwargs': {'title_string': 'Target cost range:'}}
 
 # Arguments - Comparative MC Analysis - distance_cost
@@ -232,13 +216,14 @@ Name | Value
 --- | ---
 show | False
 save | False
+name | Comparative_Distance_Cost_Index_3
 pdf | False
 dpi | 300 
 fig_height | 5
 fig_width | 9
 top | 0.98
 bottom | 0.1
-dist_kwargs | {'log_scale': True, 'ylabel_string': 'Levelized cost of $H_{2}$ / \$/kg($H_{2}$)'}
+dist_kwargs | {'log_scale': True, 'ylabel_string': 'Levelized cost of $H_{2}$ / \$/kg($H_{2}$)', 'ylim': [0.6, 150]}
 table_kwargs | {'format_cutoff': 7, 'height': 0.3, 'colWidths': [0.65, 0.2, 0.09, 0.2]}
 
 # Arguments - Comparative MC Analysis - distance_histogram
@@ -249,12 +234,11 @@ show | False
 save | False
 pdf | True
 dpi | 500
-fig_width | 5.5
+fig_width | 9.5
 fig_height | 4.5
-left | 0.35
-right | 0.97
+left | 0.21
+right | 0.57
 bottom | 0.12
 top | 0.93
-hist_kwargs | {'show_parameter_table': False}
+hist_kwargs | {'show_parameter_table': True}
 image_kwargs | {'x': -0.38}
-
