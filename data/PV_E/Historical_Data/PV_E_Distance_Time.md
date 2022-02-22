@@ -150,8 +150,8 @@ Extrapolation Limit Year | 2060
 
 Name | Method Name | Arguments
 --- | --- | ---
-plot_distance_histogram_log | plot_distance_histogram | {'show': True, 'save': False, 'dpi': 400, 'pdf': True, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
-plot_distance_cost_log | plot_distance_cost_relationship | {'show': True, 'save': False, 'dpi': 300, 'pdf': False, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
+plot_distance_histogram_log | plot_distance_histogram | {'show': False, 'save': False, 'dpi': 400, 'pdf': True, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
+plot_distance_cost_log | plot_distance_cost_relationship | {'show': False, 'save': False, 'dpi': 300, 'pdf': False, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
 plot_distance_time | plot_distance_time_relationship | Arguments - Time Analysis - distance_time_plot
 
 # Arguments - Time Analysis - distance_time_plot
@@ -186,7 +186,7 @@ image_kwargs | {'path': 'pyH2A.Other~PV_E_Clipart.png'}
 
 Name | Value
 --- | ---
-show | True
+show | False
 save | False
 legend_loc | upper right
 log_scale | False

@@ -1124,6 +1124,7 @@ class Monte_Carlo_Analysis:
 	 									log_scale = False, 
 	 									xlabel_string = 'Development distance',
 	 									ylabel_string = r'Levelized $H_{2}$ cost / \$/kg',
+	 									linewidth = 1.5,
 	 									markersize = 0.2, marker_alpha = 0.2,
 	 									table_kwargs = {}, image_kwargs = {}, plot_kwargs = {},
 	 									**kwargs):
@@ -1149,6 +1150,8 @@ class Monte_Carlo_Analysis:
 			String for x axis label.
 		ylabel_string : str, optional
 			String for y axis label.
+		linewidth : float, optional
+			Line width for smoothed trendline.
 		markersize : float, optional
 			Size of markers in scatter plot.
 		marker_alpha : float, optional
@@ -1190,7 +1193,7 @@ class Monte_Carlo_Analysis:
 		ax.plot(self.results_distances_sorted[:,-1], self.results_distances_sorted[:,-2], '.', 
 				markersize = markersize, color = self.color, alpha = marker_alpha)
 		ax.plot(self.distances_cost_savgol[:,0], self.distances_cost_savgol[:,1], color = self.color, 
-			    label = self.display_name)
+			    label = self.display_name, linewidth = linewidth)
 
 		ax.axhspan(self.target_price_range[0], self.target_price_range[1], color = 'grey', alpha = 0.7)
 

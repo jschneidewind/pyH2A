@@ -142,7 +142,6 @@ class Comparative_MC_Analysis:
 			return figure.fig
 
 	def plot_comparative_distance_cost_relationship(self, ax = None, figure_lean = True,
-													target_line = 1.5, 
 													table_kwargs = {}, image_kwargs = {}, 
 											        plot_kwargs = {}, dist_kwargs = {},
 													**kwargs):
@@ -154,8 +153,6 @@ class Comparative_MC_Analysis:
 			Axes object in which plot is drawn. Default is None, creating new plot.
 		figure_lean : bool, optional
 			If figure_lean is True, matplotlib.fig object is returned.
-		target_line : float, optional
-			y axis coordinate of target price line.
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
 			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
@@ -174,8 +171,8 @@ class Comparative_MC_Analysis:
 
 		Returns 
 		-------
-		figure : matplotlib.fig or None
-			matplotlib.fig is returned if `figure_lean` is True.
+		figure : Figure_Lean object
+			Figure_Lean object is returned.
 		'''
 
 		model_number = len(self.models)
@@ -197,8 +194,10 @@ class Comparative_MC_Analysis:
 		if ax is None:
 			figure = Figure_Lean(**kwargs)
 			ax = figure.ax
+			return_figure = True
+		else:
+			return_figure = False
 
-		#ax.plot([0, 1], [target_line, target_line], '--', color = 'black')
 		ax.axhspan(self.target_price_range[0], self.target_price_range[1], color = 'grey', alpha = 0.7)
 
 		for counter, (model_name, model) in enumerate(self.models.items()):
@@ -217,10 +216,11 @@ class Comparative_MC_Analysis:
 
 		if figure_lean is True:
 			figure.execute()
-			return figure.fig
+		
+		if return_figure:
+			return figure
 
 	def plot_combined_distance(self, fig_width = 12, fig_height = 2,
-							   target_line = 1.5,
 							   table_kwargs = {}, image_kwargs = {}, 
 							   plot_kwargs = {}, dist_kwargs = {},
 							   hist_kwargs = {}, **kwargs):
@@ -294,7 +294,6 @@ class Comparative_MC_Analysis:
 											     image_kwargs = image_kwargs,
 											     hist_kwargs = hist_kwargs)
 
-		#ax0.plot([0, 1], [target_line, target_line], '--', color = 'black')
 		ax0.axhspan(self.target_price_range[0], self.target_price_range[1], color = 'grey', alpha = 0.7)
 
 		ax0.text(-0.16, 1.04, 'A', transform=ax0.transAxes, size = 24, weight='bold')

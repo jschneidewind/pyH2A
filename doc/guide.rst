@@ -117,7 +117,7 @@ Instead of entering actual values, it is also possible to enter references to ot
 	Nominal Power (kW) | 1.5 | Electrolyzer > Nominal Power (kW) > Value 
 	...
 
-In this case, the ``Path`` column of ``Photovoltaic > Nominal Power (kW) > Value`` references ``Electrolyzer > Nominal Power (kW) > Value ``. Because the reference is in the ``Path`` column, the referenced value is multiplied by the value in ``Photovoltaic > Nominal Power (kW) > Value``. In this case, use of referencing ensures that the photovoltaic nominal power is a factor of 1.5 higher than the electrolyzer nominal power (and it is automatically updated when the electrolyzer nominal power is changed).
+In this case, the ``Path`` column of ``Photovoltaic > Nominal Power (kW) > Value`` references ``Electrolyzer > Nominal Power (kW) > Value``. Because the reference is in the ``Path`` column, the referenced value is multiplied by the value in ``Photovoltaic > Nominal Power (kW) > Value``. In this case, use of referencing ensures that the photovoltaic nominal power is a factor of 1.5 higher than the electrolyzer nominal power (and it is automatically updated when the electrolyzer nominal power is changed).
 
 Run pyH2A
 =========

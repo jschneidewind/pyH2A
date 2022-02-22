@@ -208,6 +208,9 @@ class Development_Distance_Time_Analysis:
 
 		self.years_extended = years_extended
 
+		self.p_expo = p_expo
+		self.p_linear = p_linear
+
 	def determine_distance_time_correspondence(self, years, model, 
 											   spacing = 1,
 											   minimum_tick_distance = 0.1,

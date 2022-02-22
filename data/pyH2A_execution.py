@@ -20,6 +20,8 @@ def pv_e_limit():
 def pv_e_distance_time():
 	result = pyH2A('./PV_E/Historical_Data/PV_E_Distance_Time.md', './PV_E/Historical_Data')
 
+	print(result.meta_modules['Development_Distance_Time_Analysis']['Module'].p_linear)
+
 def pec_base():
 
 	result = pyH2A('./PEC/Base/PEC_Base.md', './PEC/Base')
@@ -100,7 +102,7 @@ def test():
 def main():
 	#pv_e_base()
 	#pv_e_limit()
-	#pv_e_distance_time()
+	pv_e_distance_time()
 	#pec_base()
 	#pec_limit()
 	#pec_limit_no_concentration()
@@ -108,8 +110,7 @@ def main():
 	#photocatalytic_limit()
 	#technology_comparison()
 	#test()
-	import sphinx_markdown_tables
-	pass
+
 
 
 	
