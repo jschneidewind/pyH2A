@@ -67,6 +67,7 @@ class Sensitivity_Analysis:
 			for value in values:
 				input_dict = copy.deepcopy(self.inp)
 				numerical_value = num(value)
+
 				value_type = self.inp['Sensitivity_Analysis'][key]['Type']
 
 				set_by_path(input_dict, parameters, numerical_value, 

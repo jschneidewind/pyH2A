@@ -191,7 +191,7 @@ def num(s):
 		try:
 			return num(s[:-1])/100.
 		except TypeError:
-			pass
+			return str(s)
 	else:
 		try:
 			return int(s.replace(',', ''))

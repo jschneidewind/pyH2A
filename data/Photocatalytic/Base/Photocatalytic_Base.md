@@ -232,7 +232,6 @@ distance_histogram | plot_distance_histogram | {'show': False, 'xlabel': True, '
 colored_scatter | plot_colored_scatter | Arguments - MC Analysis - colored_scatter
 complete_histogram | plot_complete_histogram | {'show': False, 'bins': 300}
 
-
 # Arguments - MC Analysis - colored_scatter
 
 Name | Value
