@@ -475,6 +475,24 @@ class Development_Distance_Time_Analysis:
 			figure.execute()
 			return figure.fig
 
+	def plot_distance_indicator(self, ax, target_distances, model, years, color, ylim_lower):
+
+		idx = find_nearest(model, target_distances)
+
+		x = years[idx[0]:idx[1]+1]
+		y = model[idx[0]:idx[1]+1]
+		y_lower = np.ones(len(x)) * ylim_lower
+
+		ax.fill_between(x, y, y_lower, color = color)
+
+		# for i in idx:
+		# 	x_coord = years[i]
+		# 	y_coord = model[i]
+
+		# 	ax.annotate('', xy = (x_coord, y_coord), 
+		# 					xytext = (x_coord, ylim_lower), 
+		# 					arrowprops={'arrowstyle': '-', 'ls': 'dashed', 'color': color})
+
 	def plot_distance_time_relationship(self, ax = None, figure_lean = True,  
 										legend_loc = 'upper left',
 										xlabel_string = 'Year',
@@ -483,7 +501,9 @@ class Development_Distance_Time_Analysis:
 										linear_label_string = 'Linear model',
 										datapoint_label_string = ' historical distance',
 										markersize = 10,
+										color_future = True,
 										parameter_table = True,
+										target_distances = None,
 										table_kwargs = {}, image_kwargs = {}, plot_kwargs = {},
 										**kwargs):
 		'''Ploting relationship between time and development distance based on 
@@ -510,8 +530,13 @@ class Development_Distance_Time_Analysis:
 			is the display name of the model.
 		markersize : float, optional
 			Size of markers in scatter plot.
+		color_future : bool, optional
+			Boolean flag to control if past or future region of plot is colored.
 		parameter_table : bool, optional
 			If parameter_table is True, the parameter table is shown in the plot.
+		target_distances : ndarray, optional
+			Target distance range as an 1D array with two entries ([lower_limit, higher_limit]),
+			which is highlighted in the plot.
 		image_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
 			:func:`~pyH2A.Utilities.output_utilities.insert_image`
@@ -552,10 +577,18 @@ class Development_Distance_Time_Analysis:
 		ax.plot(self.years, self.distances, '.', color = self.color, markersize = markersize,
 				label = self.display_name + datapoint_label_string)
 
-		ax.axhspan(0, 1, color = cm(0.5), alpha = 0.1)
-		ax.axvspan(self.base_year, np.amax(self.years_extended), color = cm(0.75), alpha = 0.1)
+		xlim = ax.get_xlim()
+		ax.set_xlim(left = xlim[0], right = np.amax(self.years_extended))
 
-		ax.set_xlim(right = np.amax(self.years_extended))
+		ylim = ax.get_ylim()
+		ax.set_ylim(ylim)
+
+		ax.axhspan(0, 1, color = cm(0.5), alpha = 0.1)
+
+		if color_future:
+			ax.axvspan(self.base_year, np.amax(self.years_extended), color = cm(0.75), alpha = 0.1)
+		else:
+			ax.axvspan(xlim[0], self.base_year, color = cm(0.75), alpha = 0.1)
 
 		ax.set_xlabel(xlabel_string)
 		ax.set_ylabel(ylabel_string)
@@ -568,6 +601,16 @@ class Development_Distance_Time_Analysis:
 
 		if image_kwargs['path'] is not None:
 			insert_image(ax = ax, **image_kwargs)
+
+		if target_distances is not None:
+			ax.axhspan(target_distances[0], target_distances[1], color = 'gray', alpha = 0.3)
+
+			self.plot_distance_indicator(ax, target_distances, self.linear_distance_model,
+										 self.years_extended, cm(0.25), ylim[0])
+
+			self.plot_distance_indicator(ax, target_distances, self.expo_distance_model,
+										 self.years_extended, cm(0.0), ylim[0])
+
 
 		if figure_lean is True:
 			figure.execute()

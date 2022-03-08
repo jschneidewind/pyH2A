@@ -238,7 +238,7 @@ Name | Value
 --- | ---
 show | False
 save | False
-pdf | True
+pdf | False
 dpi | 500
 base_string | Base
 title_string | Target cost range: 

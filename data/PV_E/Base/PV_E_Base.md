@@ -193,7 +193,7 @@ Name | Value
 --- | ---
 show | False
 save | False
-pdf | True
+pdf | False
 dpi | 500
 base_string | Base
 title_string | Target cost range: 
@@ -247,7 +247,7 @@ Name | Value
 --- | ---
 show | False
 save | False
-pdf | True
+pdf | False
 dpi | 500
 fig_width | 5.5
 fig_height | 4.5

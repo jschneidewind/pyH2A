@@ -153,6 +153,7 @@ Name | Method Name | Arguments
 plot_distance_histogram_log | plot_distance_histogram | {'show': False, 'save': False, 'dpi': 400, 'pdf': True, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
 plot_distance_cost_log | plot_distance_cost_relationship | {'show': False, 'save': False, 'dpi': 300, 'pdf': False, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
 plot_distance_time | plot_distance_time_relationship | Arguments - Time Analysis - distance_time_plot
+plot_distance_time_no_table | plot_distance_time_relationship | Arguments - Time Analysis - distance_time_plot_no_table
 
 # Arguments - Time Analysis - distance_time_plot
 
@@ -162,7 +163,23 @@ show | True
 save | False
 dpi | 500
 pdf | True
+color_future | False
 image_kwargs | {'path': 'pyH2A.Other~PV_E_Clipart.png'}
+
+# Arguments - Time Analysis - distance_time_plot_no_table
+
+Name | Value
+--- | ---
+show | False
+save | False
+name | Distance_Time_Relationship_No_Table
+dpi | 500
+pdf | False
+parameter_table | False
+color_future | False
+target_distances | [0.5, 0.6]
+plot_kwargs | {'left': 0.34, 'right': 0.96, 'bottom': 0.13, 'top': 0.96, 'fig_width': 6.2, 'fig_height': 4.0}
+image_kwargs | {'x': -0.37, 'zoom': 0.092, 'y': 0.5, 'path': 'pyH2A.Other~PV_E_Clipart.png'}
 
 # Methods - Monte_Carlo_Analysis
 

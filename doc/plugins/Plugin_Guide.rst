@@ -8,9 +8,9 @@ pyH2A follows the open-closed principle, meaning that new plugins can be interfa
 Structure
 ---------
 
-Plugins are single ``.py`` files, which contain a class with the same name as the filename (this shared name should include the term ``Plugin``). This class is instantiated during pyH2A runtime. The file may also contain other classes and functions, which serve the central class.
+Plugins are single ``.py`` files, which contain a class with the same name as the filename (this shared name should include the term ``Plugin``). This class is instantiated during pyH2A runtime. Instantiation requires two arguments: ``dcf``, which is discounted cash flow object (generated during pyH2A runtime) and ``print_info``, which is a flag to control printing of additional runtime information (this flag is passed to :func:`~pyH2A.Utilities.input_modification.insert`) The file may also contain other classes and functions, which serve the central class.
 
-The overall idea is that during instantiation, the class reads information from ``dcf.inp`` (the directory generated from the input file), processes the information and inserts new information into ``dcf.inp``. ``dcf.inp`` is the medium of information exchange between plugins and by inserting information there, the results of the plugin affect the outcome of the discounted cashflow analysis.
+The overall idea is that during instantiation, the class reads information from ``dcf.inp`` (the dictionary generated from the input file), processes the information and inserts new information into ``dcf.inp``. ``dcf.inp`` is the medium of information exchange between plugins and by inserting information there, the results of the plugin affect the outcome of the discounted cashflow analysis.
 
 Example
 -------

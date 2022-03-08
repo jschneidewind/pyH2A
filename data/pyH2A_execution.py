@@ -100,13 +100,13 @@ def test():
 	print(Energy(285.83 * (1000./2.) * con.Avogadro, kJmol).J)
 
 def main():
-	#pv_e_base()
+	pv_e_base()
 	#pv_e_limit()
 	#pv_e_distance_time()
 	#pec_base()
 	#pec_limit()
 	#pec_limit_no_concentration()
-	photocatalytic_base()
+	#photocatalytic_base()
 	#photocatalytic_limit()
 	#technology_comparison()
 	#test()
