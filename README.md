@@ -1,6 +1,7 @@
 <img align="right" src="https://github.com/jschneidewind/pyH2A/blob/master/src/pyH2A/Other/pyH2A.svg?raw=true"/>
 
 [![Documentation Status](https://readthedocs.org/projects/pyh2a/badge/?version=latest)](https://pyh2a.readthedocs.io/en/latest/?badge=latest)
+[![DOI](https://zenodo.org/badge/332826132.svg)](https://zenodo.org/badge/latestdoi/332826132)
 
 # pyH2A
 
@@ -49,6 +50,8 @@ pyH2A run -i ../Input/Input.md -o ../Output/Example_Output
 Alternatively, the `pyH2A` class from `pyH2A.run_pyH2A.py` can imported and used within a Python script.
 
 Input is provided using a plaintext Markdown file. Input files are structured by headers (designated by '#'), which are followed by Markdown style tables. Headers and tables are parsed by `pyH2A.py` to generate dictionaries which are used for computations. Certain input sections are mandatory (such as `Technical Operating Parameters and Specifications` or `Financial Input Values`). Additional input sections can be processed by invoking `Plugins`, which perform additional calculations that feed into the discounted cash flow analysis. Finally, the input file can invoke `Analysis` modules to analyze and visualize the output.
+
+Tools such as [StackEdit](https://stackedit.io/app#) can be used to edit markdown files while having a live view of the formatted version. This can help with readability of complex tables.
 
 # Example output
 
