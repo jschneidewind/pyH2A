@@ -43,7 +43,7 @@ class pyH2A:
 			input_file: str, 
 			output_directory: str, 
 			print_info: bool = False,
-			store_snapshots: bool = False,
+			snapshot_directory: str | None = None,
 			) -> None:
 
 		current_time = time.time()
@@ -57,7 +57,7 @@ class pyH2A:
 		self.file_name = os.path.basename(input_file).split('.')[0]
 		self.output_directory = output_directory
 		self.inp = convert_input_to_dictionary(self.input_file)
-		self.base_case = DiscountedCashFlow(self.input_file, print_info = print_info, store_snapshots=store_snapshots)
+		self.base_case = DiscountedCashFlow(self.input_file, print_info = print_info, snapshot_directory = snapshot_directory)
 
 		self.meta_modules = {}
 		self.meta_workflow(self.meta_modules)

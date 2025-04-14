@@ -25,7 +25,7 @@ class Plugin:
 
     def process_insert_queue(self) -> None:
         """Inserts the calculated values into the DCF."""
-        if self.dcf.store_snapshots:
+        if self.dcf.snapshot_directory != None:
             self._store_snapshot()
 
         for entry in self.insert_queue:
@@ -61,10 +61,10 @@ class Plugin:
 
     def _store_snapshot(self):
         """Stores insert queue dict entry keys (key, subkey, field) to a CSV file if store_snapshots is True."""
-        if not self.dcf.store_snapshots:
+        if self.dcf.snapshot_directory is None:
             return
 
-        dict_entries_file = f"tests/snapshots/{self.__class__.__name__}-dict_entries.csv"
+        dict_entries_file = f"{self.dcf.snapshot_directory}{self.__class__.__name__}-dict_entries.csv"
         os.makedirs(os.path.dirname(dict_entries_file), exist_ok=True)
 
         with open(dict_entries_file, 'w', newline='') as csvfile:
@@ -75,3 +75,4 @@ class Plugin:
                 subkey = entry.get("subkey", "")
                 field = entry.get("field", "Value")
                 writer.writerow([key, subkey, field])
+        self.logger.info(f"Stored snapshot entries to {dict_entries_file}")

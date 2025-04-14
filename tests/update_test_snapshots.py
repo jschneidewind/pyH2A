@@ -1,16 +1,18 @@
 import sys
 from pyH2A.run_pyH2A import pyH2A
-from tests.test_pyh2a import test_pv_e, test_pec, test_photocatalytic_base
+from tests.test_pec import test_pec
+from tests.test_photocatalytic import test_photocatalytic
+from tests.test_pve import test_pve
 
 def update_all():
-    test_pv_e()
-    pyH2A('./tests/PV_E.md', './tests/Results/PV_E/', store_snapshots=True)
+    test_pve()
+    pyH2A('./tests/PV_E.md', './tests/Results/PV_E/', snapshot_directory="tests/snapshots/PV_E/")
     
     test_pec()
-    pyH2A('./tests/PEC.md', './tests/Results/PEC/', store_snapshots=True)
+    pyH2A('./tests/PEC.md', './tests/Results/PEC/', snapshot_directory="tests/snapshots/PEC/")
     
-    test_photocatalytic_base()
-    pyH2A('./tests/Photocatalytic.md', './tests/Results/Photocatalytic/', store_snapshots=True)
+    test_photocatalytic()
+    pyH2A('./tests/Photocatalytic.md', './tests/Results/Photocatalytic/', snapshot_directory="tests/snapshots/Photocatalytic/")
 
 def main():
     if len(sys.argv) < 2:
@@ -21,14 +23,14 @@ def main():
     if choice == "all":
         update_all()
     elif choice == "pve":
-        test_pv_e()
-        pyH2A('./tests/PV_E.md', './tests/Results/PV_E/', store_snapshots=True)
+        test_pve()
+        pyH2A('./tests/PV_E.md', './tests/Results/PV_E/', snapshot_directory="tests/snapshots/PV_E/")
     elif choice == "pec":
         test_pec()
-        pyH2A('./tests/PEC.md', './tests/Results/PEC/', store_snapshots=True)
+        pyH2A('./tests/PEC.md', './tests/Results/PEC/', snapshot_directory="tests/snapshots/PEC/")
     elif choice == "photocatalytic":
-        test_photocatalytic_base()
-        pyH2A('./tests/Photocatalytic.md', './tests/Results/Photocatalytic/', store_snapshots=True)
+        test_photocatalytic()
+        pyH2A('./tests/Photocatalytic.md', './tests/Results/Photocatalytic/', snapshot_directory="tests/snapshots/Photocatalytic/")
     else:
         print("Invalid choice. Please use 'all', 'pve', 'pec', or 'photocatalytic'.")
         sys.exit(1)

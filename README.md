@@ -78,7 +78,7 @@ Tools such as [StackEdit](https://stackedit.io/app#) can be used to edit markdow
 
 To execute a Python script outside the `pyH2A` package, use the following command:
 ```bash
-python3 -m path.to.file
+python3 /path/to/file.py
 ```
 This will run the script as a standalone module.
 
@@ -89,11 +89,14 @@ pyH2A uses `pytest` for testing. To run all tests in the codebase, use:
 pytest
 ```
 
-To run individual tests, specify the test method within the relevant test file:
+To run individual tests, specify the test method within the relevant test file (replace test_name with the appropriate test name):
 ```bash
-pytest tests/test_pyh2a.py::test_pv_e_base
-pytest tests/test_pyh2a.py::test_pec
-pytest tests/test_pyh2a.py::test_photocatalytic_base
+pytest tests/test_pyh2a.py::test_name
+```
+
+To capture the most current version of expected values for the tests (e.g. when having changed the input file and being sure that the calculation runs correctly) run (replace all with `pve`, `pce`, or `photocatalytic` for more specific snapshot update):
+```bash
+python3 -m tests.update_test_snapshots all
 ```
 
 You can also pass flags like `-v` for verbose output or `--maxfail` to limit the number of failures.
