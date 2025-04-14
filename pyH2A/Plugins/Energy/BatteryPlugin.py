@@ -47,8 +47,9 @@ class BatteryPlugin(Plugin):
             self
             ) -> None:
         tea = BatteryPluginTEA(self)
+        lca = BatteryPluginLCA(self)
         tea.calculate_electricity_storage()
-
+        lca.export_battery_weight()
 
 class BatteryPluginTEA:
     def __init__(
