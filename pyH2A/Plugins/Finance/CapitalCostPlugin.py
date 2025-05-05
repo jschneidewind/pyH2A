@@ -90,7 +90,7 @@ class CapitalCostPluginTEA:
 		'''Calculation of direct capital costs by applying ``sum_all_tables()`` to "Direct Capital Cost" group.
 		'''
 		(self.direct, 
-   		 self.direct_contributions) = sum_all_tables(self.plugin.dcf.inp, 'Direct Capital Cost', 'Value',
+   		 self.plugin.direct_contributions) = sum_all_tables(self.plugin.dcf.inp, 'Direct Capital Cost', 'Value',
 												  insert_total = True, class_object = self.plugin.dcf, 
 												  print_info = self.plugin.dcf.print_info, return_contributions = True
 												)

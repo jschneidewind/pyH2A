@@ -123,6 +123,8 @@ class PlannedReplacement:
 		Replacement costs are billed annually, replacements which are performed at a non-integer rate 
 		are corrected using non_integer_correction.
 		'''
+		print("dictionary", dictionary)
+		print("key", key)
 		replacement_frequency = int(np.ceil(dictionary['Frequency (years)']))
 		non_integer_correction = replacement_frequency / dictionary['Frequency (years)']
 

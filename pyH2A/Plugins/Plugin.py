@@ -13,11 +13,6 @@ class Plugin:
         self.logger = logging.getLogger(self.mod)
         self.logger.info(f"Starting {self.__class__.__name__}")
 
-        # Define snapshot file path
-        self.snapshot_file = os.path.join(
-            "tests/snapshots", f"{self.__class__.__name__}.json"
-        )
-
     def process_table(self, table_keys: list[str]) -> None:
         """Processes input table."""
         for table_key in table_keys:
@@ -64,7 +59,7 @@ class Plugin:
         if self.dcf.snapshot_directory is None:
             return
 
-        dict_entries_file = f"{self.dcf.snapshot_directory}{self.__class__.__name__}-dict_entries.csv"
+        dict_entries_file = f"{self.dcf.snapshot_directory}/{self.__class__.__name__}/dict_entries.csv"
         os.makedirs(os.path.dirname(dict_entries_file), exist_ok=True)
 
         with open(dict_entries_file, 'w', newline='') as csvfile:

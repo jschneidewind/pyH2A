@@ -364,16 +364,16 @@ class DiscountedCashFlow:
 			else:
 				if self.snapshot_directory != None:
 					plugin_name = key if "." not in key else key.split(".")[1]
-					if not os.path.exists(self.snapshot_directory):
-						os.makedirs(self.snapshot_directory)
-					with open(f"{self.snapshot_directory}{plugin_name}-snapshot_before.pkl", "wb") as f:
+					if not os.path.exists(f"{self.snapshot_directory}/{plugin_name}"):
+						os.makedirs(f"{self.snapshot_directory}/{plugin_name}")
+					with open(f"{self.snapshot_directory}/{plugin_name}/snapshot_before.pkl", "wb") as f:
 						pickle.dump(self, f)
-					self.logger.info(f"Storing snapshot before executing {plugin_name} plugin to {self.snapshot_directory}{plugin_name}-snapshot_before.pkl")
+					self.logger.info(f"Storing snapshot before executing {plugin_name} plugin to {self.snapshot_directory}/{plugin_name}/snapshot_before.pkl")
 				execute_plugin(key, plugs_dict, dcf = self)
 				if self.snapshot_directory != None:
-					with open(f"{self.snapshot_directory}{plugin_name}-snapshot_after.pkl", "wb") as f:
+					with open(f"{self.snapshot_directory}/{plugin_name}/snapshot_after.pkl", "wb") as f:
 						pickle.dump(self, f)
-					self.logger.info(f"Storing snapshot after executing {plugin_name} plugin to {self.snapshot_directory}{plugin_name}-snapshot_after.pkl")
+					self.logger.info(f"Storing snapshot after executing {plugin_name} plugin to {self.snapshot_directory}/{plugin_name}/snapshot_after.pkl")
 	def post_workflow(self):
 		'''Functions executed after workflow.
 

@@ -1047,7 +1047,7 @@ class Monte_Carlo_Analysis:
 	
 		ax.grid(color = 'grey', linestyle = '--', linewidth = 0.2, zorder = 0)
 
-		plt.show()
+		#plt.show()
 
 		return fig
 

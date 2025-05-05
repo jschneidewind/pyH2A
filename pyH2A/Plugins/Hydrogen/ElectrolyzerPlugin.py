@@ -134,7 +134,7 @@ class ElectrolyserPluginTEA:
         )
         # This case needs extra parameters so they are included in the dictionary.
         self.plugin.insert_queue.append(
-            {'key': 'Planned Replacement', 'subkey': 'Electrolyzer Stack Replacement', 'value': replacement_frequency, 'add_processed': False, 'insert_path': False}
+            {'key': 'Planned Replacement', 'subkey': 'Electrolyzer Stack Replacement', 'field': 'Frequency (years)', 'value': replacement_frequency, 'add_processed': False, 'insert_path': False}
         )
 
 class ElectrolyserPluginLCA:

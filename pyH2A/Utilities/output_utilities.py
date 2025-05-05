@@ -150,7 +150,7 @@ class Figure_Lean:
 		`show` and `save` options.
 		'''
 		if self.show:
-			plt.show()
+			'plt.show()'
 		else:
 			plt.close()
 

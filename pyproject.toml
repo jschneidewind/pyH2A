@@ -20,5 +20,8 @@ dependencies = [
     "nptyping"
 ]
 
+[project.scripts]
+pyH2A = "pyH2A.cli_pyH2A:cli"
+
 [tool.setuptools]
-packages = ["pyH2A"]
+packages = ["pyH2A", "tests"]
