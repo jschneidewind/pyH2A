@@ -10,6 +10,12 @@ def pytest_addoption(parser):
         default=False,
         help="After tests pass, regenerate snapshot files."
     )
+    parser.addoption(
+        "--update-templates", 
+        action="store_true", 
+        default=False, 
+        help="Update mode input templates"
+    )
 
 @pytest.fixture
 def run_pyh2a(request, tmp_path):
