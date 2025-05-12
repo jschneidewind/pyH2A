@@ -164,57 +164,6 @@ Name | Cost ($) | Path
 --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value
 
-# Sensitivity_Analysis
-
-Parameter | Name | Type | Values
---- | --- | --- | ---
-Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. cost (% of E-CAPEX) | value | 20%; 80%
-Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | PV CAPEX (\$/kW) | value | 400; 1600
-Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | Electrolyzer CAPEX (\$/kW) | value | 400; 1600
-Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | Electrolyzer efficiency (kg H_{2}/kWh) | value | 0.015; 0.025
-Photovoltaic > Power loss per year > Value | PV power loss per year | value | 0.25%; 1.0%
-Electrolyzer > Power requirement increase per year > Value | Electrolyzer power increase per year | value | 0.15%; 0.6%
-
-# Waterfall_Analysis
-
-Parameter | Name | Type | Value | Show Percent
---- | --- | --- | --- | ---
-Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$)/ kWh(Electricity) | value | 0.025
-Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | \$/kW(PV) | value | 220
-Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$/kW(Electro- lyzer) | value | 200
-Planned Replacement > Electrolyzer Stack Replacement > Cost ($)| Stack replacement (%E-CAPEX) | value | 20% | True
-
-# Cost_Contributions_Analysis
-
-# Methods - Cost_Contributions_Analysis
-
-Name | Method Name | Arguments
---- | --- | ---
-cost_breakdown_plot_total | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot', 'show': False}
-
-# Monte_Carlo_Analysis
-
-Name | Value
---- | ---
-Samples | 1000
-Target Price Range ($) | 1.5; 2.5
-Input File | pyH2A.Example~PV_E_Monte_Carlo.csv
-
-# Parameters - Monte_Carlo_Analysis
-
-Parameter | Name | Type | Values | File Index
---- | --- | --- | --- | ---
-Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | \$ / kW(PV) | value | Base; 200 | 0
-Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$ / kW(Electrolyzer) | value | Base; 200 | 1
-Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Electricity) | value | Base; 0.029 | 2
-
-# Methods - Monte_Carlo_Analysis
-
-Name | Method Name | Arguments
---- | --- | ---
-distance_histogram | plot_distance_histogram | {'show': False}
-distance_cost_relationship | plot_distance_cost_relationship | {'show': True}
-
 # Optimization_Analysis
 
 Name | Value

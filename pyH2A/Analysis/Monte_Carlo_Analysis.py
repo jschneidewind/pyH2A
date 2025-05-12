@@ -307,7 +307,6 @@ class Monte_Carlo_Analysis:
 
 		values = np.empty((samples, number_parameters))
 		parameters = {}
-
 		for counter, key in enumerate(monte):
 			values_range = parse_parameter_to_array(monte[key]['Values'], delimiter = ';', dictionary = self.inp, top_key = 'Parameters - Monte_Carlo_Analysis', middle_key = key, bottom_key = 'Values', special_values = ['Base', 'Reference'], path = key)
 
@@ -319,7 +318,6 @@ class Monte_Carlo_Analysis:
 			limit = select_non_reference_value(reference, values_range)
 		
 			parameters[monte[key]['Name']] = {'Parameter': path, 'Type': monte[key]['Type'], 'Values': values_range, 'Reference': reference, 'Index': counter, 'Input Index': counter, 'Limit': limit}
-	
 		self.values = values
 		self.parameters = parameters
 		self.target_price_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis']['Target Price Range ($)']['Value'], delimiter = ';', dictionary = self.inp)
@@ -849,7 +847,7 @@ class Monte_Carlo_Analysis:
 
 		results_distances = np.c_[self.results, distances]
 		self.results_distances_sorted = results_distances[np.argsort(results_distances[:,-1])]
-
+		
 		smoothed = savgol_filter(self.results_distances_sorted[:,-2], window_length, poly_order)
 	
 		self.distances_cost_savgol = np.c_[self.results_distances_sorted[:,-1], smoothed]
@@ -859,7 +857,7 @@ class Monte_Carlo_Analysis:
 			bins : int = None, 
 			xlim_low : float = None, 
 			xlim_high : float = None, 
-			xlabel_string : str = 'Levelized $H_{2}$ Cost / \$/kg', 
+			xlabel_string : str = r'Levelized $H_{2}$ Cost / \$/kg', 
 			ylabel_string : str = 'Normalized Frequency', 
 			image_kwargs : dict = {}, 
 			plot_kwargs : dict = {}, 
@@ -987,7 +985,7 @@ class Monte_Carlo_Analysis:
 
 		ax.annotate(make_bold(base_string), xy = (par[pc[0]]['Reference'], par[pc[1]]['Reference']), xytext = (xtext, ytext), textcoords = 'axes fraction')
 
-		ax.set_title(title_string + f' {self.target_price_range[0]} - {self.target_price_range[1]} \$/kg($H_{2}$)')
+		ax.set_title(title_string + fr' {self.target_price_range[0]} - {self.target_price_range[1]} \$/kg($H_{2}$)')
 
 		ax.grid(color = 'grey', linestyle = '--', linewidth = 0.2, zorder = 0)
 
@@ -1043,7 +1041,7 @@ class Monte_Carlo_Analysis:
 		ax.set_zlabel(pc[3])
 		colorbar.set_label(pc[2])
 
-		ax.set_title(make_bold(title_string) + '{0} - {1} \$/kg'.format(self.target_price_range[0], self.target_price_range[1]))
+		ax.set_title(make_bold(title_string) + r'{0} - {1} \$/kg'.format(self.target_price_range[0], self.target_price_range[1]))
 	
 		ax.grid(color = 'grey', linestyle = '--', linewidth = 0.2, zorder = 0)
 
@@ -1123,7 +1121,7 @@ class Monte_Carlo_Analysis:
 			ax = figure.ax
 
 		if title is True:
-			ax.title.set_text(title_string + f' {self.target_price_range[0]} - {self.target_price_range[1]} \$/kg($H_{2}$)')
+			ax.title.set_text(title_string + fr' {self.target_price_range[0]} - {self.target_price_range[1]} \$/kg($H_{2}$)')
 
 		yhist, xhist, rectangle = ax.hist(self.distances, bins = bins, density=False, color=self.color, edgecolor = 'black')
 		density = np.sum(np.diff(xhist) * yhist)
@@ -1141,7 +1139,7 @@ class Monte_Carlo_Analysis:
 		ax.set_ylabel(ylabel_string)
 
 		if show_mu:
-			ax.annotate(f'$\mu$ = {mu:.2f}\n$\sigma$ = {std:.3f}', xy = (mu_x, mu_y), va = 'center', ha = 'center', xycoords = ax.transAxes)
+			ax.annotate(fr'$\mu$ = {mu:.2f}\n$\sigma$ = {std:.3f}', xy = (mu_x, mu_y), va = 'center', ha = 'center', xycoords = ax.transAxes)
 
 		if image_kwargs['path'] is not None:
 			insert_image(ax = ax, **image_kwargs)

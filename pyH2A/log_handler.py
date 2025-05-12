@@ -28,7 +28,10 @@ def setup_logging(log_file=None):
     # Get the root logger (or a specific logger, e.g., 'pyH2A')
     logger = logging.getLogger("pyH2A")
     logger.setLevel(logging.DEBUG)
-    logger.handlers.clear() 
+    for handler in logger.handlers:
+        handler.close()
+    logger.handlers.clear()
+
 
     # Prevent propagation for noisy third-party libraries
     logging.getLogger("PIL").propagate = False
