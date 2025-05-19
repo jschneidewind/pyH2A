@@ -19,19 +19,6 @@ Parameter | Value | Full Name
 [...] | float | n/a
 capital perc 1st | 1.0 | % of Capital Spent in 1st Year of Construction
 
-# Electrolyzer
-
-Parameter | Value
---- | ---
-Yearly Operation Data | nd.array
-H2 Production (yearly, kg) | nd.array
-Nominal Power (kW) | 5500.0
-CAPEX Reference Power (kW) | 1000.0
-Power requirement increase per year | 0.01
-Minimum capacity | 0.1
-Conversion efficiency (kg H2/kWh) | 0.02
-Replacement time (h) | 40000.0
-
 # Technical Operating Parameters and Specifications
 
 Parameter | Value
@@ -162,6 +149,17 @@ Parameter | Value | Full Name
 --- | --- | ---
 Multiplier | 1.0 | CAPEX multiplier for every 10-fold increase of system size
 
+# Electrolyzer
+
+Parameter | Value
+--- | ---
+Nominal Power (kW) | 5500.0
+CAPEX Reference Power (kW) | 1000.0
+Power requirement increase per year | 0.01
+Minimum capacity | 0.1
+Conversion efficiency (kg H2/kWh) | 0.02
+Replacement time (h) | 40000.0
+
 # Electrolysis Using Stored Power
 
 Parameter | Value | Comment
@@ -240,5 +238,27 @@ Cost ($/kWh) | 10000.12
 Parameter | Method Name | Arguments
 --- | --- | ---
 distance_histogram | plot_distance_histogram | {'show': False}
-distance_cost_relationship | plot_distance_cost_relationship | {'show': True}
+distance_cost_relationship | plot_distance_cost_relationship | {'show': False}
+colored_scatter | plot_colored_scatter | Arguments - MC Analysis - colored_scatter
+target_parameters | plot_target_parameters_by_distance | {'show': False}
+complete_histogram | plot_complete_histogram | {'show': False, 'bins': 300}
+
+# colored_scatter_3d | plot_colored_scatter_3D | {'show': False}
+
+Parameter | Method Name | Arguments
+--- | --- | ---
+#colored_scatter_3d | plot_colored_scatter_3D | {'show': False}
+
+# Arguments - MC Analysis - colored_scatter
+
+Parameter | Value
+--- | ---
+show | False
+save | False
+pdf | True
+dpi | 500
+base_string | Base
+title_string | Target cost range:
+plot_kwargs | {'left': 0.32, 'right': 0.94, 'bottom': 0.13, 'top': 0.92, 'fig_width': 6.5, 'fig_height': 4.0}
+image_kwargs | {'x': -0.41, 'zoom': 0.092, 'y': 0.5, 'path': 'pyH2A.Other~PV_E_Clipart.png'}
 

@@ -19,24 +19,10 @@ Parameter | Value | Full Name
 [...] | float | n/a
 capital perc 1st | 1.0 | % of capital spent in 1st year of construction
 
-# Electrolyzer
-
-Parameter | Value | Comment
---- | --- | ---
-Yearly Operation Data | nd.array | n/a
-H2 Production (yearly, kg) | nd.array | n/a
-Nominal Power (kW) | 5500.0 | Production of ca. 1 t of H2 per day to compare with PEC and photocatalytic models.
-CAPEX Reference Power (kW) | 1000.0 | n/a
-Power requirement increase per year | 0.003 | Based on Chang 2020
-Minimum capacity | 0.1 | Based on Chang 2020, minimum capacity for electrolyzer to operate.
-Conversion efficiency (kg H2/kWh) | 0.0185 | Based on Chang 2020
-Replacement time (h) | 80000.0 | Based on Chang 2020, operating time after which electrolyzer stacks have to be replaced.
-
 # Technical Operating Parameters and Specifications
 
 Parameter | Value | Comment
 --- | --- | ---
-Operating Capacity Factor (%) | float | n/a
 Maximum Output at Gate | float, optional | n/a
 New Plant Design Capacity (kg of H2/day) | float, optional | n/a
 Scaling Ratio | float, optional | n/a
@@ -153,6 +139,17 @@ Data | Hourly Irradiation > Horizontal Single Axis Tracking (kW) > Value | Singl
 Parameter | Value | Full Name
 --- | --- | ---
 Multiplier | 1.0 | CAPEX multiplier for every 10-fold increase of system size.
+
+# Electrolyzer
+
+Parameter | Value | Comment
+--- | --- | ---
+Nominal Power (kW) | 5500.0 | Production of ca. 1 t of H2 per day to compare with PEC and photocatalytic models.
+CAPEX Reference Power (kW) | 1000.0 | n/a
+Power requirement increase per year | 0.003 | Based on Chang 2020
+Minimum capacity | 0.1 | Based on Chang 2020, minimum capacity for electrolyzer to operate.
+Conversion efficiency (kg H2/kWh) | 0.0185 | Based on Chang 2020
+Replacement time (h) | 80000.0 | Based on Chang 2020, operating time after which electrolyzer stacks have to be replaced.
 
 # Electrolysis Using Stored Power
 

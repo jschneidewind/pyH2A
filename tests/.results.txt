@@ -3,18 +3,18 @@ ______________________________________________________________________ coverage:
 
 Name                                                      Stmts   Miss  Cover
 -----------------------------------------------------------------------------
-pyH2A/Analysis/Comparative_MC_Analysis.py                    97     97     0%
+pyH2A/Analysis/Comparative_MC_Analysis.py                    97      3    97%
 pyH2A/Analysis/Cost_Contributions_Analysis.py                47      0   100%
-pyH2A/Analysis/Development_Distance_Time_Analysis.py        193    193     0%
-pyH2A/Analysis/Monte_Carlo_Analysis.py                      422    193    54%
+pyH2A/Analysis/Development_Distance_Time_Analysis.py        193      7    96%
+pyH2A/Analysis/Monte_Carlo_Analysis.py                      419     39    91%
 pyH2A/Analysis/Optimization_Analysis.py                      27      0   100%
 pyH2A/Analysis/Sensitivity_Analysis.py                       87      2    98%
-pyH2A/Analysis/Waterfall_Analysis.py                        112     55    51%
+pyH2A/Analysis/Waterfall_Analysis.py                        112      2    98%
 pyH2A/Analysis/__init__.py                                    0      0   100%
 pyH2A/Config/__init__.py                                      0      0   100%
-pyH2A/DiscountedCashFlow.py                                 266     21    92%
+pyH2A/DiscountedCashFlow.py                                 266     28    89%
 pyH2A/Example/__init__.py                                     0      0   100%
-pyH2A/LCA/LCA.py                                             51      2    96%
+pyH2A/LCA/LCA.py                                             50      2    96%
 pyH2A/LCA/LCA_lib.py                                        151     41    73%
 pyH2A/LCA/__init__.py                                         0      0   100%
 pyH2A/Lookup_Tables/Hourly_Irradiation_Data/__init__.py       0      0   100%
@@ -23,7 +23,7 @@ pyH2A/Lookup_Tables/__init__.py                               0      0   100%
 pyH2A/Other/__init__.py                                       0      0   100%
 pyH2A/Plugins/Background/MultipleModulesPlugin.py            16      0   100%
 pyH2A/Plugins/Background/ProductionScalingPlugin.py          36     11    69%
-pyH2A/Plugins/Background/ReplacementPlugin.py                46      0   100%
+pyH2A/Plugins/Background/ReplacementPlugin.py                44      0   100%
 pyH2A/Plugins/Energy/BatteryPlugin.py                        43      0   100%
 pyH2A/Plugins/Energy/HourlyIrradiationPlugin.py              64      0   100%
 pyH2A/Plugins/Energy/PhotovoltaicPlugin.py                   52      1    98%
@@ -44,13 +44,13 @@ pyH2A/Plugins/__init__.py                                    19      0   100%
 pyH2A/Utilities/Energy_Conversion.py                         38      5    87%
 pyH2A/Utilities/__init__.py                                   0      0   100%
 pyH2A/Utilities/find_nearest.py                              14      0   100%
-pyH2A/Utilities/input_modification.py                       270     26    90%
-pyH2A/Utilities/output_utilities.py                         112     44    61%
-pyH2A/Utilities/plugin_input_output_processing.py           174    174     0%
+pyH2A/Utilities/input_modification.py                       270     17    94%
+pyH2A/Utilities/output_utilities.py                         112     36    68%
+pyH2A/Utilities/plugin_input_output_processing.py           174      5    97%
 pyH2A/__init__.py                                             1      0   100%
 pyH2A/__main__.py                                             0      0   100%
 pyH2A/cli_pyH2A.py                                           19     19     0%
-pyH2A/log_handler.py                                         31      2    94%
+pyH2A/log_handler.py                                         33      2    94%
 pyH2A/run_pyH2A.py                                           64      9    86%
 -----------------------------------------------------------------------------
-TOTAL                                                      3038    924    70%
+TOTAL                                                      3034    258    91%

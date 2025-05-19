@@ -84,7 +84,6 @@ class LCA:
         self.scaling_vector[0] = total_H2_production
 
         for key in dcf.inp:
-            print(key)
             if table_group in key:
                 process_table(dcf.inp, key, 'Value')
                 process_LCA_table(self.scaling_vector, dcf.inp[key], self.tech_index_dict, self.logger)

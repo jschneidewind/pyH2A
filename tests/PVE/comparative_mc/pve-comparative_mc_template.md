@@ -19,19 +19,6 @@ Parameter | Value | Full Name
 [...] | float | n/a
 capital perc 1st | 1.0 | % of Capital Spent in 1st Year of Construction
 
-# Electrolyzer
-
-Parameter | Value
---- | ---
-Yearly Operation Data | nd.array
-H2 Production (yearly, kg) | nd.array
-Nominal Power (kW) | 5500.0
-CAPEX Reference Power (kW) | 1000.0
-Power requirement increase per year | 0.01
-Minimum capacity | 0.1
-Conversion efficiency (kg H2/kWh) | 0.02
-Replacement time (h) | 40000.0
-
 # Technical Operating Parameters and Specifications
 
 Parameter | Value
@@ -152,6 +139,17 @@ interest | Interest rate on debt (%) | 0.037000000000000005
 Parameter | Value | Full Name
 --- | --- | ---
 Multiplier | 1.0 | CAPEX multiplier for every 10-fold increase of system size
+
+# Electrolyzer
+
+Parameter | Value
+--- | ---
+Nominal Power (kW) | 5500.0
+CAPEX Reference Power (kW) | 1000.0
+Power requirement increase per year | 0.01
+Minimum capacity | 0.1
+Conversion efficiency (kg H2/kWh) | 0.02
+Replacement time (h) | 40000.0
 
 # Electrolysis Using Stored Power
 

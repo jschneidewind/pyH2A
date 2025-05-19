@@ -8,28 +8,32 @@ def is_parameter_or_output(line, spaces_for_tab = 4, spaces_cutoff = 5):
 	'''Detection of parameters and output values in line based on presence of more than `spaces_cuttoff`
 	spaces (tabs are converted to four spaces).
 	'''
-	line = line.replace('\t', ' ' * spaces_for_tab)
+
+	line = line.replace('\t', ' ' * spaces_for_tab) # replace tabs with given number of spaces
 	return line[:spaces_cutoff] != ' ' * spaces_cutoff
 
 def process_single_line(line, output_dict, origin, variable_string, **kwargs):
 	'''Process single line to extract parameter/output information and comments'''
-	line = line.replace('\t', ' ' * kwargs.get('spaces_for_tab', 4))
-	if is_parameter_or_output(line, **kwargs):
-		if ':' not in line:
-			return variable_string
-		parts = line.split(':', 1)
-		variable_string = parts[0].strip(', \t')
-		variable_type = parts[1].strip(', \t')
+
+	if is_parameter_or_output(line, **kwargs): # is a line containing parameter/output information
+		complete_string = line.split(':')
+		variable_string = complete_string[0].strip(', \t')
+		variable_type = complete_string[1].strip(', \t')
+
 		output_dict[variable_string] = {'Type': variable_type, 'Origin': origin}
+
 		return variable_string
-	else:
+
+	else:  # is a line containing comment for parameter/output
 		comment = line.strip(' \t')
-		bottom_key = parse_parameter(variable_string)[-1] if variable_string else None
-		comment_string = f'Comment {bottom_key}' if bottom_key else 'Comment'
-		if variable_string and comment_string in output_dict.get(variable_string, {}):
+		bottom_key = parse_parameter(variable_string)[-1]
+		comment_string = f'Comment {bottom_key}'
+
+		if comment_string in output_dict[variable_string]:
 			output_dict[variable_string][comment_string] += ' ' + comment
-		elif variable_string:
+		else:
 			output_dict[variable_string][comment_string] = comment
+
 		return variable_string
 
 def extract_input_output_from_docstring(target, **kwargs):
@@ -345,4 +349,4 @@ class Template_File:
 		'''Write output string to file.'''
 
 		with open(Path(file_name), 'w') as text_file:
-			text_file.write(self.output)		
+			text_file.write(self.output)

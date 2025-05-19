@@ -172,3 +172,9 @@ Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$)/ kWh(Elec
 Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | \$/kW(PV) | value | 220
 Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$/kW(Electro- lyzer) | value | 200
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($)| Stack replacement (%E-CAPEX) | value | 20% | True
+
+# Methods - Waterfall_Analysis
+
+Name | Method Name | Arguments
+--- | --- | ---
+waterfall_chart | plot_waterfall_chart | {'show': False}

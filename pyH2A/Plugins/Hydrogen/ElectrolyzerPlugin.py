@@ -8,7 +8,46 @@ class ElectrolyzerPlugin(Plugin):
 
     Parameters
     ----------
-    ... (documentation remains the same) ...
+    CAPEX Multiplier > Multiplier > Value : float
+        Multiplier to describe cost reduction of electrolyzer CAPEX for every ten-fold
+    Electrolyzer > Nominal Power (kW) > Value : float
+        Nominal power of electrolyzer in kW.
+    Electrolyzer > Power requirement increase per year > Value : float
+        Yearly increase in electrolyzer power demand. Value > 0.
+    Electrolyzer > Minimum capacity > Value : float
+        Minimum capacity of electrolyzer. Value between 0 and 1.
+    Electrolyzer > Conversion efficiency (kg H2/kWh) > Value : float
+        Conversion efficiency of electrolyzer. Value > 0.
+    Electrolyzer > CAPEX Reference Power (kW) > Value : float
+        Reference power of electrolyzer for cost reduction calculations.
+    Electrolyzer > Replacement time (h) > Value : float
+        Replacement time of electrolyzer stack in hours.
+    Financial Input Values > construction time > Value : float
+        Construction time of electrolyzer in years.
+    Power Generation > Available Power (hourly, kWh) > Value : dict
+        Hourly power generation data for electricity production calculation.
+
+    Returns
+    -------
+    Electrolyzer > H2 Production (yearly, kg) > Value : ndarray
+        Yearly hydrogen production in kg.
+    Electrolyzer > Yearly Operation Data > Value : ndarray
+        Yearly operation data in kWh.
+    Electrolyzer > Scaling Factor > Value : float
+        CAPEX scaling factor for electrolyzer calculated based on CAPEX multiplier,
+        reference and nominal power.
+    Planned Replacement > Electrolyzer Stack Replacement > Value : float
+        Replacement frequency of electrolyzer stack.
+    Power Generation > Available Power (hourly, kWh) > Value : dict
+        Available power, hourly basis, dictionary of years (in kWh).
+    Power Generation > Available Power (daily, kWh) > Value : dict
+        Available power, daily basis, dictionary of years (in kWh).
+    Technical Operating Parameters and Specifications > Plant Design Capacity (kg of H2/day) > Value : float
+        Plant design capacity in kg of H2/day.
+    Technical Operating Parameters and Specifications > Operating Capacity Factor (%) > Value : float
+        Operating capacity factor in %.
+    LCA - Exports > Electrolyzer Nominal Power > Value : float
+        Nominal power of electrolyzer in kW.
     '''
 
     def __init__(

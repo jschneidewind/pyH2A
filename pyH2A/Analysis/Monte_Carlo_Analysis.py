@@ -408,7 +408,7 @@ class Monte_Carlo_Analysis:
 		self.results = self.perform_monte_carlo_multiprocessing(self.values)
 
 		end = timer()
-		print('Time Monte Carlo Multi:', end - start)
+		#print('Time Monte Carlo Multi:', end - start)
 
 	def save_results(
 			self, 
@@ -523,8 +523,8 @@ class Monte_Carlo_Analysis:
 				self.parameters[parameter['Name']]['Input Index'] = counter # Identical name, storing Input Index
 
 			elif 'File Index' in parameter:   # Non-identical name, looking for File Index to map
-				print("parameter: ", parameter)
-				print("self.parameter: ", self.parameters)
+				#print("parameter: ", parameter)
+				#print("self.parameter: ", self.parameters)
 
 				keys_to_iterate = list(self.parameters.keys())
 				success = False
@@ -539,7 +539,7 @@ class Monte_Carlo_Analysis:
 						break
 
 				if not success:  # Raise error it not all parameters with different names could be mapped
-					raise KeyError('Input Parameter {0} could not be mapped.'.format(key))
+					raise KeyError(r'Input Parameter {0} could not be mapped.'.format(key))
 
 			else:
 				raise KeyError('Difference between input parameter names and those stored in Monte Carlo File, no index for mapping specified.')
@@ -576,7 +576,7 @@ class Monte_Carlo_Analysis:
 			limit = parameter['Limit']
 			values_range = parameter['Values']
 
-			assert reference in values_range, f'Reference value {reference} not found in value range {values_range} for {name}'
+			assert reference >= values_range[0] and reference <= values_range[1], f'Reference value {reference} not found in value range {values_range} for {name}'
 			assert limit in values_range, f'Limit value {limit} not found in value range {values_range} for {name}'
 
 	def generate_parameter_string_table(

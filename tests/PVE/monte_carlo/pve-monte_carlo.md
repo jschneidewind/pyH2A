@@ -185,4 +185,21 @@ Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Ele
 Name | Method Name | Arguments
 --- | --- | ---
 distance_histogram | plot_distance_histogram | {'show': False}
-distance_cost_relationship | plot_distance_cost_relationship | {'show': True}
+distance_cost_relationship | plot_distance_cost_relationship | {'show': False}
+colored_scatter | plot_colored_scatter | Arguments - MC Analysis - colored_scatter
+target_parameters | plot_target_parameters_by_distance | {'show': False}
+complete_histogram | plot_complete_histogram | {'show': False, 'bins': 300}
+#colored_scatter_3d | plot_colored_scatter_3D | {'show': False}
+
+# Arguments - MC Analysis - colored_scatter
+
+Name | Value
+--- | ---
+show | False
+save | False
+pdf | True
+dpi | 500
+base_string | Base
+title_string | Target cost range: 
+plot_kwargs | {'left': 0.32, 'right': 0.94, 'bottom': 0.13, 'top': 0.92, 'fig_width': 6.5, 'fig_height': 4.0}
+image_kwargs | {'x': -0.41, 'zoom': 0.092, 'y': 0.5, 'path': 'pyH2A.Other~PV_E_Clipart.png'}
