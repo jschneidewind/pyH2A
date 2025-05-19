@@ -50,7 +50,9 @@ PLUGINS: Dict[str, Type[Any]] = {name: getattr(Plugins, name) for name in Plugin
 # Pytest CLI options
 # -----------------------------------------------------------------------------
 
-def pytest_addoption(parser: pytest.Parser) -> None:
+def pytest_addoption(
+        parser: pytest.Parser
+        ) -> None:
     """
     Register custom command-line options for updating snapshots and templates.
     """
@@ -71,7 +73,9 @@ def pytest_addoption(parser: pytest.Parser) -> None:
 # Test case collection helpers
 # -----------------------------------------------------------------------------
 
-def collect_all_modes(root_dir: Path) -> List[Tuple[str, str]]:
+def collect_all_modes(
+        root_dir: Path
+        ) -> List[Tuple[str, str]]:
     """
     Gather all scenario/mode pairs from the given directory.
     """
@@ -86,7 +90,9 @@ def collect_all_modes(root_dir: Path) -> List[Tuple[str, str]]:
     return sorted(modes)
 
 
-def collect_plugin_test_cases(root_dir: Path) -> List[Tuple[str, str, str]]:
+def collect_plugin_test_cases(
+        root_dir: Path
+        ) -> List[Tuple[str, str, str]]:
     """
     Identify plugin test cases by scanning snapshot directories.
     """
@@ -110,10 +116,10 @@ _PLUGIN_IDS: List[str] = [f"{s}-{m}-{p}" for s, m, p in _CASES]
 # -----------------------------------------------------------------------------
 
 def _run_pyh2a(
-    scenario: str,
-    mode: str,
-    snapshot_dir: Optional[str] = None
-) -> Any:
+        scenario: str,
+        mode: str,
+        snapshot_dir: Optional[str] = None
+        ) -> Any:
     """
     Run pyH2A model for a given scenario/mode, optionally generating snapshots.
 
@@ -154,7 +160,11 @@ def _run_pyh2a(
     _SCENARIO_MODE_CASES,
     ids=_SCENARIO_MODE_IDS
 )
-def test_template(scenario: str, mode: str, request: pytest.FixtureRequest) -> None:
+def test_template(
+        scenario: str, 
+        mode: str, 
+        request: pytest.FixtureRequest
+        ) -> None:
     """
     Validate or regenerate markdown templates for each scenario/mode.
 
@@ -190,10 +200,10 @@ def test_template(scenario: str, mode: str, request: pytest.FixtureRequest) -> N
     ids=_SCENARIO_MODE_IDS
 )
 def test_scenario_mode_cost(
-    scenario: str,
-    mode: str,
-    request: pytest.FixtureRequest
-) -> None:
+        scenario: str,
+        mode: str,
+        request: pytest.FixtureRequest
+        ) -> None:
     """
     Check H₂ cost for each scenario/mode against expected values.
 
@@ -231,11 +241,11 @@ def test_scenario_mode_cost(
     ids=_PLUGIN_IDS
 )
 def test_scenario_and_plugin(
-    scenario: str,
-    mode: str,
-    plugin_name: str,
-    request: pytest.FixtureRequest
-) -> None:
+        scenario: str,
+        mode: str,
+        plugin_name: str,
+        request: pytest.FixtureRequest
+        ) -> None:
     """
     Verify plugin-specific snapshot insertions.
 

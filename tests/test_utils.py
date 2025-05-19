@@ -1,75 +1,94 @@
+"""
+Utility functions for validating DiscountedCashFlow (DCF) insertions by plugins.
+"""
 from pathlib import Path
-from pyH2A.run_pyH2A import pyH2A
-from pyH2A.DiscountedCashFlow import DiscountedCashFlow
-from pyH2A.Plugins import *
+from typing import Any, List, Tuple, Type
+
 import numpy as np
 import csv
 import pickle
 
-def compare_values(val1, val2):
-    """Recursively compare two values, handling numpy arrays, dicts, and lists."""
-    # Compare types first
-    if type(val1) != type(val2):
+from pyH2A.DiscountedCashFlow import DiscountedCashFlow
+
+
+def compare_values(
+        val1: Any, 
+        val2: Any
+        ) -> bool:
+    """
+    Recursively compare two values, handling numpy arrays, dictionaries, and lists.
+
+    Args:
+        val1: First value to compare.
+        val2: Second value to compare.
+
+    Returns:
+        True if the values are equivalent, False otherwise.
+    """
+    if type(val1) is not type(val2):
         return False
 
-    # For numpy arrays
     if isinstance(val1, np.ndarray):
         return np.array_equal(val1, val2)
-    
-    # For dictionaries, compare keys and then recursively compare each value
+
     if isinstance(val1, dict):
         if val1.keys() != val2.keys():
             return False
-        for key in val1:
-            if not compare_values(val1[key], val2[key]):
-                return False
-        return True
+        return all(compare_values(val1[k], val2[k]) for k in val1)
 
-    # For lists, compare each element
     if isinstance(val1, list):
         if len(val1) != len(val2):
             return False
-        for item1, item2 in zip(val1, val2):
-            if not compare_values(item1, item2):
-                return False
-        return True
+        return all(compare_values(a, b) for a, b in zip(val1, val2))
 
     return val1 == val2
 
+
 def validate_dcf_insertions(
-    plugin_class: type,
-    snapshot_dir: Path,
-    scenario: str
-) -> None:
-    """Reusable function to test plugin insertions into DCF."""
+        plugin_class: Type[Any],
+        snapshot_dir: Path,
+        scenario: str
+        ) -> None:
+    """
+    Validate that a plugin correctly inserts or modifies entries in a DCF object.
 
-    # Construct full snapshot file paths
-    before_path = snapshot_dir / "snapshot_before.pkl"
-    after_path = snapshot_dir / "snapshot_after.pkl"
-    entries_path = snapshot_dir / "dict_entries.csv"
+    This function loads pre- and post-plugin DiscountedCashFlow snapshots,
+    applies the plugin to the pre-snapshot, and compares specified fields.
 
-    # Load before and after DCF objects
-    with open(before_path, "rb") as f:
+    Args:
+        plugin_class: The plugin class to test (should accept a DCF instance).
+        snapshot_dir: Path to directory containing 'snapshot_before.pkl',
+                      'snapshot_after.pkl', and 'dict_entries.csv'.
+        scenario: Name of the scenario being tested, used in error messages.
+
+    Raises:
+        AssertionError: If any field value after plugin differs from expected.
+    """
+    before_path: Path = snapshot_dir / "snapshot_before.pkl"
+    after_path:  Path = snapshot_dir / "snapshot_after.pkl"
+    entries_path: Path = snapshot_dir / "dict_entries.csv"
+
+    with before_path.open("rb") as f:
         dcf_before: DiscountedCashFlow = pickle.load(f)
-    with open(after_path, "rb") as f:
+    with after_path.open("rb") as f:
         dcf_after: DiscountedCashFlow = pickle.load(f)
 
-    # Load the dict_entries
-    with open(entries_path, "r", newline="") as f:
+    with entries_path.open("r", newline="") as f:
         reader = csv.reader(f)
-        header = next(reader, None)
-        dict_entries: list[tuple[str, str, str]] = [tuple(row) for row in reader]
+        _header = next(reader, None)
+        entries: List[Tuple[str, str, str]] = [tuple(row) for row in reader]
 
-    # Apply plugin to dcf_before
+    # Apply plugin to the before snapshot
     plugin_class(dcf_before)
 
-    # Compare values
-    for key, subkey, field in dict_entries:
-        value_before = dcf_before.inp.get(key, {}).get(subkey, {}).get(field, None)
-        value_after = dcf_after.inp.get(key, {}).get(subkey, {}).get(field, None)
+    # Compare each specified entry
+    for key, subkey, field in entries:
+        before_val: Any = dcf_before.inp.get(key, {}).get(subkey, {}).get(field)
+        after_val:  Any = dcf_after.inp.get(key, {}).get(subkey, {}).get(field)
 
-        if not compare_values(value_before, value_after):
-            raise AssertionError(
-                f"[{scenario}] expected {value_after} but got {value_before} for "
-                f"{key} -> {subkey} -> {field}"
+        if not compare_values(before_val, after_val):
+            msg = (
+                f"[{scenario}] Mismatch in {key} -> {subkey} -> {field}: "
+                f"expected {after_val!r}, got {before_val!r}"
             )
+            raise AssertionError(msg)

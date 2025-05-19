@@ -5,7 +5,10 @@ from pyH2A.DiscountedCashFlow import DiscountedCashFlow
 from pyH2A.Utilities.input_modification import insert, process_table
 
 class Plugin:
-    def __init__(self, dcf: DiscountedCashFlow) -> None:
+    def __init__(
+            self, 
+            dcf: DiscountedCashFlow
+            ) -> None:
         self.dcf: DiscountedCashFlow = dcf
         self.mod: str = self.__class__.__module__ + "." + self.__class__.__name__
         self.insert_queue: list[dict] = []
@@ -13,12 +16,17 @@ class Plugin:
         self.logger = logging.getLogger(self.mod)
         self.logger.info(f"Starting {self.__class__.__name__}")
 
-    def process_table(self, table_keys: list[str]) -> None:
+    def process_table(
+            self, 
+            table_keys: list[str]
+            ) -> None:
         """Processes input table."""
         for table_key in table_keys:
             process_table(self.dcf.inp, table_key, "Value")
 
-    def process_insert_queue(self) -> None:
+    def process_insert_queue(
+            self
+            ) -> None:
         """Inserts the calculated values into the DCF."""
         if self.dcf.snapshot_directory != None:
             self._store_snapshot()
@@ -31,7 +39,10 @@ class Plugin:
                 )
         self.insert_queue.clear()
 
-    def _process_insert(self, entry: dict[str, str | float | int | list[float] | None]) -> None:
+    def _process_insert(
+            self, 
+            entry: dict[str, str | float | int | list[float] | None]
+            ) -> None:
         """Inserts the calculated values into the DCF."""
         key = entry.get("key")
         subkey = entry.get("subkey")
@@ -54,7 +65,9 @@ class Plugin:
             insert_path=insert_path,
         )
 
-    def _store_snapshot(self):
+    def _store_snapshot(
+            self
+            ) -> None:
         """Stores insert queue dict entry keys (key, subkey, field) to a CSV file if store_snapshots is True."""
         if self.dcf.snapshot_directory is None:
             return

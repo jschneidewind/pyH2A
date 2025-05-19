@@ -12,7 +12,7 @@ pyH2A/Analysis/Sensitivity_Analysis.py                       87      2    98%
 pyH2A/Analysis/Waterfall_Analysis.py                        112      2    98%
 pyH2A/Analysis/__init__.py                                    0      0   100%
 pyH2A/Config/__init__.py                                      0      0   100%
-pyH2A/DiscountedCashFlow.py                                 266     28    89%
+pyH2A/DiscountedCashFlow.py                                 266     29    89%
 pyH2A/Example/__init__.py                                     0      0   100%
 pyH2A/LCA/LCA.py                                             50      2    96%
 pyH2A/LCA/LCA_lib.py                                        151     41    73%
@@ -53,4 +53,4 @@ pyH2A/cli_pyH2A.py                                           19     19     0%
 pyH2A/log_handler.py                                         33      2    94%
 pyH2A/run_pyH2A.py                                           64      9    86%
 -----------------------------------------------------------------------------
-TOTAL                                                      3034    258    91%
+TOTAL                                                      3034    259    91%
