@@ -88,7 +88,7 @@ Parameter | Value
 --- | ---
 [...] | float
 
-# Comparative_MC_Analysis
+# ComparativeMCAnalysis
 
 Parameter | Value | Image
 --- | --- | ---
@@ -224,7 +224,7 @@ Parameter | Value
 --- | ---
 Cost ($/kWh) | 10000.12
 
-# Parameters - Optimization_Analysis
+# Parameters - OptimizationAnalysis
 
 Parameter | Bounds
 --- | ---
@@ -233,7 +233,7 @@ Electrolyzer > Nominal Power (kW) > Value | 4,000; 6,000
 Electrolysis Using Stored Power > Fraction of stored power used for electrolysis > Value | 0; 1
 Battery > Design Capacity (kWh) > Value | 0; 100,000
 
-# Methods - Comparative_MC_Analysis
+# Methods - ComparativeMCAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---

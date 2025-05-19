@@ -88,7 +88,7 @@ Parameter | Value
 --- | ---
 [...] | float
 
-# Sensitivity_Analysis
+# SensitivityAnalysis
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---
@@ -97,7 +97,7 @@ Solar-to-Hydrogen Efficiency > STH (%) > Value | STH Efficiency | value | 10%; 2
 PEC Cells > Cell Cost ($/m2) > Value | PEC Cell Cost (USD/m^{2}) | value | 200.0; 450.0
 PEC Cells > Lifetime (years) > Value | PEC Cell Lifetime (years) | value | 5; 20
 
-# Monte_Carlo_Analysis
+# MonteCarloAnalysis
 
 Parameter | Value
 --- | ---
@@ -106,7 +106,7 @@ Samples | 1000
 Target Price Range ($) | 1.5; 2.5
 Input File | pyH2A.Example~Future_PEC_Type_4_Monte_Carlo.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index
 --- | --- | --- | --- | ---
@@ -262,7 +262,7 @@ Parameter | Full Name | Path | Value
 --- | --- | --- | ---
 unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of total direct depreciable costs/year) | Depreciable Capital Costs > Inflated > Value | 0.005
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---

@@ -215,7 +215,7 @@ Parameter | Value
 --- | ---
 Cost ($/kWh) | 10000.12
 
-# Optimization_Analysis
+# OptimizationAnalysis
 
 Parameter | Value
 --- | ---
@@ -223,7 +223,7 @@ Algorithm | differential_evolution
 Target | dcf.h2_cost
 Direction | minimize
 
-# Parameters - Optimization_Analysis
+# Parameters - OptimizationAnalysis
 
 Parameter | Bounds
 --- | ---

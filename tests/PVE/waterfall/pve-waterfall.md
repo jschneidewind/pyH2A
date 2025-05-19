@@ -164,7 +164,7 @@ Name | Cost ($) | Path
 --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value
 
-# Waterfall_Analysis
+# WaterfallAnalysis
 
 Parameter | Name | Type | Value | Show Percent
 --- | --- | --- | --- | ---
@@ -173,7 +173,7 @@ Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | \$/kW(PV) | value | 220
 Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$/kW(Electro- lyzer) | value | 200
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($)| Stack replacement (%E-CAPEX) | value | 20% | True
 
-# Methods - Waterfall_Analysis
+# Methods - WaterfallAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

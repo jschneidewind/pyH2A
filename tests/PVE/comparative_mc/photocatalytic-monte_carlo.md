@@ -200,7 +200,7 @@ title_string | Target cost range:
 plot_kwargs | {'left': 0.31, 'right': 0.94, 'bottom': 0.13, 'top': 0.92, 'fig_width': 6.5, 'fig_height': 4.0}
 image_kwargs | {'x': -0.4, 'zoom': 0.09, 'y': 0.5, 'path': 'pyH2A.Other~Photocatalytic_Clipart.png'}
 
-# Monte_Carlo_Analysis
+# MonteCarloAnalysis
 
 Name | Value
 --- | ---
@@ -208,7 +208,7 @@ Samples | 100
 Target Price Range ($) | 30; 50
 Input File | tests/PVE/comparative_mc/photocatalytic-monte_carlo-results.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index | Comment
 --- | --- | --- | --- | --- | ---
@@ -217,7 +217,7 @@ Catalyst > Concentration (g/L) > Value | g(Catalyst) / L | value | Base; 0.01 | 
 Catalyst > Cost per kg ($) > Value | USD / kg(Catalyst) | value | 100.0; Base | 2 | CatCost model catalyst cost drops to 140 $/kg at 100 t/a production scale, estimating lower bound of catalyst cost at 100 $/kg.
 Catalyst > Lifetime (years) > Value | Catalyst lifetime (years) | value | Base; 1 | 3 | Doubling lifetime of 6 months to 1 year.
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

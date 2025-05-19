@@ -164,7 +164,7 @@ Name | Cost ($) | Path
 --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value
 
-# Optimization_Analysis
+# OptimizationAnalysis
 
 Name | Value
 --- | ---
@@ -172,7 +172,7 @@ Algorithm | differential_evolution
 Target | dcf.h2_cost
 Direction | minimize
 
-# Parameters - Optimization_Analysis
+# Parameters - OptimizationAnalysis
 
 Parameter | Bounds
 --- | ---

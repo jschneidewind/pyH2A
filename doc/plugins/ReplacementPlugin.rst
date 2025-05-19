@@ -1,5 +1,5 @@
 ReplacementPlugin
 ==================
 
-.. automodule:: pyH2A.Plugins.ReplacementPlugin
+.. automodule:: pyH2A.Plugins.Background.ReplacementPlugin
     :members:

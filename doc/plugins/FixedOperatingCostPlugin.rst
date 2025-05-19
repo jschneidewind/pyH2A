@@ -1,5 +1,5 @@
 FixedOperatingCostPlugin
 ===========================
 
-.. automodule:: pyH2A.Plugins.FixedOperatingCostPlugin
+.. automodule:: pyH2A.Plugins.Finance.FixedOperatingCostPlugin
     :members:

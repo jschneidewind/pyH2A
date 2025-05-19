@@ -1,5 +1,5 @@
 CatalystSeparationPlugin
 ==========================
 
-.. automodule:: pyH2A.Plugins.CatalystSeparationPlugin
+.. automodule:: pyH2A.Plugins.Hydrogen.CatalystSeparationPlugin
     :members:

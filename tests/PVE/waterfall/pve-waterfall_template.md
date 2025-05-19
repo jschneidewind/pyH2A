@@ -88,7 +88,7 @@ Parameter | Value
 --- | ---
 [...] | float
 
-# Waterfall_Analysis
+# WaterfallAnalysis
 
 Parameter | Name | Type | Value | Show Percent
 --- | --- | --- | --- | ---
@@ -225,7 +225,7 @@ Parameter | Value
 --- | ---
 Cost ($/kWh) | 10000.12
 
-# Methods - Waterfall_Analysis
+# Methods - WaterfallAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---

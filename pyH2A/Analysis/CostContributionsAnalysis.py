@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 from pyH2A.Utilities.output_utilities import make_bold, millify, bottom_offset, Figure_Lean
 from pyH2A.DiscountedCashFlow import DiscountedCashFlow
 
-class Cost_Contributions_Analysis:
+class CostContributionsAnalysis:
 	'''Reading cost contributions from DCF output and plotting it.
 
 	Notes
 	-----
-	`Cost_Contributions_Analysis` does not require any input, it is sufficient
-	to include "# Cost_Contributions_Analysis" in input file.
+	`CostContributionsAnalysis` does not require any input, it is sufficient
+	to include "# CostContributionsAnalysis" in input file.
 	Contributions for plotting have to provided as a dictionary with three components:
 	`Data` containing the name and value for each contribution.
 	`Total` containing the total value

@@ -9,18 +9,18 @@ from pyH2A.Utilities.output_utilities import make_bold, Figure_Lean, dynamic_val
 
 import pprint
 
-class Sensitivity_Analysis:
+class SensitivityAnalysis:
 	'''Sensitivity analysis for multiple parameters.
 
 	Parameters
 	----------
-	Sensitivity_Analysis > [...] > Name : str
+	SensitivityAnalysis > [...] > Name : str
 		Display name for parameter, e.g. used for plot labels.
-	Sensitivity_Analysis > [...] > Type : str
+	SensitivityAnalysis > [...] > Type : str
 		Type of parameter values. If `Type` is 'value', provided values are
 		used as is. If `Type` is 'factor', provided values are multiplied 
 		with base value of parameter in input file.
-	Sensitivity_Analysis > [...] > Values : str
+	SensitivityAnalysis > [...] > Values : str
 		Value pair to be used for sensitivity analysis. One value should 
 		be higher than the base value, the other should be lower.
 		Specified in following format: value A; value B (order is irrelevant).
@@ -28,7 +28,7 @@ class Sensitivity_Analysis:
 
 	Notes
 	-----
-	`Sensitivity_Analysis` contains parameters which are to be varied in
+	`SensitivityAnalysis` contains parameters which are to be varied in
 	sensitivity analysis. First column specifies path to parameter in input file 
 	(top key > middle key > bottom key format, e.g. Catalyst > Cost per kg ($) > Value).
 	Order of parameters is not relevant.
@@ -37,9 +37,9 @@ class Sensitivity_Analysis:
 	def __init__(self, input_file):
 		self.inp = convert_input_to_dictionary(input_file)
 		self.base_case = DiscountedCashFlow(input_file, print_info = False)
-		#self.results = self.perform_sensitivity_analysis()
+		#self.results = self.perform_SensitivityAnalysis()
 
-	def perform_sensitivity_analysis(self, format_cutoff = 7):
+	def perform_SensitivityAnalysis(self, format_cutoff = 7):
 		'''Perform sensitivity analysis.
 
 		Parameters
@@ -50,9 +50,9 @@ class Sensitivity_Analysis:
 
 		sensitivity_results = {}
 
-		for key in self.inp['Sensitivity_Analysis']:
+		for key in self.inp['SensitivityAnalysis']:
 			parameters = parse_parameter(key)
-			name = self.inp['Sensitivity_Analysis'][key]['Name']
+			name = self.inp['SensitivityAnalysis'][key]['Name']
 
 
 
@@ -61,19 +61,19 @@ class Sensitivity_Analysis:
 																		 cutoff = format_cutoff)
 			sensitivity_results[name]['Values'] = {}
 
-			values = parse_parameter(self.inp['Sensitivity_Analysis'][key]['Values'], 
+			values = parse_parameter(self.inp['SensitivityAnalysis'][key]['Values'], 
 									 delimiter = ';')
 
 			for value in values:
 				input_dict = copy.deepcopy(self.inp)
 				numerical_value = num(value)
 
-				value_type = self.inp['Sensitivity_Analysis'][key]['Type']
+				value_type = self.inp['SensitivityAnalysis'][key]['Type']
 
 				set_by_path(input_dict, parameters, numerical_value, 
 							value_type = value_type)
 
-				if self.inp['Sensitivity_Analysis'][key]['Type'] == 'factor':
+				if self.inp['SensitivityAnalysis'][key]['Type'] == 'factor':
 					sensitivity_results[name]['Base'] = '1.0x'
 					shown_value = '{0}x'.format(numerical_value)
 				else:
@@ -149,7 +149,7 @@ class Sensitivity_Analysis:
 		In plot, parameters are sorted by descending cost increase magnitude.
 		'''
 
-		self.results = self.perform_sensitivity_analysis(format_cutoff = format_cutoff)		
+		self.results = self.perform_SensitivityAnalysis(format_cutoff = format_cutoff)		
 
 		data = copy.deepcopy(self.results)
 

@@ -7,27 +7,27 @@ from pyH2A.DiscountedCashFlow import DiscountedCashFlow
 from pyH2A.Utilities.input_modification import convert_input_to_dictionary, parse_parameter, get_by_path, set_by_path
 from pyH2A.Utilities.output_utilities import make_bold, Figure_Lean, format_value_dollar_sign
 
-class Waterfall_Analysis:
+class WaterfallAnalysis:
 	'''Perform waterfall analysis to study the compounded effect 
 	of changing multiple parameters.
 
 	Parameters
 	----------
-	Waterfall_Analysis > [...] > Name : str
+	WaterfallAnalysis > [...] > Name : str
 		Display name for parameter, e.g. used for plot labels.
-	Waterfall_Analysis > [...] > Type : str
+	WaterfallAnalysis > [...] > Type : str
 		Type of parameter values. If `Type` is 'value', provided values are
 		used as is. If `Type` is 'factor', provided values are multiplied 
 		with base value of parameter in input file.
-	Waterfall_Analysis > [...] > Value : float
+	WaterfallAnalysis > [...] > Value : float
 		New value or factor for parameter.
-	Waterfall_Analysis > [...] > Show Percent : bool or str, optional
+	WaterfallAnalysis > [...] > Show Percent : bool or str, optional
 		If there is any entry for `Show Percent` the parameter
 		will be displayed as a percentage value in waterfall chart.
 
 	Notes
 	-----
-	`Waterfall_Analysis` contains parameters which are to be varied in
+	`WaterfallAnalysis` contains parameters which are to be varied in
 	waterfall analysis. First column specifies path to parameter in input file 
 	(top key > middle key > bottom key format, e.g. Catalyst > Cost per kg ($) > Value).
 	Order of varied parameters determines in which order they are applied.
@@ -39,14 +39,14 @@ class Waterfall_Analysis:
 	def __init__(self, input_file):
 		self.inp = convert_input_to_dictionary(input_file)
 		self.base_case = DiscountedCashFlow(input_file, print_info = False)
-		self.results = self.perform_waterfall_analysis()
+		self.results = self.perform_WaterfallAnalysis()
 
 
-	def perform_waterfall_analysis(self):
+	def perform_WaterfallAnalysis(self):
 		'''Perform waterfall analysis
 		'''
 
-		waterfall = self.inp['Waterfall_Analysis']
+		waterfall = self.inp['WaterfallAnalysis']
 
 		results = {}
 		results['Base Case'] = {'Value': self.base_case.h2_cost}

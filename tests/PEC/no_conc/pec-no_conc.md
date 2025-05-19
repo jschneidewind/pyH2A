@@ -166,7 +166,7 @@ Name | Full Name | Path | Value | Comment
 --- | --- | --- | --- | ---
 unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of total direct depreciable costs/year) | Depreciable Capital Costs > Inflated > Value | 0.5% | Based on Pinaud 2013.
 
-# Sensitivity_Analysis
+# SensitivityAnalysis
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---
@@ -174,15 +174,15 @@ Solar-to-Hydrogen Efficiency > STH (%) > Value | STH efficiency | value | 15%; 4
 PEC Cells > Cell Cost ($/m2) > Value | PEC cell cost (\$/m^{2}) | value | 350; 1,400
 PEC Cells > Lifetime (years) > Value | PEC cell lifetime (years) | value | 1.5; 6
 
-# Methods - Sensitivity_Analysis
+# Methods - SensitivityAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 sensitivity_box_plot | sensitivity_box_plot | {'show': False, 'save': False, 'fig_width': 8, 'label_offset': 0.12, 'lim_extra': 0.25, 'right': 0.97}
 
-# Cost_Contributions_Analysis - Deactivate
+# CostContributionsAnalysis - Deactivate
 
-# Methods - Cost_Contributions_Analysis
+# Methods - CostContributionsAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

@@ -1,5 +1,5 @@
 ProductionScalingPlugin
 =========================
 
-.. automodule:: pyH2A.Plugins.ProductionScalingPlugin
+.. automodule:: pyH2A.Plugins.Background.ProductionScalingPlugin
     :members:

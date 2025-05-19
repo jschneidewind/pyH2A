@@ -50,19 +50,18 @@ def validate_dcf_insertions(
         scenario: str
         ) -> None:
     """
-    Validate that a plugin correctly inserts or modifies entries in a DCF object.
+    Validate plugin modifications to a DiscountedCashFlow object.
 
-    This function loads pre- and post-plugin DiscountedCashFlow snapshots,
-    applies the plugin to the pre-snapshot, and compares specified fields.
+    Loads pre- and post-plugin DiscountedCashFlow snapshots, applies the plugin,
+    and compares specified input entries to verify consistency.
 
-    Args:
-        plugin_class: The plugin class to test (should accept a DCF instance).
-        snapshot_dir: Path to directory containing 'snapshot_before.pkl',
-                      'snapshot_after.pkl', and 'dict_entries.csv'.
-        scenario: Name of the scenario being tested, used in error messages.
-
-    Raises:
-        AssertionError: If any field value after plugin differs from expected.
+    :param plugin_class: Plugin class to be applied (expects a DCF instance).
+    :type plugin_class: Type[Any]
+    :param snapshot_dir: Path to directory containing `snapshot_before.pkl`, `snapshot_after.pkl`, and `dict_entries.csv`.
+    :type snapshot_dir: Path
+    :param scenario: Descriptive name of the scenario under test.
+    :type scenario: str
+    :raises AssertionError: If any compared value differs after plugin insertion.
     """
     before_path: Path = snapshot_dir / "snapshot_before.pkl"
     after_path:  Path = snapshot_dir / "snapshot_after.pkl"

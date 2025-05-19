@@ -164,7 +164,7 @@ Name | Cost ($) | Path
 --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value
 
-# Sensitivity_Analysis
+# SensitivityAnalysis
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---

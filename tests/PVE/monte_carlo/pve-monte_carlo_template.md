@@ -88,16 +88,16 @@ Parameter | Value
 --- | ---
 [...] | float
 
-# Monte_Carlo_Analysis
+# MonteCarloAnalysis
 
 Parameter | Value
 --- | ---
 Input File | str, optional
 Samples | 100
 Target Price Range ($) | 30; 50
-Output File | tests/PVE/monte_carlo/Results/PV_E_Monte_Carlo.csv
+Output File | tests/PVE/monte_carlo/pve-monte_carlo-results.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index
 --- | --- | --- | --- | ---
@@ -233,7 +233,7 @@ Parameter | Value
 --- | ---
 Cost ($/kWh) | 10000.12
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---

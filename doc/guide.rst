@@ -38,9 +38,9 @@ At this point one may also specify the analysis modules which are to be used. Th
 
 .. code-block:: markdown
 
-	# Monte_Carlo_Analysis
+	# MonteCarloAnalysis
 
-This header request the :class:`~pyH2A.Analysis.Monte_Carlo_Analysis` module.
+This header request the :class:`~pyH2A.Analysis.MonteCarloAnalysis` module.
 
 Generate input file template
 ============================
@@ -58,7 +58,7 @@ At this point the input file may look like this:
 	HourlyIrradiationPlugin | plugin | 0
 	PhotovoltaicPlugin | plugin | 0
 
-	# Monte_Carlo_Analysis
+	# MonteCarloAnalysis
 
 In the current directory, the ``generate`` function from the pyH2A command line interface may be used to generate the full input file template:
 
@@ -139,17 +139,17 @@ Upon completion, pyH2A prints the levelized cost of hydrogen, for example:
 Generate plots, save results, access information
 ================================================
 
-The power of pyH2A lies in the ability to interface the core techno-economic analysis with different analysis modules to perform in-depth analysis of the results. For example, when the ``Monte_Carlo_Analysis`` module is requested in the input file, Monte Carlo analysis is performed in which selected input parameters are randomly varied to analyze the future hydrogen cost trajectory. Typically, analysis modules contain methods to generate plots of the analysis results. These are requested by adding a ``Methods`` table to the input file. For example:
+The power of pyH2A lies in the ability to interface the core techno-economic analysis with different analysis modules to perform in-depth analysis of the results. For example, when the ``MonteCarloAnalysis`` module is requested in the input file, Monte Carlo analysis is performed in which selected input parameters are randomly varied to analyze the future hydrogen cost trajectory. Typically, analysis modules contain methods to generate plots of the analysis results. These are requested by adding a ``Methods`` table to the input file. For example:
 
 .. code-block:: markdown
 
-	# Methods - Monte_Carlo_Analysis
+	# Methods - MonteCarloAnalysis
 
 	Name | Method Name | Arguments
 	--- | --- | ---
 	distance_cost_relationship | plot_distance_cost_relationship | Arguments - MC Analysis - distance_cost
 
-Including this table in the input file requests that the :func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_cost_relationship` method is executed. Arguments can be passed to the method in the ``Arguments`` column. In this case, a simple string is included ``Arguments - MC Analysis - distance_cost``. This directs pyH2A to another table in the input file which contains the method arguments:
+Including this table in the input file requests that the :func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_cost_relationship` method is executed. Arguments can be passed to the method in the ``Arguments`` column. In this case, a simple string is included ``Arguments - MC Analysis - distance_cost``. This directs pyH2A to another table in the input file which contains the method arguments:
 
 .. code-block:: markdown
 	
@@ -169,7 +169,7 @@ This synthax is useful when a number of arguments are provided. Alternatively, a
 
 .. code-block:: markdown
 
-	# Methods - Monte_Carlo_Analysis
+	# Methods - MonteCarloAnalysis
 
 	Name | Method Name | Arguments
 	--- | --- | ---

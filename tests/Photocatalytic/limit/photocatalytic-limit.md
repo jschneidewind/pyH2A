@@ -187,7 +187,7 @@ Name | Full Name | Path | Value | Comment
 --- | --- | --- | --- | ---
 unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of total direct depreciable costs/year) | Depreciable Capital Costs > Inflated > Value | 0.5% | Based on Pinaud 2013
 
-# Monte_Carlo_Analysis - Deactivate
+# MonteCarloAnalysis - Deactivate
 
 Name | Value
 --- | ---
@@ -195,7 +195,7 @@ Samples | 100
 Target Price Range ($) | 1.5; 1.6
 Output File | ./Photocatalytic/Base/Monte_Carlo_Output.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index | Comment
 --- | --- | --- | --- | --- | ---
@@ -204,7 +204,7 @@ Catalyst > Concentration (g/L) > Value | g(Catalyst) / L | value | Base; 10.0e-3
 Catalyst > Cost per kg ($) > Value | \$ / kg(Catalyst) | value | 100.0; Base | 2 | CatCost model catalyst cost drops to 140 $/kg at 100 t/a production scale, estimating lower bound of catalyst cost at 100 $/kg
 Catalyst > Lifetime (years) > Value | Catalyst Lifetime / years | value | Base; 1 | 3 | Doubling lifetime of 6 months to 1 year
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
@@ -233,7 +233,7 @@ plot_kwargs | {'show': False, 'save': False, 'dpi': 300, 'left': 0.09, 'right': 
 table_kwargs | {'ypos': 0.5, 'xpos': 1.05, 'height': 0.5}
 image_kwargs | {'path': 'pyH2A.Other~Photocatalytic_Clipart.png', 'x': 1.6, 'zoom': 0.095, 'y': 0.2}
 
-# Comparative_MC_Analysis - Deactivate
+# ComparativeMCAnalysis - Deactivate
 
 Name | Value | Image
 --- | --- | ---
@@ -241,7 +241,7 @@ pec | pyH2A.Example~210511_Future_PEC_Type_4.md | pyH2A.Other~PEC_Clipart.png
 photocatalytic | pyH2A.Example~211109_Future_PEC_Type_1_Figure_Test.md | pyH2A.Other~Photocatalytic_Clipart.png
 pv_e | pyH2A.Example~210613_PV_E.md | pyH2A.Other~PV_E_Clipart.png
 
-# Methods - Comparative_MC_Analysis
+# Methods - ComparativeMCAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
@@ -249,16 +249,16 @@ comparative_distance_histogram | plot_comparative_distance_histogram | {'show': 
 comparative_distance_cost_relationship | plot_comparative_distance_cost_relationship | {'show': False, 'save': False, 'dist_kwargs': {'log_scale': True}}
 comparative_distance_combined | plot_combined_distance | {'show': False, 'save': False, 'left': 0.06, 'fig_width': 13, 'dist_kwargs': {'legend_loc': 'upper right', 'log_scale': True}, 'table_kwargs': {'colWidths': [0.65, 0.25, 0.12, 0.25]}, 'hist_kwargs': {'title_string': 'Target price range:'}}
 
-# Cost_Contributions_Analysis
+# CostContributionsAnalysis
 
-# Methods - Cost_Contributions_Analysis
+# Methods - CostContributionsAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 cost_breakdown_plot_total | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot', 'show': False, 'save': False}
 cost_breakdown_plot_capital | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot_Capital', 'show': False, 'save': False, 'plugin': 'Finance.CapitalCostPlugin', 'plugin_property': 'direct_contributions'}
 
-# Waterfall_Analysis - Deactivate
+# WaterfallAnalysis - Deactivate
 
 Parameter | Name | Type | Value | Show Percent
 --- | --- | --- | --- | ---
@@ -267,13 +267,13 @@ Catalyst > Lifetime (years) > Value | Catalyst Lifetime (years) | value | 5.0
 Catalyst > Concentration (g/L) > Value | Catalyst Concentration (g/L) | value | 1.05e-2
 Catalyst > Cost per kg ($) > Value | Catalyst Cost ($/kg) | value | 304.0
 
-# Methods - Waterfall_Analysis
+# Methods - WaterfallAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 waterfall_chart | plot_waterfall_chart | {'show': False}
 
-# Sensitivity_Analysis - Deactivate
+# SensitivityAnalysis - Deactivate
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---
@@ -283,7 +283,7 @@ Catalyst > Lifetime (years) > Value | Catalyst lifetime (years) | value | 0.5; 2
 Catalyst > Concentration (g/L) > Value | Catalyst concentration (g/L) | value | 0.005; 0.02
 Direct Capital Costs - Gas Processing > Compressor ($) > Value | Compressor cost (\$) | value | 250,000; 1,000,000
 
-# Methods - Sensitivity_Analysis
+# Methods - SensitivityAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

@@ -1,5 +1,5 @@
 VariableOperatingCostPlugin
 ==============================
 
-.. automodule:: pyH2A.Plugins.VariableOperatingCostPlugin
+.. automodule:: pyH2A.Plugins.Finance.VariableOperatingCostPlugin
     :members:

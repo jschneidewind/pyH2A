@@ -1,5 +1,5 @@
 SolarThermalPlugin
 ====================
 
-.. automodule:: pyH2A.Plugins.SolarThermalPlugin
+.. automodule:: pyH2A.Plugins.Hydrogen.SolarThermalPlugin
     :members:

@@ -808,7 +808,7 @@ def sum_all_tables(dictionary, table_group, bottom_key, insert_total = False,
 		Key used for path column. Defaults to 'Path'.
 	return_contributions : bool, optional
 		Flag to control if a dictionary with contributions breakdown (for use 
-		in cost ``Cost_Contributions_Analysis`` module) is returned.
+		in cost ``CostContributionsAnalysis`` module) is returned.
 
 	Notes
 	-----
@@ -817,7 +817,7 @@ def sum_all_tables(dictionary, table_group, bottom_key, insert_total = False,
 
 	The contributions of each table in table_group are stored in `contributions` dictionary, 
 	which is returned if `return_contributions` is set to True. Dictionary is structured so 
-	that it can be provided to "Cost_Contributions_Analysis" class to generate a cost breakdown plot.
+	that it can be provided to "CostContributionsAnalysis" class to generate a cost breakdown plot.
 	'''
 
 	total = 0.

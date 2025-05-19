@@ -1,5 +1,5 @@
 PhotovoltaicPlugin
 ===================
 
-.. automodule:: pyH2A.Plugins.PhotovoltaicPlugin
+.. automodule:: pyH2A.Plugins.Energy.PhotovoltaicPlugin
     :members:

@@ -174,7 +174,7 @@ Name | Full Name | Path | Value | Comment
 --- | --- | --- | --- | ---
 unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of total direct depreciable costs/year) | Depreciable Capital Costs > Inflated > Value | 0.5% | Based on Pinaud 2013.
 
-# Sensitivity_Analysis
+# SensitivityAnalysis
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---
@@ -184,13 +184,13 @@ PEC Cells > Lifetime (years) > Value | PEC cell lifetime (years) | value | 0.15;
 Solar Concentrator > Cost ($/m2) > Value | Solar concentrator cost (\$/m^{2}) | value | 50; 200
 Solar Concentrator > Concentration Factor > Value | Solar concentration factor | value | 25; 100
 
-# Methods - Sensitivity_Analysis
+# Methods - SensitivityAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 sensitivity_box_plot | sensitivity_box_plot | {'show': False, 'save': False, 'fig_width': 8, 'label_offset': 0.12, 'lim_extra': 0.25, 'right': 0.97}
 
-# Monte_Carlo_Analysis - Deactivate
+# MonteCarloAnalysis - Deactivate
 
 Name | Value | Comment
 --- | --- | ---
@@ -198,7 +198,7 @@ Samples | 50000 | Number of samples in Monte Carlo simulation.
 Target Price Range ($) | 1.5; 1.6
 Input File | tests.PEC.Base~Monte_Carlo_Output.csv
 
-# Parameters - Monte_Carlo_Analysis - Deactivate
+# Parameters - MonteCarloAnalysis - Deactivate
 
 Parameter | Name | Type | Values | File Index | Comment
 --- | --- | --- | --- | --- | ---
@@ -207,16 +207,16 @@ PEC Cells > Cell Cost ($/m2) > Value | \$ / $m^{2}$(PEC cell) | value | 700.0; B
 PEC Cells > Lifetime (years) > Value | Cell lifetime (years) | value | Base; 3 | 2 | 9-fold lifetime improvement relative to state of the art (0.33 years).
 Solar Concentrator > Concentration Factor > Value | Solar concentration factor | value | Base; 100 | 3 | Doubling solar concentration factor, upper range of parabolic trough concentrators (see Gharbi 2021).
 
-# Cost_Contributions_Analysis - Deactivate
+# CostContributionsAnalysis - Deactivate
 
-# Methods - Cost_Contributions_Analysis
+# Methods - CostContributionsAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 cost_breakdown_plot_total | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot', 'show': False, 'save': False}
 cost_breakdown_plot_capital | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot_Capital', 'show': False, 'save': False, 'plugin': 'Finance.CapitalCostPlugin', 'plugin_property': 'direct_contributions'}
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

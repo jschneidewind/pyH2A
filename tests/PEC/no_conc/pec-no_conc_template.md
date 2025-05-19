@@ -93,7 +93,7 @@ Parameter | Value
 --- | ---
 [...] | float
 
-# Sensitivity_Analysis
+# SensitivityAnalysis
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---
@@ -232,18 +232,18 @@ Parameter | Full Name | Path | Value | Comment
 --- | --- | --- | --- | ---
 unplanned replacement | Total Unplanned Replacement Capital Cost Factor (% of total direct depreciable costs/year) | Depreciable Capital Costs > Inflated > Value | 0.005 | Based on Pinaud 2013.
 
-# Methods - Sensitivity_Analysis
+# Methods - SensitivityAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---
 sensitivity_box_plot | sensitivity_box_plot | {'show': False, 'save': False, 'fig_width': 8, 'label_offset': 0.12, 'lim_extra': 0.25, 'right': 0.97}
 
-# Cost_Contributions_Analysis - Deactivate
+# CostContributionsAnalysis - Deactivate
 
 Parameter
 ---
 
-# Methods - Cost_Contributions_Analysis
+# Methods - CostContributionsAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---

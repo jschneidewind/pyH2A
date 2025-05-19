@@ -164,7 +164,7 @@ Name | Cost ($) | Path
 --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value
 
-# Parameters - Optimization_Analysis
+# Parameters - OptimizationAnalysis
 
 Parameter | Bounds
 --- | ---
@@ -173,7 +173,7 @@ Electrolyzer > Nominal Power (kW) > Value | 4,000; 6,000
 Electrolysis Using Stored Power > Fraction of stored power used for electrolysis > Value | 0; 1
 Battery > Design Capacity (kWh) > Value | 0; 100,000
 
-# Comparative_MC_Analysis
+# ComparativeMCAnalysis
 
 Name | Value | Image
 --- | --- | ---
@@ -181,7 +181,7 @@ pec | tests.PVE.comparative_mc~pec-monte_carlo.md | pyH2A.Other~PEC_Clipart.png
 photocatalytic | tests.PVE.comparative_mc~photocatalytic-monte_carlo.md | pyH2A.Other~Photocatalytic_Clipart.png
 pv_e | tests.PVE.comparative_mc~pve-monte_carlo.md | pyH2A.Other~PV_E_Clipart.png
 
-# Methods - Comparative_MC_Analysis
+# Methods - ComparativeMCAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

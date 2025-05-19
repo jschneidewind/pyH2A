@@ -191,7 +191,7 @@ Name | Cost ($) | Path | Comment
 --- | --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | Based on Chang 2020
 
-# Sensitivity_Analysis - Deactivate
+# SensitivityAnalysis - Deactivate
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---
@@ -202,7 +202,7 @@ Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | Electrolyzer efficien
 Photovoltaic > Power loss per year > Value | PV power loss per year | value | 0.25%; 1.0%
 Electrolyzer > Power requirement increase per year > Value | Electrolyzer power increase per year | value | 0.15%; 0.6%
 
-# Waterfall_Analysis - Deactivate
+# WaterfallAnalysis - Deactivate
 
 Parameter | Name | Type | Value | Show Percent
 --- | --- | --- | --- | ---
@@ -211,7 +211,7 @@ Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | \$/kW(PV) | value | 220
 Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$/kW(Electro- lyzer) | value | 200
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($)| Stack replacement (%E-CAPEX) | value | 20% | True
 
-# Monte_Carlo_Analysis - Deactivate
+# MonteCarloAnalysis - Deactivate
 
 Name | Value | Comment
 --- | --- | ---
@@ -219,7 +219,7 @@ Samples | 50,000 | Number of samples in Monte Carlo simulation.
 Target Price Range ($) | 1.5; 1.6
 Input File | data/PV_E/Base/Monte_Carlo_Output.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index | Comment
 --- | --- | --- | --- | --- | --- 
@@ -228,28 +228,28 @@ Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$ / k
 Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Electricity) | value | Base; 0.025 | 2 | Maximum efficiency: 0.02538 kg H2/kWh, Chang 2020 (based on reaction enthalpy).
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. (fr. E-CAPEX) | value | Base; 20% | 3 | Decreasing stack replacement cost to 20% of electrolyzer CAPEX.
 
-# Cost_Contributions_Analysis - Deactivate
+# CostContributionsAnalysis - Deactivate
 
-# Methods - Cost_Contributions_Analysis 
+# Methods - CostContributionsAnalysis 
 
 Name | Method Name | Arguments
 --- | --- | ---
 cost_breakdown_plot_total | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot', 'show': False, 'save': False}
 cost_breakdown_plot_capital | cost_breakdown_plot | {'name': 'Cost_Breakdown_Plot_Capital', 'show': False, 'save': False, 'plugin': 'Finance.CapitalCostPlugin', 'plugin_property': 'direct_contributions', 'fig_height': 3, 'bottom': 0.2}
 
-# Methods - Sensitivity_Analysis
+# Methods - SensitivityAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 sensitivity_box_plot | sensitivity_box_plot | {'show': False, 'save': False, 'fig_width': 8, 'label_offset': 0.12, 'lim_extra': 0.25, 'fig_height': 5.4, 'bottom': 0.1, 'top': 0.98, 'format_cutoff': 7}
 
-# Methods - Waterfall_Analysis
+# Methods - WaterfallAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
 waterfall_chart | plot_waterfall_chart | {'show': True, 'save': False, 'fig_width': 9, 'width': 0.55}
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
@@ -281,7 +281,7 @@ plot_kwargs | {'show': False, 'save': False, 'dpi': 300, 'left': 0.09, 'right': 
 table_kwargs | {'ypos': 0.5, 'xpos': 1.05, 'height': 0.5}
 image_kwargs | {'path': 'pyH2A.Other~PV_E_Clipart.png', 'x': 1.6, 'zoom': 0.095, 'y': 0.2}
 
-# Comparative_MC_Analysis - Deactivate
+# ComparativeMCAnalysis - Deactivate
 
 Name | Value | Image
 --- | --- | ---
@@ -289,7 +289,7 @@ pec | ./PEC/Base/PEC_Base.md | pyH2A.Other~PEC_Clipart.png
 photocatalytic | ./Photocatalytic/Base/Photocatalytic_Base.md | pyH2A.Other~Photocatalytic_Clipart.png
 pv_e | ./PV_E/Base/PV_E_Base.md | pyH2A.Other~PV_E_Clipart.png
 
-# Methods - Comparative_MC_Analysis
+# Methods - ComparativeMCAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
@@ -329,7 +329,7 @@ top | 0.93
 hist_kwargs | {'show_parameter_table': False}
 image_kwargs | {'x': -0.38}
 
-# Optimization_Analysis - Deactivate
+# OptimizationAnalysis - Deactivate
 
 Name | Value
 --- | ---
@@ -337,7 +337,7 @@ Algorithm | differential_evolution
 Target | dcf.h2_cost
 Direction | minimize
 
-# Parameters - Optimization_Analysis
+# Parameters - OptimizationAnalysis
 
 Parameter | Bounds
 --- | ---

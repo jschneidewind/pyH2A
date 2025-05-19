@@ -9,7 +9,7 @@ from pyH2A.Utilities.input_modification import convert_input_to_dictionary,parse
 from pyH2A.DiscountedCashFlow import DiscountedCashFlow, DiscountedCashFlow_function, DiscountedCashFlow_function_1D
 from pyH2A.Utilities.output_utilities import make_bold, format_scientific, dynamic_value_formatting, insert_image, Figure_Lean
 
-class Optimization_Analysis:
+class OptimizationAnalysis:
 	'''Optimization of pyH2A models.
 
 	Parameters
@@ -40,7 +40,7 @@ class Optimization_Analysis:
 		bounds (seperated by `;`).
 		'''
 
-		parameters = self.inp['Parameters - Optimization_Analysis']
+		parameters = self.inp['Parameters - OptimizationAnalysis']
 
 		self.parameters = []
 		self.bounds = []
@@ -50,7 +50,7 @@ class Optimization_Analysis:
 			parameter = parse_parameter(key)
 			bounds = parse_parameter_to_array(parameters[key]['Bounds'], delimiter = ';', 
 											  dictionary = self.inp, 
-											  top_key = 'Parameters - Optimization_Analysis', 
+											  top_key = 'Parameters - OptimizationAnalysis', 
 											  middle_key = key, bottom_key = 'Bounds', 
 											  special_values = ['Base', 'Reference'], 
 											  path = key)

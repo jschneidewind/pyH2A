@@ -4,7 +4,7 @@ from copy import deepcopy
 from scipy.optimize import least_squares
 import logging
 
-from pyH2A.Analysis.Monte_Carlo_Analysis import Monte_Carlo_Analysis, calculate_distance
+from pyH2A.Analysis.MonteCarloAnalysis import MonteCarloAnalysis, calculate_distance
 from pyH2A.Utilities.find_nearest import find_nearest
 from pyH2A.Utilities.input_modification import convert_input_to_dictionary, read_textfile, file_import, parse_parameter, merge
 from pyH2A.Utilities.output_utilities import Figure_Lean, insert_image
@@ -52,23 +52,23 @@ def fit_generic(
 	p = least_squares(fun=residual_generic, x0=p_guess, args=(x, y, function), kwargs = kwargs)
 	return p.x
 
-class Development_Distance_Time_Analysis:
+class DevelopmentDistanceTimeAnalysis:
 	'''Relating development distance to time using historical data.
 
 	Parameters
 	----------
-	Development_Distance_Time_Analysis > Input File > Value : str
+	DevelopmentDistanceTimeAnalysis > Input File > Value : str
 		Path to textfile containing historical data for parameters
 		specified in Monte Carlo analysis (see Notes).
-	Development_Distance_Time_Analysis > Log Normalization > Value : bool
+	DevelopmentDistanceTimeAnalysis > Log Normalization > Value : bool
 		Boolean flag to control if logarithmic normalization is used
 		for distance calculation or not. If `False`, linear normalization is used.
 		When analyzing historical data, it is advised to use logaritthmic 
 		normalization to avoid outsized impacts of parameters which have changed on
 		the order of magnitudes.
-	Development_Distance_Time_Analysis > Base Year > Value : int
+	DevelopmentDistanceTimeAnalysis > Base Year > Value : int
 		Year which corresponds to the `Base` values specified in Monte Carlo analysis.
-	Development_Distance_Time_Analysis > Extrapolation Limit > Year : int
+	DevelopmentDistanceTimeAnalysis > Extrapolation Limit > Year : int
 		Year until which the distance/time models should be extrapolated.
 
 	Notes
@@ -79,7 +79,7 @@ class Development_Distance_Time_Analysis:
 	columns contain the corresponding parameter values. The textfile needs to be tab 
 	separated. The header of textfile has to start with `#` and needs to contain the tab separated
 	column names (first being `Year` and the other being the same parameter
-	names specified in the `Parameters - Monte_Carlo_Analysis` table.)
+	names specified in the `Parameters - MonteCarloAnalysis` table.)
 	If the textfile does not contain values for all parameters from the Monte Carlo analysis,
 	missing parameter values are set to the base/reference value are are assumed to be 
 	constant across all years included in the textfile.
@@ -90,11 +90,11 @@ class Development_Distance_Time_Analysis:
 			input_file : str
 			) -> None:
 		
-		self.logger: logging.Logger = logging.getLogger("pyH2A.Analysis.Development_Distance_Time_Analysis")
-		self.logger.info("Starting Development_Distance_Time_Analysis")
+		self.logger: logging.Logger = logging.getLogger("pyH2A.Analysis.DevelopmentDistanceTimeAnalysis")
+		self.logger.info("Starting DevelopmentDistanceTimeAnalysis")
 		# Initialize the development distance time analysis with the provided input file
 		self.inp = convert_input_to_dictionary(input_file)
-		self.monte_carlo = Monte_Carlo_Analysis(input_file)
+		self.monte_carlo = MonteCarloAnalysis(input_file)
 		self.mc_parameters = deepcopy(self.monte_carlo.parameters)
 
 		if 'Display Parameters' in self.inp:
@@ -104,15 +104,15 @@ class Development_Distance_Time_Analysis:
 			self.color = 'darkgreen'
 			self.display_name = 'Model'
 
-		if self.inp['Development_Distance_Time_Analysis']['Log Normalization']['Value'] == 'False':
+		if self.inp['DevelopmentDistanceTimeAnalysis']['Log Normalization']['Value'] == 'False':
 			self.log_normalize = False
 		else:
 			self.log_normalize = True
 
-		self.base_year = self.inp['Development_Distance_Time_Analysis']['Base Year']['Value']
-		self.limit_year = self.inp['Development_Distance_Time_Analysis']['Extrapolation Limit Year']['Value']
+		self.base_year = self.inp['DevelopmentDistanceTimeAnalysis']['Base Year']['Value']
+		self.limit_year = self.inp['DevelopmentDistanceTimeAnalysis']['Extrapolation Limit Year']['Value']
 
-		self.import_data(self.inp['Development_Distance_Time_Analysis']['Input File']['Value'])
+		self.import_data(self.inp['DevelopmentDistanceTimeAnalysis']['Input File']['Value'])
 		self.map_parameters()
 		self.harmonize_monte_carlo_parameters()
 		self.historical_development_distance()
@@ -354,13 +354,13 @@ class Development_Distance_Time_Analysis:
 			String for label of exponential/asymptotic model time axis.
 		label_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for
-			:func:`~pyH2A.Analysis.Development_Distance_Time_Analysis.Development_Distance_Time_Analysis.determine_distance_time_correspondence`.
+			:func:`~pyH2A.Analysis.DevelopmentDistanceTimeAnalysis.DevelopmentDistanceTimeAnalysis.determine_distance_time_correspondence`.
 		hist_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_histogram`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_histogram`
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.render_parameter_table`
 		image_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
 			:func:`~pyH2A.Utilities.output_utilities.insert_image`
@@ -456,13 +456,13 @@ class Development_Distance_Time_Analysis:
 			String for label of exponential/asymptotic model time axis.
 		label_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for
-			:func:`~pyH2A.Analysis.Development_Distance_Time_Analysis.Development_Distance_Time_Analysis.determine_distance_time_correspondence`.
+			:func:`~pyH2A.Analysis.DevelopmentDistanceTimeAnalysis.DevelopmentDistanceTimeAnalysis.determine_distance_time_correspondence`.
 		dist_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_cost_relationship`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_cost_relationship`
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.render_parameter_table`
 		image_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
 			:func:`~pyH2A.Utilities.output_utilities.insert_image`

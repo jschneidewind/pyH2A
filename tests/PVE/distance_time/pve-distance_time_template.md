@@ -86,7 +86,7 @@ Parameter | Value
 --- | ---
 [...] | float
 
-# Monte_Carlo_Analysis
+# MonteCarloAnalysis
 
 Parameter | Value | Comment
 --- | --- | ---
@@ -95,7 +95,7 @@ Samples | 50000 | Number of samples in Monte Carlo simulation.
 Target Price Range ($) | 1.5; 1.6 | n/a
 Input File | tests/PVE/distance_time/pve-monte_carlo-results.csv | n/a
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index | Comment
 --- | --- | --- | --- | --- | ---
@@ -105,7 +105,7 @@ Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$ / k
 Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Electricity) | value | Base; 0.025 | 2 | Maximum efficiency: 0.02538 kg H2/kWh, Chang 2020 (based on reaction enthalpy).
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. (fr. E-CAPEX) | value | Base; 20% | 3 | Decreasing stack replacement cost to 20% of electrolyzer CAPEX.
 
-# Development_Distance_Time_Analysis
+# DevelopmentDistanceTimeAnalysis
 
 Parameter | Year | Value
 --- | --- | ---
@@ -235,7 +235,7 @@ Parameter | Value | Path | Comment
 Electrolyzer OPEX (% of CAPEX) | 0.02 | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | Based on Stolten 2020, Shah 2021.
 PV OPEX (% of CAPEX) | 0.02 | Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | Based on Stolten 2020.
 
-# Methods - Development_Distance_Time_Analysis
+# Methods - DevelopmentDistanceTimeAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---
@@ -270,7 +270,7 @@ target_distances | [0.5, 0.6]
 plot_kwargs | {'left': 0.34, 'right': 0.96, 'bottom': 0.13, 'top': 0.96, 'fig_width': 6.2, 'fig_height': 4.0}
 image_kwargs | {'x': -0.37, 'zoom': 0.092, 'y': 0.5, 'path': 'pyH2A.Other~PV_E_Clipart.png'}
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Parameter | Method Name | Arguments
 --- | --- | ---

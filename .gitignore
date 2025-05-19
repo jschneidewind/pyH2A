@@ -34,7 +34,8 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 snapshots/
-tests/.results.txt
+tests/results.txt
+tests/PVE/monte_carlo/pve-monte_carlo-results.csv
 
 # Translations
 *.mo

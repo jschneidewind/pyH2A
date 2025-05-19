@@ -1,23 +1,23 @@
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import numpy as np
-from pyH2A.Analysis.Monte_Carlo_Analysis import Monte_Carlo_Analysis
+from pyH2A.Analysis.MonteCarloAnalysis import MonteCarloAnalysis
 from pyH2A.Utilities.input_modification import convert_input_to_dictionary
 from pyH2A.Utilities.output_utilities import insert_image, Figure_Lean
 
-class Comparative_MC_Analysis:
+class ComparativeMCAnalysis:
 	'''Comparison of Monte Carlo analysis results for different models.
 
 	Parameters
 	----------
-	Comparative_MC_Analysis > [...] > Value : str
+	ComparativeMCAnalysis > [...] > Value : str
 		Path to input file for model.
-	Comparative_MC_Analysis > [...] > Image : str, optional
+	ComparativeMCAnalysis > [...] > Image : str, optional
 		Path to image for model.
 
 	Notes
 	-----
-	First column of `Comparative_MC_Analysis` table can include arbitrary 
+	First column of `ComparativeMCAnalysis` table can include arbitrary 
 	name for model.
 	'''
 
@@ -33,14 +33,14 @@ class Comparative_MC_Analysis:
 	def get_models(
 			self
 			) -> dict:
-		'''Get models which are to be compared from `Comparative_MC_Analysis` 
+		'''Get models which are to be compared from `ComparativeMCAnalysis` 
 		table in input file and perform Monte Carlo analysis for them.
 		'''
 		# Retrieve models from the input file and perform Monte Carlo analysis
 		models = {}
 
-		for key, input_file in self.inp['Comparative_MC_Analysis'].items():
-			model = Monte_Carlo_Analysis(input_file['Value'])
+		for key, input_file in self.inp['ComparativeMCAnalysis'].items():
+			model = MonteCarloAnalysis(input_file['Value'])
 
 			models[key] = {}
 			models[key]['Model'] = model
@@ -88,7 +88,7 @@ class Comparative_MC_Analysis:
 			If figure_lean is True, matplotlib.fig object is returned.
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.render_parameter_table`
 		image_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
 			:func:`~pyH2A.Utilities.output_utilities.insert_image`
@@ -97,7 +97,7 @@ class Comparative_MC_Analysis:
 			:func:`~pyH2A.Utilities.output_utilities.Figure_Lean`, has priority over `**kwargs`.
 		hist_kwargs: dict, optional
 				Dictionary containing optional keyword arguments for
-				:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_histogram`
+				:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_histogram`
 		**kwargs: 
 			Additional `kwargs` passed to 
 			:func:`~pyH2A.Utilities.output_utilities.Figure_Lean`
@@ -175,7 +175,7 @@ class Comparative_MC_Analysis:
 			If figure_lean is True, matplotlib.fig object is returned.
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.render_parameter_table`
 		image_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
 			:func:`~pyH2A.Utilities.output_utilities.insert_image`
@@ -184,7 +184,7 @@ class Comparative_MC_Analysis:
 			:func:`~pyH2A.Utilities.output_utilities.Figure_Lean`, has priority over `**kwargs`.
 		dist_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_cost_relationship`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_cost_relationship`
 		**kwargs: 
 			Additional `kwargs` passed to 
 			:func:`~pyH2A.Utilities.output_utilities.Figure_Lean`
@@ -264,7 +264,7 @@ class Comparative_MC_Analysis:
 			y axis coordinate of target price line.
 		table_kwargs : dict, optional
 			Dictionary containing optional keyword arguments for 
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.render_parameter_table`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.render_parameter_table`
 		image_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
 			:func:`~pyH2A.Utilities.output_utilities.insert_image`
@@ -273,10 +273,10 @@ class Comparative_MC_Analysis:
 			:func:`~pyH2A.Utilities.output_utilities.Figure_Lean`, has priority over `**kwargs`.
 		dist_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_cost_relationship`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_cost_relationship`
 		hist_kwargs: dict, optional
 			Dictionary containing optional keyword arguments for
-			:func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_histogram`
+			:func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_histogram`
 		**kwargs: 
 			Additional `kwargs` passed to 
 			:func:`~pyH2A.Utilities.output_utilities.Figure_Lean`

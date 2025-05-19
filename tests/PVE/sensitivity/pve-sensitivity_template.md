@@ -88,7 +88,7 @@ Parameter | Value
 --- | ---
 [...] | float
 
-# Sensitivity_Analysis
+# SensitivityAnalysis
 
 Parameter | Name | Type | Values
 --- | --- | --- | ---

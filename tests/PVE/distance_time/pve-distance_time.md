@@ -155,7 +155,7 @@ Name | Cost ($) | Path | Comment
 --- | --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | Based on Chang 2020
 
-# Monte_Carlo_Analysis
+# MonteCarloAnalysis
 
 Name | Value | Comment
 --- | --- | ---
@@ -163,7 +163,7 @@ Samples | 50,000 | Number of samples in Monte Carlo simulation.
 Target Price Range ($) | 1.5; 1.6
 Input File | tests/PVE/distance_time/pve-monte_carlo-results.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index | Comment
 --- | --- | --- | --- | --- | --- 
@@ -172,7 +172,7 @@ Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | \$ / k
 Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Electricity) | value | Base; 0.025 | 2 | Maximum efficiency: 0.02538 kg H2/kWh, Chang 2020 (based on reaction enthalpy).
 Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. (fr. E-CAPEX) | value | Base; 20% | 3 | Decreasing stack replacement cost to 20% of electrolyzer CAPEX.
 
-# Development_Distance_Time_Analysis
+# DevelopmentDistanceTimeAnalysis
 
 Name | Value
 --- | ---
@@ -181,7 +181,7 @@ Log Normalization | True
 Base Year | 2020
 Extrapolation Limit Year | 2060
 
-# Methods - Development_Distance_Time_Analysis
+# Methods - DevelopmentDistanceTimeAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
@@ -216,7 +216,7 @@ target_distances | [0.5, 0.6]
 plot_kwargs | {'left': 0.34, 'right': 0.96, 'bottom': 0.13, 'top': 0.96, 'fig_width': 6.2, 'fig_height': 4.0}
 image_kwargs | {'x': -0.37, 'zoom': 0.092, 'y': 0.5, 'path': 'pyH2A.Other~PV_E_Clipart.png'}
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

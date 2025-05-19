@@ -223,31 +223,31 @@ def coordinate_position(
 
 	return xtext, ytext
 
-class Monte_Carlo_Analysis:
+class MonteCarloAnalysis:
 	'''Monte Carlo analysis of a techno-economic model.
 
 	Parameters 
 	----------
-	Monte_Carlo_Analysis > Samples > Value : int
+	MonteCarloAnalysis > Samples > Value : int
 		Number of samples for Monte Carlo analysis.
-	Monte_Carlo_Analysis > Target Price Range ($) > Value : str
+	MonteCarloAnalysis > Target Price Range ($) > Value : str
 		Target price range for H2 specified in the following format: lower value; higher value (e.g. "1.5: 1.54").
-	Monte_Carlo_Analysis > Output File > Value : str, optional
+	MonteCarloAnalysis > Output File > Value : str, optional
 		Path to location where output file containing Monte Carlo analysis results should be saved.
-	Monte_Carlo_Analysis > Input File > Value : str, optional
+	MonteCarloAnalysis > Input File > Value : str, optional
 		Path to location of file containing Monte Carlo analysis results that should be read.
-	Parameters - Monte_Carlo_Analysis > [...] > Name : str
+	Parameters - MonteCarloAnalysis > [...] > Name : str
 		Display name for parameter, e.g. used for axis labels.
-	Parameters - Monte_Carlo_Analysis > [...] > Type : str
+	Parameters - MonteCarloAnalysis > [...] > Type : str
 		Type of parameter values. If `Type` is 'value', provided values are used as is. If `Type` is 'factor', provided values are multiplied with base value of parameter in input file.
-	Parameters - Monte_Carlo_Analysis > [...] > Values : str
+	Parameters - MonteCarloAnalysis > [...] > Values : str
 		Value range for parameter in Monte Carlo analysis. Specified in following format: upper limit; lower limit (order is irrelevant). Instead of actual values, 'Base' or 'Reference' can be used to retrieve base value of parameter in input file as one of the values. E.g. 'Base; 20%'.
-	Parameters - Monte_Carlo_Analysis > [...] > File Index : int, optional
-		If Monte Carlo results are read from a provided input file, `File Index` for each parameter can be specified. `File Index` refers to the column position of each parameter in the read input file. This mapping allows for changing the display name and position of a parameter in the `Parameters - Monte_Carlo_Analysis` analysis table and still ensure correct mapping of the read results.
+	Parameters - MonteCarloAnalysis > [...] > File Index : int, optional
+		If Monte Carlo results are read from a provided input file, `File Index` for each parameter can be specified. `File Index` refers to the column position of each parameter in the read input file. This mapping allows for changing the display name and position of a parameter in the `Parameters - MonteCarloAnalysis` analysis table and still ensure correct mapping of the read results.
 
 	Notes
 	-----
-	`Parameters - Monte_Carlo_Analysis` contains parameters which are to be varied in Monte Carlo Analysis. First column specifies path to parameter in input file (top key > middle key > bottom key format, e.g. Catalyst > Cost per kg ($) > Value). Order of parameters can be changed, which for example affects the mapping onto different axis in `plot_colored_scatter` (first parameter is on x axis, second on y axis, etc.).
+	`Parameters - MonteCarloAnalysis` contains parameters which are to be varied in Monte Carlo Analysis. First column specifies path to parameter in input file (top key > middle key > bottom key format, e.g. Catalyst > Cost per kg ($) > Value). Order of parameters can be changed, which for example affects the mapping onto different axis in `plot_colored_scatter` (first parameter is on x axis, second on y axis, etc.).
 	'''
 
 	def __init__(
@@ -259,7 +259,7 @@ class Monte_Carlo_Analysis:
 		Notes 
 		-----
 		`self.inp` is generated from provided `input_file`. 
-		If 'Input File' is specified in Monte_Carlo_Analysis table of `input_file`, 
+		If 'Input File' is specified in MonteCarloAnalysis table of `input_file`, 
 		the provided file (which has to contain Monte Carlo simulation 
 		data formatted as done by `save_results()` method) is read and Monte Carlo simulation
 		results and corresponding parameter specification are retrieved.
@@ -278,12 +278,12 @@ class Monte_Carlo_Analysis:
 			self.color = 'darkgreen'
 			self.display_name = 'Model'
 
-		if 'Input File' in self.inp['Monte_Carlo_Analysis']:
-			self.read_results(self.inp['Monte_Carlo_Analysis']['Input File']['Value'])
+		if 'Input File' in self.inp['MonteCarloAnalysis']:
+			self.read_results(self.inp['MonteCarloAnalysis']['Input File']['Value'])
 		else:
 			self.process_parameters()
 			self.perform_full_monte_carlo()
-			self.save_results(self.inp['Monte_Carlo_Analysis']['Output File']['Value'])
+			self.save_results(self.inp['MonteCarloAnalysis']['Output File']['Value'])
 
 		self.check_parameter_integrity(self.results)
 		self.target_price_components()
@@ -300,15 +300,15 @@ class Monte_Carlo_Analysis:
 		-----
 		The ranges for each parameter are defined in `Values` column as ';' separated entries. Entries can either be a number, a path, or a `special_value` such as `Base` or `Reference`. If such a `special_value` is specified, the base value of that parameter is retrieved from `self.inp`. Parameter information is stored in `self.parameters` attribute. Based on the ranges for each parameter, random values (uniform distribution) are generated and stored in the `self.values` attribute. The target price range is read from `self.inp` file and stored in `self.target_price_range` attribute.
 		'''
-		monte = self.inp['Parameters - Monte_Carlo_Analysis']
-		samples = self.inp['Monte_Carlo_Analysis']['Samples']['Value']
+		monte = self.inp['Parameters - MonteCarloAnalysis']
+		samples = self.inp['MonteCarloAnalysis']['Samples']['Value']
 
 		number_parameters = len(monte)
 
 		values = np.empty((samples, number_parameters))
 		parameters = {}
 		for counter, key in enumerate(monte):
-			values_range = parse_parameter_to_array(monte[key]['Values'], delimiter = ';', dictionary = self.inp, top_key = 'Parameters - Monte_Carlo_Analysis', middle_key = key, bottom_key = 'Values', special_values = ['Base', 'Reference'], path = key)
+			values_range = parse_parameter_to_array(monte[key]['Values'], delimiter = ';', dictionary = self.inp, top_key = 'Parameters - MonteCarloAnalysis', middle_key = key, bottom_key = 'Values', special_values = ['Base', 'Reference'], path = key)
 
 			values_range = values_range[np.argsort(values_range)]
 			values[:,counter] = np.random.uniform(values_range[0], values_range[1], samples)
@@ -320,7 +320,7 @@ class Monte_Carlo_Analysis:
 			parameters[monte[key]['Name']] = {'Parameter': path, 'Type': monte[key]['Type'], 'Values': values_range, 'Reference': reference, 'Index': counter, 'Input Index': counter, 'Limit': limit}
 		self.values = values
 		self.parameters = parameters
-		self.target_price_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis']['Target Price Range ($)']['Value'], delimiter = ';', dictionary = self.inp)
+		self.target_price_range = parse_parameter_to_array(self.inp['MonteCarloAnalysis']['Target Price Range ($)']['Value'], delimiter = ';', dictionary = self.inp)
 
 	def perform_h2_cost_calculation(
 			self,
@@ -515,9 +515,9 @@ class Monte_Carlo_Analysis:
 																  parameters[key]['Values'])
 
 		self.parameters = parameters
-		self.target_price_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis']['Target Price Range ($)']['Value'], delimiter = ';')
+		self.target_price_range = parse_parameter_to_array(self.inp['MonteCarloAnalysis']['Target Price Range ($)']['Value'], delimiter = ';')
 
-		for counter, (key, parameter) in enumerate(self.inp['Parameters - Monte_Carlo_Analysis'].items()):
+		for counter, (key, parameter) in enumerate(self.inp['Parameters - MonteCarloAnalysis'].items()):
 			
 			if parameter['Name'] in self.parameters:
 				self.parameters[parameter['Name']]['Input Index'] = counter # Identical name, storing Input Index
@@ -545,8 +545,8 @@ class Monte_Carlo_Analysis:
 				raise KeyError('Difference between input parameter names and those stored in Monte Carlo File, no index for mapping specified.')
 
 		for name, parameter in self.parameters.items():
-			if reverse_parameter_to_string(parameter['Parameter']) not in self.inp['Parameters - Monte_Carlo_Analysis']:
-				raise KeyError(f'Input file contains {name} which is not included in Parameter - Monte_Carlo_Analysis table.')
+			if reverse_parameter_to_string(parameter['Parameter']) not in self.inp['Parameters - MonteCarloAnalysis']:
+				raise KeyError(f'Input file contains {name} which is not included in Parameter - MonteCarloAnalysis table.')
 
 	def check_parameter_integrity(
 			self, 

@@ -164,7 +164,7 @@ Name | Cost ($) | Path
 --- | --- | ---
 Electrolyzer Stack Replacement | 40% | Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value
 
-# Monte_Carlo_Analysis
+# MonteCarloAnalysis
 
 Name | Value
 --- | ---
@@ -172,7 +172,7 @@ Samples | 100
 Target Price Range ($) | 30; 50
 Input File | tests/PVE/comparative_mc/pve-monte_carlo-results.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index
 --- | --- | --- | --- | ---
@@ -180,7 +180,7 @@ Direct Capital Costs - PV > PV CAPEX ($/kW) > Value | USD / kW(PV) | value | Bas
 Direct Capital Costs - Electrolyzer > Electrolyzer CAPEX ($/kW) > Value | USD / kW(Electrolyzer) | value | Base; 200 | 1
 Electrolyzer > Conversion efficiency (kg H2/kWh) > Value | kg($H_{2}$) / kWh(Electricity) | value | Base; 0.029 | 2
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---

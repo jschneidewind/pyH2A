@@ -197,7 +197,7 @@ plot_kwargs | {'show': False, 'save': False, 'dpi': 300, 'left': 0.09, 'right': 
 table_kwargs | {'ypos': 0.5, 'xpos': 1.05, 'height': 0.5}
 image_kwargs | {'path': 'pyH2A.Other~PEC_Clipart.png', 'x': 1.6, 'zoom': 0.095, 'y': 0.2}
 
-# Monte_Carlo_Analysis
+# MonteCarloAnalysis
 
 Name | Value
 --- | ---
@@ -205,7 +205,7 @@ Samples | 100
 Target Price Range ($) | 30; 50
 Input File | tests/PVE/comparative_mc/pec-monte_carlo-results.csv
 
-# Parameters - Monte_Carlo_Analysis
+# Parameters - MonteCarloAnalysis
 
 Parameter | Name | Type | Values | File Index | Comment
 --- | --- | --- | --- | --- | ---
@@ -214,7 +214,7 @@ PEC Cells > Cell Cost ($/m2) > Value | USD / $m^{2}$(PEC cell) | value | 700.0; 
 PEC Cells > Lifetime (years) > Value | Cell lifetime (years) | value | Base; 3 | 2 | 9-fold lifetime improvement relative to state of the art (0.33 years).
 Solar Concentrator > Concentration Factor > Value | Solar concentration factor | value | Base; 100 | 3 | Doubling solar concentration factor, upper range of parabolic trough concentrators (see Gharbi 2021).
 
-# Methods - Monte_Carlo_Analysis
+# Methods - MonteCarloAnalysis
 
 Name | Method Name | Arguments
 --- | --- | ---
