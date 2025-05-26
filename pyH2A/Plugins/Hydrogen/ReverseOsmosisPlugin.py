@@ -22,15 +22,17 @@ class ReverseOsmosisPlugin(Plugin):
 	Reverse Osmosis > Recovery Rate > Value : float
 		Fraction of fresh water obtained from given volume of sea water.
   
-	Returns
-	-------
-	Power Consumption > Reverse Osmosis Consumption (kWh, yearly) > Value : nd.array
-		Electricity demand of reverse osmosis plant in kWh per year.
-	Power Consumption > Reverse Osmosis Consumption (kWh, yearly) > Type : str
-		Type of power consumer, type is 'flexible', uses both stored and available power.
-	Reverse Osmosis > Capacity (m3/h) > Value : float
-		Maximum sea water processing capacity per hour of reverse osmosis plant.   
-	'''
+    Returns
+    -------
+    Power Consumption > Reverse Osmosis Consumption (kWh, yearly) > Value : nd.array
+        Electricity demand of reverse osmosis plant in kWh per year.
+    Power Consumption > Reverse Osmosis Consumption (kWh, yearly) > Type : str
+        Type of power consumer, type is 'flexible', uses both stored and available power.
+    Reverse Osmosis > Capacity (m3/h) > Value : float
+        Maximum sea water processing capacity per hour of reverse osmosis plant.
+    LCA - Exports > Deionised Water Weight > Value : float
+        Weight of deionised water produced in kg.
+    '''
 
 	def __init__(
 			self, 

@@ -31,6 +31,8 @@ class BatteryPlugin(Plugin):
     Power Generation > Available Power (hourly, kWh) > Value : float
         Available power (hourly, kWh) is set to zero, since available power is now 
         only in daily format.
+    LCA - Exports > Battery Weight > Value : float
+        Weight of battery in kg.
     '''
     def __init__(
             self, 

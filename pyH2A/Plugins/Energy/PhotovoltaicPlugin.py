@@ -43,10 +43,8 @@ class PhotovoltaicPlugin(Plugin):
         Total land required in acres.
     Non-Depreciable Capital Costs > Solar Collection Area (m2) > Value : float
         Solar collection area in m2.
-    LCA Parameters Photovoltaic > Amount of PV modules > Value : float
-        Number of PV modules required for the hydrogen production capacity.
-    LCA Parameters Photovoltaic > Produced electricity PV (kW) > Value : float
-        Total electricity produced by the PV modules.
+    LCA - Exports > PV Nominal Power > Value : float
+        Nominal power of PV array in kW.
     '''
 
     def __init__(
