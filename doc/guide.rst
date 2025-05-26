@@ -19,7 +19,7 @@ pyH2A can be installed using ``pip``:
 Choose configuration
 ====================
 
-First, the configuration of the hydrogen production technology should be specified. This is done by selecting the appropiate plugins, which together form the desired production pathway. For example, in case of photovoltaic + electrolysis (PV+E), the :class:`~pyH2A.Plugins.Hourly_Irradiation_Plugin` and :class:`~pyH2A.Plugins.Photovoltaic_Plugin` may be used: `Hourly_Irradiation_Plugin` models the irradiation in specified location, while `Photovoltaic_Plugin` models electricity production using PV based on the hourly irradiation data and subsequent production of hydrogen from electrolysis. Changing the plugins changes the technology configuration and new configurations (e.g. including battery storage) can be modelled by creating new plugins (see :ref:`plugin_guide_label` for information on how to create new plugins).
+First, the configuration of the hydrogen production technology should be specified. This is done by selecting the appropiate plugins, which together form the desired production pathway. For example, in case of photovoltaic + electrolysis (PV+E), the :class:`~pyH2A.Plugins.HourlyIrradiationPlugin` and :class:`~pyH2A.Plugins.PhotovoltaicPlugin` may be used: `HourlyIrradiationPlugin` models the irradiation in specified location, while `PhotovoltaicPlugin` models electricity production using PV based on the hourly irradiation data and subsequent production of hydrogen from electrolysis. Changing the plugins changes the technology configuration and new configurations (e.g. including battery storage) can be modelled by creating new plugins (see :ref:`plugin_guide_label` for information on how to create new plugins).
 
 The chosen plugins are specified in the `Workflow` table of the input file:
 
@@ -29,18 +29,18 @@ The chosen plugins are specified in the `Workflow` table of the input file:
 
 	Name | Type | Position
 	--- | --- | ---
-	Hourly_Irradiation_Plugin | plugin | 0
-	Photovoltaic_Plugin | plugin | 0
+	HourlyIrradiationPlugin | plugin | 0
+	PhotovoltaicPlugin | plugin | 0
 
-``Name`` is the name of the used module, ``Type`` is the type of module (in both cases ``plugin``) and ``Posiition`` refers to the the position in the workflow when this module is executed (in this case both positions are 0, meaning that these plugins are executed at the beginning of the workflow with ``Hourly_Irradiation_Plugin`` being executed before ``Photovoltaic`` plugin). See :ref:`default_settings_label` for the default positions of the different elements of the workflow. 
+``Name`` is the name of the used module, ``Type`` is the type of module (in both cases ``plugin``) and ``Posiition`` refers to the the position in the workflow when this module is executed (in this case both positions are 0, meaning that these plugins are executed at the beginning of the workflow with ``HourlyIrradiationPlugin`` being executed before ``Photovoltaic`` plugin). See :ref:`default_settings_label` for the default positions of the different elements of the workflow. 
 
 At this point one may also specify the analysis modules which are to be used. These are included by putting a header with the name of the analysis module into the input file.
 
 .. code-block:: markdown
 
-	# Monte_Carlo_Analysis
+	# MonteCarloAnalysis
 
-This header request the :class:`~pyH2A.Analysis.Monte_Carlo_Analysis` module.
+This header request the :class:`~pyH2A.Analysis.MonteCarloAnalysis` module.
 
 Generate input file template
 ============================
@@ -55,10 +55,10 @@ At this point the input file may look like this:
 
 	Name | Type | Position
 	--- | --- | ---
-	Hourly_Irradiation_Plugin | plugin | 0
-	Photovoltaic_Plugin | plugin | 0
+	HourlyIrradiationPlugin | plugin | 0
+	PhotovoltaicPlugin | plugin | 0
 
-	# Monte_Carlo_Analysis
+	# MonteCarloAnalysis
 
 In the current directory, the ``generate`` function from the pyH2A command line interface may be used to generate the full input file template:
 
@@ -73,7 +73,7 @@ The thus generated file ``input_full.md`` can be used to enter the model informa
 Enter model information
 =======================
 
-The input file template specifies which model information has to be entered for the selected technology configuration. For example, ``Hourly_Irradiation_Plugin`` requests a file containg hourly irradiation data:
+The input file template specifies which model information has to be entered for the selected technology configuration. For example, ``HourlyIrradiationPlugin`` requests a file containg hourly irradiation data:
 
 .. code-block:: markdown
 
@@ -85,7 +85,7 @@ The input file template specifies which model information has to be entered for 
 
 ``str`` indicates that a string which a path to the file is requested (regular Python types are used for input prompts, such as ``str``, ``int``, ``float``, ``ndarray`` etc.).
 
-Other tables allow for flexible processing of input information, which is indicated by the placeholder ``[...]``. For example, the default ``Capital_Cost_Plugin`` creates this input prompt:
+Other tables allow for flexible processing of input information, which is indicated by the placeholder ``[...]``. For example, the default ``CapitalCostPlugin`` creates this input prompt:
 
 .. code-block:: markdown
 
@@ -139,17 +139,17 @@ Upon completion, pyH2A prints the levelized cost of hydrogen, for example:
 Generate plots, save results, access information
 ================================================
 
-The power of pyH2A lies in the ability to interface the core techno-economic analysis with different analysis modules to perform in-depth analysis of the results. For example, when the ``Monte_Carlo_Analysis`` module is requested in the input file, Monte Carlo analysis is performed in which selected input parameters are randomly varied to analyze the future hydrogen cost trajectory. Typically, analysis modules contain methods to generate plots of the analysis results. These are requested by adding a ``Methods`` table to the input file. For example:
+The power of pyH2A lies in the ability to interface the core techno-economic analysis with different analysis modules to perform in-depth analysis of the results. For example, when the ``MonteCarloAnalysis`` module is requested in the input file, Monte Carlo analysis is performed in which selected input parameters are randomly varied to analyze the future hydrogen cost trajectory. Typically, analysis modules contain methods to generate plots of the analysis results. These are requested by adding a ``Methods`` table to the input file. For example:
 
 .. code-block:: markdown
 
-	# Methods - Monte_Carlo_Analysis
+	# Methods - MonteCarloAnalysis
 
 	Name | Method Name | Arguments
 	--- | --- | ---
 	distance_cost_relationship | plot_distance_cost_relationship | Arguments - MC Analysis - distance_cost
 
-Including this table in the input file requests that the :func:`~pyH2A.Analysis.Monte_Carlo_Analysis.Monte_Carlo_Analysis.plot_distance_cost_relationship` method is executed. Arguments can be passed to the method in the ``Arguments`` column. In this case, a simple string is included ``Arguments - MC Analysis - distance_cost``. This directs pyH2A to another table in the input file which contains the method arguments:
+Including this table in the input file requests that the :func:`~pyH2A.Analysis.MonteCarloAnalysis.MonteCarloAnalysis.plot_distance_cost_relationship` method is executed. Arguments can be passed to the method in the ``Arguments`` column. In this case, a simple string is included ``Arguments - MC Analysis - distance_cost``. This directs pyH2A to another table in the input file which contains the method arguments:
 
 .. code-block:: markdown
 	
@@ -169,7 +169,7 @@ This synthax is useful when a number of arguments are provided. Alternatively, a
 
 .. code-block:: markdown
 
-	# Methods - Monte_Carlo_Analysis
+	# Methods - MonteCarloAnalysis
 
 	Name | Method Name | Arguments
 	--- | --- | ---

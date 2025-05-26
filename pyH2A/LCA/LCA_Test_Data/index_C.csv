@@ -1,0 +1,7 @@
+index,indicator ID,indicator name,indicator unit
+0,0cc25ff8-966d-3b04-880b-1d26e469c876,"Non-renewable, nuclear",MJ
+1,0477e7ec-5ce6-3156-b002-c764b6173224,"Renewable, wind, solar, geothe",MJ
+2,be18d2fc-0ec1-3a93-9e92-efb4edb04adc,"Non-renewable, biomass",MJ
+3,9ea0f2d6-0f60-3e80-b2e4-6adebe5e7803,"Renewable, biomass",MJ
+4,388e9af0-004b-33fb-bf91-90dded0001cc,"Renewable, water",MJ
+5,14e58e12-ca7b-3fdd-a8c6-c06a42567d4c,"Non renewable, fossil",MJ

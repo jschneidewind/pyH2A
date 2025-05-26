@@ -5,9 +5,9 @@ Analysis
    :maxdepth: 1
    :caption: Analysis
 
-   Cost_Contributions_Analysis
-   Sensitivity_Analysis
-   Waterfall_Analysis
-   Monte_Carlo_Analysis
-   Comparative_MC_Analysis
-   Development_Distance_Time_Analysis
+   CostContributionsAnalysis
+   SensitivityAnalysis
+   WaterfallAnalysis
+   MonteCarloAnalysis
+   ComparativeMCAnalysis
+   DevelopmentDistanceTimeAnalysis

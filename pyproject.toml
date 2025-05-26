@@ -1,6 +1,27 @@
 [build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
-]
+requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyH2A"
+version = "0.1.0"
+dependencies = [
+    "python-json-logger",
+    "pytest",
+    "click>=7.1.2",
+    "numpy",
+    "scipy",
+    "pandas",
+    "matplotlib",
+    "numpydoc",
+    "autodocsumm",
+    "furo",
+    "pint",
+    "nptyping"
+]
+
+[project.scripts]
+pyH2A = "pyH2A.cli_pyH2A:cli"
+
+[tool.setuptools]
+packages = ["pyH2A", "tests"]

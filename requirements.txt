@@ -6,3 +6,4 @@ matplotlib
 numpydoc
 autodocsumm
 furo
+python-json-logger

@@ -1,0 +1,4 @@
+index,provider ID,provider name,provider category,provider location,flow ID,flow name,flow category,flow unit,flow type
+0,d304025a-d235-48b7-a7e4-f54db11459ff,Produce Hydrogen (Photocatalysis),,DE,0b61b77e-1364-404e-a16e-fb473dc1486a,"Hydrogen, 1 bar",,kg,product
+1,238013c6-bac6-3768-b6ff-177fc2d89d57,Add 0.5mm High Density Polyethylene HDPE Damp Proof Membrane,Building Products/Membranes & flashing,AU,7f2ba718-90e0-3af5-aeca-c2a6ab8b2e88,Add 0.5mm High Density Polyethylene HDPE Damp Proof Membrane - AU,Building Products/Membranes & flashing,kg,product
+2,83cae1ae-4cd2-3b5e-8c06-4001a3f38ab7,Add Ammonium Hydroxide,Chemicals/Inorganic Chemicals,AU,b4842c41-bb19-3924-acf4-6d50fcb24270,Add Ammonium Hydroxide,Chemicals/Inorganic Chemicals,kg,product

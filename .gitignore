@@ -33,6 +33,9 @@ coverage.xml
 *.cover
 .hypothesis/
 .pytest_cache/
+snapshots/
+tests/results.txt
+tests/PVE/monte_carlo/pve-monte_carlo-results.csv
 
 # Translations
 *.mo
@@ -85,3 +88,10 @@ celerybeat-schedule
 *.fchk
 *.cube
 
+#logs
+logs/
+
+#virtualenv
+pyh2a_env/
+build/
+pyH2A.egg-info/

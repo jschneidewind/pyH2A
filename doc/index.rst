@@ -15,6 +15,8 @@ pyH2A
    utilities/utilities
    plugins/plugins
    analysis/analysis
+   tests/tests
+   development
 
 pyH2A is a Python framework for the analysis of hydrogen production cost.
 
