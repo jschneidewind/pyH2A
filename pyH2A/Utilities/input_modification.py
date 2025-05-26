@@ -6,7 +6,6 @@ from pathlib import Path
 import ast
 import operator
 import numpy as np
-from pyH2A import DiscountedCashFlow
 import pint
 import logging
 
@@ -130,12 +129,12 @@ def file_import(file_name, mode='rb', return_path=False):
     mode : str, optional
         File mode, 'r' for text (default encoding will be used) or 'rb' for binary.
     return_path : bool, optional
-        If True, return the resource’s path (or Traversable) instead of the open file.
+        If True, return the resource's path (or Traversable) instead of the open file.
 
     Returns
     -------
     output : file-like object or Traversable
-        The open file-like object (TextIO or BinaryIO) or, if return_path is True, the resource’s 
+        The open file-like object (TextIO or BinaryIO) or, if return_path is True, the resource's 
         path/Traversable.
     """
     if '~' in file_name:
@@ -169,8 +168,8 @@ def read_textfile(file_name, delimiter, mode = 'rb', **kwargs):
 	data : ndarray
 		Array containing read data.
 	'''
-
-	data = np.genfromtxt(file_import(file_name, mode = mode), delimiter = delimiter, **kwargs)
+	with file_import(file_name, mode=mode) as f:
+		data = np.genfromtxt(f, delimiter=delimiter, **kwargs)
 
 	return data
 
@@ -383,7 +382,7 @@ def set_by_path(root, items, value, value_type = 'value'):
 		get_by_path(root, items[:-1])[items[-1]] = value
 
 def insert(
-		class_object: DiscountedCashFlow, 
+		class_object: 'DiscountedCashFlow',
 		top_key: str, 
 		middle_key: str, 
 		bottom_key: str, 

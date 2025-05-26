@@ -161,7 +161,7 @@ Name | Value | Comment
 --- | --- | ---
 Samples | 50,000 | Number of samples in Monte Carlo simulation.
 Target Price Range ($) | 1.5; 1.6
-Input File | tests/PVE/distance_time/pve-monte_carlo-results.csv
+Input File | tests.PVE.distance_time~pve-monte_carlo-results.csv
 
 # Parameters - MonteCarloAnalysis
 
@@ -176,7 +176,7 @@ Planned Replacement > Electrolyzer Stack Replacement > Cost ($) | Stack repl. (f
 
 Name | Value
 --- | ---
-Input File | tests/PVE/distance_time/pve-historical_data.csv
+Input File | tests.PVE.distance_time~pve-historical_data.csv
 Log Normalization | True
 Base Year | 2020
 Extrapolation Limit Year | 2060

@@ -2,7 +2,7 @@
 
 Name | Value
 --- | ---
-Matrix Folder | pyH2A/LCA/LCA_Test_Data
+Matrix Folder | pyH2A.LCA.LCA_Test_Data
 
 # LCA - Exports
 

@@ -96,9 +96,8 @@ def import_hourly_data(
     by: https://re.jrc.ec.europa.eu/pvg_tools/en/#TMY.
     ``@lru_cache`` is used for fast repeated reads.
     '''
-    data = np.genfromtxt(file_import(file_name, mode='r'), 
-                          delimiter=',', skip_header=17, 
-                          skip_footer=9, converters={0: converter_function})
+    with file_import(file_name, mode='r') as f:
+        data = np.genfromtxt(f, delimiter=',', skip_header=17, skip_footer=9, converters={0: converter_function})
 
     strings = ['Latitude (decimal degrees)', 'Longitude (decimal degrees)']
     location = {}

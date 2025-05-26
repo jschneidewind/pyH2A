@@ -84,7 +84,7 @@ By default, pytest will:
 2.3. Running Individual Tests
 *****************************
 
-You can pinpoint a single test case via pytest’s “node ID” syntax:
+You can pinpoint a single test case via pytest's “node ID” syntax:
 
 - **By mode template** (e.g. `PVE-sensitivity`):
 

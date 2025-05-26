@@ -170,7 +170,7 @@ Name | Value
 --- | ---
 Samples | 100
 Target Price Range ($) | 30; 50
-Output File | tests/PVE/monte_carlo/pve-monte_carlo-results.csv
+Output File | tests.PVE.monte_carlo~pve-monte_carlo-results.csv
 
 # Parameters - MonteCarloAnalysis
 

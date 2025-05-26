@@ -8,22 +8,7 @@ Plugins allow for modelling of different hydrogen production pathways. They proc
    :caption: Plugins
 
    Plugin_Guide
-   BatteryPlugin
-   CapitalCostPlugin
-   CatalystSeparationPlugin
-   FixedOperatingCostPlugin
-   ForegroundLCIDatabasePlugin
-   HourlyIrradiationPlugin
-   MultipleModulesPlugin
-   PECPlugin
-   PhotocatalyticPlugin
-   PhotovoltaicPlugin
-   PowerManagementPlugin
-   ProductionScalingPlugin
-   ReplacementPlugin
-   ReverseOsmosisPlugin
-   SolarConcentratorPlugin
-   SolarThermalPlugin
-   StoredPowerElectrolysisPlugin
-   VariableOperatingCostPlugin
-
+   Background/Background
+   Energy/Energy
+   Finance/Finance
+   Hydrogen/Hydrogen

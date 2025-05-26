@@ -203,7 +203,7 @@ Name | Value
 --- | ---
 Samples | 100
 Target Price Range ($) | 30; 50
-Input File | tests/PVE/comparative_mc/pec-monte_carlo-results.csv
+Input File | tests.PVE.comparative_mc~pec-monte_carlo-results.csv
 
 # Parameters - MonteCarloAnalysis
 

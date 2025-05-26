@@ -298,9 +298,10 @@ def insert_image(path, x, y, zoom, ax):
 	ax : matplotlib.ax
 		matplotlib.ax object into which image is inserted.
 	'''
+	file_obj = file_import(path)
+	img = mpimg.imread(file_obj)
+	file_obj.close()
 
-	img = mpimg.imread(file_import(path))
-	imagebox = OffsetImage(img, zoom = zoom)
-	ab = AnnotationBbox(imagebox, (x, y), frameon = False, xycoords = ax.transAxes)
+	imagebox = OffsetImage(img, zoom=zoom)
+	ab = AnnotationBbox(imagebox, (x, y), frameon=False, xycoords=ax.transAxes)
 	ax.add_artist(ab)
-

@@ -47,7 +47,7 @@ class LCA:
         '''Imports the LCA data folder and checks if it has impacts.
         '''
 
-        export_folder = ExportFolder(folder)
+        export_folder = ExportFolder(folder, self.logger)
 
         if not export_folder.has_impacts():
             self.logger.error('no impacts in your export')

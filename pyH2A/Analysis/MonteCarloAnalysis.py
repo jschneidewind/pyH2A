@@ -14,6 +14,7 @@ import pyH2A.Utilities.find_nearest as fn
 from pyH2A.Utilities.input_modification import convert_input_to_dictionary, parse_parameter, parse_parameter_to_array, get_by_path, set_by_path, read_textfile, file_import, reverse_parameter_to_string
 from pyH2A.DiscountedCashFlow import DiscountedCashFlow
 from pyH2A.Utilities.output_utilities import make_bold, format_scientific, dynamic_value_formatting, insert_image, Figure_Lean
+import logging
 
 def select_non_reference_value(
 		reference : float, 
@@ -269,6 +270,8 @@ class MonteCarloAnalysis:
 		Subsequently, Monte Carlo datapoints are selected based on the specified target price range, 
 		development distances are calculated and plots can be generated.
 		'''
+		self.logger: logging.Logger = logging.getLogger("pyH2A.Analysis.MonteCarloAnalysis")
+		self.logger.info("Starting MonteCarloAnalysis")
 		self.inp = convert_input_to_dictionary(input_file)
 
 		if 'Display Parameters' in self.inp:
@@ -435,7 +438,8 @@ class MonteCarloAnalysis:
 		header_string += 'H2 Cost'
 		complete_string = header_string + '\n' + path_string + '\n' + type_string + '\n' + values_string
 
-		np.savetxt(Path(file_name), self.results, header = complete_string, delimiter = '	')
+		path = file_import(file_name, return_path=True)
+		np.savetxt(path, self.results, header = complete_string, delimiter = '	')
 
 	def read_results(
 			self, 
@@ -1127,6 +1131,9 @@ class MonteCarloAnalysis:
 		density = np.sum(np.diff(xhist) * yhist)
 	
 		mu, std = normal_distribution.fit(self.distances)
+		if std < 1e-8:
+			std = 1e-8  # small number to avoid zero std
+
 
 		ax.set_xlim(0, 1)
 		xmin, xmax = plt.xlim()
