@@ -215,10 +215,9 @@ Planned Replacement > Electrolyzer Stack Replacement > Cost ($)| Stack replaceme
 
 Name | Value | Comment
 --- | --- | ---
-Samples | 100 | Number of samples in Monte Carlo simulation.
-Dependent Variable | lca_result | Supported: h2_cost or lca_result.
-Dependent Variable Key | Climate change | Required for lca_result mode, key in dcf.lca.lca_results.
-Target Response Range | 0; 100 | Used when Dependent Variable is lca_result.
+Samples | 50000 | Number of samples in Monte Carlo simulation.
+Dependent Variable | Climate change | Supported: h2_cost, Climate change, or Cumulative energy demand.
+Target Response Range | 0; 100 | Used for Dependent Variable response filtering.
 Output File | data/LCA/Monte_Carlo_Output.csv
 
 # Parameters - Monte_Carlo_Analysis
@@ -258,7 +257,7 @@ Name | Method Name | Arguments
 distance_cost_relationship | plot_distance_cost_relationship | Arguments - MC Analysis - distance_cost
 distance_histogram | plot_distance_histogram | {'show': True, 'xlabel': True, 'save': True, 'pdf': True, 'image_kwargs': {'path': 'pyH2A.Other~PV_E_Clipart.png'}}
 colored_scatter | plot_colored_scatter | Arguments - MC Analysis - colored_scatter
-target_parameters | plot_target_parameters_by_distance | {'show': False}
+target_parameters | plot_target_parameters_by_distance | {'show': True}
 
 # Arguments - MC Analysis - colored_scatter
 
