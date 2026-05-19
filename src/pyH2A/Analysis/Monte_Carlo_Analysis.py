@@ -17,17 +17,33 @@ from pyH2A.Discounted_Cash_Flow import Discounted_Cash_Flow
 from pyH2A.Utilities.output_utilities import make_bold, format_scientific, dynamic_value_formatting, insert_image, Figure_Lean
 
 
-def _mc_response_worker(value_batch, inp, parameters, dependent_variable, dependent_variable_key):
-	"""Module-level worker for parallel Monte Carlo execution.
+def _mc_response_worker(value_batch, inp, parameters, dependent_variable):
+	'''Module-level worker for parallel Monte Carlo execution.
 
-	Runs a batch of parameter sets through Discounted_Cash_Flow and returns
-	the target response value for each set.  Being a module-level function
-	(not a bound method) makes it safely picklable for ProcessPoolExecutor.
+	Parameters
+	----------
+	value_batch : ndarray
+		Batch of Monte Carlo parameter sets, one sample per row.
+	inp : dict
+		Input dictionary template copied and modified per sample.
+	parameters : dict
+		Parameter metadata containing path, type, and index mappings.
+	dependent_variable : str
+		Response key to evaluate (``h2_cost`` or an LCA impact name).
 
-	Within each worker process the LCA class-level cache ensures A is
-	factorized only once; all remaining samples in the batch reuse the
-	stored factors via Sherman-Morrison.
-	"""
+	Returns
+	-------
+	tuple[list[float], str or None]
+		Pair ``(response_values, units)``. ``units`` is ``None`` for
+		``h2_cost`` and otherwise the LCA unit string from the first sample.
+
+	Notes
+	-----
+	The function is module-level (not a bound method), which makes it
+	picklable for ``ProcessPoolExecutor``. Within each worker process, the
+	LCA class-level cache reuses factorization work across samples in the
+	batch through the Sherman-Morrison update path.
+	'''
 	response_values = []
 	units = None
 	for value_set in value_batch:
@@ -39,7 +55,7 @@ def _mc_response_worker(value_batch, inp, parameters, dependent_variable, depend
 		if dependent_variable == 'h2_cost':
 			response_values.append(dcf.h2_cost)
 		else:
-			lca_entry = dcf.lca.lca_results[dependent_variable_key]
+			lca_entry = dcf.lca.lca_results[dependent_variable]
 			response_values.append(lca_entry['value'])
 			if units is None:
 				units = lca_entry['unit']
@@ -54,7 +70,20 @@ def select_non_reference_value(reference, values):
 	return values[idx][0]
 
 def divide_into_batches(array, batch_size):
-	'''Divide provided array into batches of size batch_size for parallel processing'''
+	'''Split an array into batches for parallel processing.
+
+	Parameters
+	----------
+	array : ndarray
+		Array of samples to split.
+	batch_size : int
+		Number of samples per batch.
+
+	Returns
+	-------
+	list
+		List of ndarrays where each entry is a batch.
+	'''
 
 	number_of_divisions = np.floor(len(array)/batch_size)
 	idx = int(number_of_divisions * batch_size)
@@ -70,8 +99,23 @@ def divide_into_batches(array, batch_size):
 	return batches
 
 def normalize_parameter(parameter, base, limit, log_normalize = False):
-	'''Linear of log normalization of parameter (float or array) based on 
-	base and limit values.
+	'''Normalize parameter values using linear or logarithmic scaling.
+
+	Parameters
+	----------
+	parameter : float or ndarray
+		Value or values to normalize.
+	base : float
+		Reference value mapped to zero.
+	limit : float
+		Limit value mapped to one.
+	log_normalize : bool, optional
+		If ``True``, apply log normalization.
+
+	Returns
+	-------
+	float or ndarray
+		Normalized value or values.
 	'''
 
 	if log_normalize:
@@ -110,7 +154,7 @@ def calculate_distance(data, parameters, selection, metric = 'cityblock', log_no
 
 	Returns
 	-------
-	distances: ndarray
+	distances : ndarray
 		Array containing distance for each model.
 
 	Notes
@@ -150,7 +194,20 @@ def calculate_distance(data, parameters, selection, metric = 'cityblock', log_no
 	return distances
 
 def extend_limits(limits_original, extension):
-	'''Extend limits_original in both directions by muliplying with extensions'''
+	'''Extend lower and upper bounds by a fraction of the current range.
+
+	Parameters
+	----------
+	limits_original : ndarray
+		Two-element array containing lower and upper limits.
+	extension : float
+		Fraction of the range used to extend both bounds.
+
+	Returns
+	-------
+	ndarray
+		Extended two-element bounds array.
+	'''
 
 	limits = np.copy(limits_original)
 
@@ -184,9 +241,13 @@ class Monte_Carlo_Analysis:
 	----------
 	Monte_Carlo_Analysis > Samples > Value : int
 		Number of samples for Monte Carlo analysis.
+	Monte_Carlo_Analysis > Dependent Variable > Value : str
+		Dependent response variable used in Monte Carlo filtering and plots.
+		Supported values are ``h2_cost``, ``Climate change``, and
+		``Cumulative energy demand``.		
 	Monte_Carlo_Analysis > Target Response Range > Value : str
-		Target response range for H2 specfied in the following format:
-		lower value; higher value (e.g. "1.5: 1.54").
+		Target response range for the configured dependent variable in the
+		following format: lower value; higher value (e.g. ``1.5; 4.0``).
 	Monte_Carlo_Analysis > Output File > Value : str, optional
 		Path to location where output file containing Monte Carlo analysis
 		results should be saved.
@@ -220,8 +281,32 @@ class Monte_Carlo_Analysis:
 	axis in `plot_colored_scatter` (first parameter is on x axis, second on y axis, etc.).
 	'''
 
+	_DEPENDENT_VARIABLE_CONFIG = {
+		'h2_cost': {
+			'header': 'cost',
+			'label': 'H2 Cost ($/kg)',
+			'unit': r'\$/kg($H_{2}$)',
+			'source': 'h2_cost',
+		},
+		'Climate change': {
+			'header': 'climate change',
+			'label': 'Climate change (kg CO2-Eq/kg H2)',
+			'unit': 'kg $CO_{2}$-Eq/kg $H_{2}$',
+		},
+		'Cumulative energy demand': {
+			'header': 'cumulative energy demand',
+			'label': 'Cumulative energy demand (MJ_Eq/kg H2)',
+			'unit': 'MJ_Eq/kg $H_{2}$',
+		},
+	}
+
 	def __init__(self, input_file):
-		'''Initialization of Monte Carlo analysis.
+		'''Initialize and execute the Monte Carlo analysis workflow.
+
+		Parameters
+		----------
+		input_file : str or pathlib.Path
+			Input file path passed to ``convert_input_to_dictionary``.
 
 		Notes 
 		-----
@@ -264,47 +349,31 @@ class Monte_Carlo_Analysis:
 	def configure_dependent_variable(self):
 		'''Configure the dependent Monte Carlo response variable.
 
-		Supported dependent variables are `h2_cost` and `lca_result`.
+		Supported dependent variables are the keys of
+		``_DEPENDENT_VARIABLE_CONFIG``.
 		'''
 
 		monte = self.inp['Monte_Carlo_Analysis']
-		self.dependent_variable = monte.get('Dependent Variable', {}).get('Value', 'h2_cost')
-
-		if self.dependent_variable == 'h2_cost':
-			self.dependent_variable_key = None
-			self.dependent_variable_header = 'H2 Cost'
-			self.dependent_variable_label = 'H2 Cost ($/kg)'
-			self.dependent_variable_unit = r'\$/kg($H_{2}$)'
-			self.target_range_key = 'Target Response Range'
-		elif self.dependent_variable == 'lca_result':
-			if 'Dependent Variable Key' not in monte:
-				raise KeyError("'Dependent Variable Key' is required when Dependent Variable is 'lca_result'")
-
-			self.dependent_variable_key = monte['Dependent Variable Key']['Value']
-			self.dependent_variable_header = f"LCA Result: {self.dependent_variable_key}"
-			self.dependent_variable_label = f"LCA Result ({self.dependent_variable_key})"
-			self.dependent_variable_unit = self.dependent_variable_key
-			self.target_range_key = 'Target Response Range'
-
-		else:
+		if 'Dependent Variable' not in monte or 'Value' not in monte['Dependent Variable']:
+			raise KeyError(
+				"Monte_Carlo_Analysis must define 'Dependent Variable > Value'."
+			)
+		self.dependent_variable = monte['Dependent Variable']['Value']
+		
+		config = self._DEPENDENT_VARIABLE_CONFIG.get(self.dependent_variable)		
+		if config is None:
+			supported = "', '".join(self._DEPENDENT_VARIABLE_CONFIG.keys())
 			raise ValueError(
-				f"Unsupported Dependent Variable '{self.dependent_variable}'. Supported values are 'h2_cost' and 'lca_result'."
+				f"Unsupported Dependent Variable '{self.dependent_variable}'. "
+				f"Use one of the supported values: '{supported}'."
 			)
 
-	def get_dependent_variable_value(self, dcf):
-		'''Extract configured dependent variable value from a DCF object.'''
+		self.dependent_variable_header = config['header']
+		self.dependent_variable_label = config['label']
+		self.dependent_variable_unit = config['unit']
+		self.target_range_header = f"Target {self.dependent_variable_header} range:"
 
-		if self.dependent_variable == 'h2_cost':
-			return dcf.h2_cost
-
-		lca_result = dcf.lca.lca_results[self.dependent_variable_key]
-		self.dependent_variable_label = (
-			f"LCA Result ({self.dependent_variable_key}, {lca_result['unit']})"
-		)
-		self.dependent_variable_unit = lca_result['unit'] + r' / kg $H_{2}$'
-		return lca_result['value']
-
-	def process_parameters(self):
+	def process_parameters(self):  
 		'''
 		Monte Carlo Analysis parameters are read from 'Monte Carlo Analysis - Parameters' 
 		in `self.inp` and processed.
@@ -352,7 +421,7 @@ class Monte_Carlo_Analysis:
 	
 		self.values = values
 		self.parameters = parameters
-		self.target_response_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis'][self.target_range_key]['Value'], 
+		self.target_response_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis']['Target Response Range']['Value'], 
 												   delimiter = ';', 
 												   dictionary = self.inp)
 
@@ -410,15 +479,13 @@ class Monte_Carlo_Analysis:
 		Returns
 		-------
 		full_array : ndarray
-			2D array containing parameter variations and H2 cost values.
+			2D array containing parameter variations and dependent-response values.
 		response_values : ndarray
-			1D array containing response values.
+			1D array containing dependent-response values.
 		'''
 
 		num_cpus = multiprocessing.cpu_count()
 		value_batches = divide_into_batches(values, int(np.ceil(len(values) / num_cpus)))
-
-		dep_key = getattr(self, 'dependent_variable_key', None)
 
 		with concurrent.futures.ProcessPoolExecutor(max_workers=num_cpus) as executor:
 			futures = [
@@ -428,22 +495,12 @@ class Monte_Carlo_Analysis:
 					self.inp,
 					self.parameters,
 					self.dependent_variable,
-					dep_key,
 				)
 				for batch in value_batches
 			]
 			results = [f.result() for f in futures]
 
 		response_values = np.concatenate([r[0] for r in results])
-
-		# Restore unit-dependent label/unit that get_dependent_variable_value used to set.
-		if self.dependent_variable == 'lca_result':
-			unit = next((r[1] for r in results if r[1] is not None), None)
-			if unit is not None:
-				self.dependent_variable_label = (
-					f"LCA Result ({self.dependent_variable_key}, {unit})"
-				)
-				self.dependent_variable_unit = unit + r' / kg $H_{2}$'
 
 		if return_full_array is True:
 			return np.c_[self.values, response_values]
@@ -495,7 +552,7 @@ class Monte_Carlo_Analysis:
 		Returns
 		-------
 		self.results : ndarray
-			Array containing parameters and H2 cost for each model.
+			Array containing parameters and dependent-response values for each model.
 		self.parameters : dict
 			Dictionary containing information on varied parameters.
 		self.target_response_range : ndarray
@@ -573,7 +630,7 @@ class Monte_Carlo_Analysis:
 																  parameters[key]['Values'])
 
 		self.parameters = parameters
-		self.target_response_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis'][self.target_range_key]['Value'], delimiter = ';')
+		self.target_response_range = parse_parameter_to_array(self.inp['Monte_Carlo_Analysis']['Target Response Range']['Value'], delimiter = ';')
 
 		for counter, (key, parameter) in enumerate(self.inp['Parameters - Monte_Carlo_Analysis'].items()):
 			
@@ -743,7 +800,7 @@ class Monte_Carlo_Analysis:
 		Notes
 		-----
 		The dependent response is stored in the last column of `self.results`, whether it is
-		`h2_cost` or an `lca_result`.
+		`h2_cost` or a configured LCA result key.
 		'''
 
 		results_sorted = self.results[np.argsort(self.results[:,-1])]
@@ -980,7 +1037,7 @@ class Monte_Carlo_Analysis:
 		return figure.fig
 
 	def plot_colored_scatter(self, limit_extension = 0.03,   
-							 title_string = 'Target response range: ', 
+							 title_string = None, 
 							 base_string = 'Base',
 							 image_kwargs = {}, plot_kwargs = {},  
 							 **kwargs):
@@ -1069,6 +1126,9 @@ class Monte_Carlo_Analysis:
 					par[pc[1]]['Reference']), xytext = (xtext, ytext), 
 					textcoords = 'axes fraction')
 
+		if title_string is None:
+			title_string = self.target_range_header
+
 		ax.set_title(title_string + f' {self.target_response_range[0]} - {self.target_response_range[1]} {self.dependent_variable_unit}')
 
 		ax.grid(color = 'grey', linestyle = '--', linewidth = 0.2, zorder = 0)
@@ -1083,7 +1143,7 @@ class Monte_Carlo_Analysis:
 		return figure.fig
 
 	def plot_colored_scatter_3D(self, limit_extension = 0.03,   
-							 	title_string = 'Target response range: ',
+						 	title_string = None,
 							 	**kwargs):
 		'''3D colored scatter plot of models within target response range.
 	
@@ -1140,7 +1200,7 @@ class Monte_Carlo_Analysis:
 								figure_lean = True, xlabel = False, title = True,
 								xlabel_string = 'Development distance',
 								ylabel_string = 'Frequency',
-								title_string = 'Target response range:',
+								title_string = None,
 								show_parameter_table = True,
 								show_mu = True, mu_x = 0.2, mu_y = 0.5,
 								table_kwargs = {}, image_kwargs = {}, plot_kwargs = {},
@@ -1208,6 +1268,9 @@ class Monte_Carlo_Analysis:
 		if ax is None:
 			figure = Figure_Lean(**kwargs)
 			ax = figure.ax
+
+		if title_string is None:
+			title_string = self.target_range_header
 
 		if title is True:
 			ax.title.set_text(title_string + f' {self.target_response_range[0]} - {self.target_response_range[1]} {self.dependent_variable_unit}')
