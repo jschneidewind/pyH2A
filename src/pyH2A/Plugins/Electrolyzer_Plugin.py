@@ -171,8 +171,8 @@ class Electrolyzer_Plugin:
         Yearly operation data of electrolyzer in (year, H2 produced, electrolyzer capacity) format.
     Electrolyzer > H2 Production (yearly, kg) > Value : nd.array
         Yearly hydrogen production in kg.
-    Electrolyzer > Number of electrolyzers required > Value : int
-        Number of electrolyzer units required, calculated as ceiling of total nominal
+    Electrolyzer > Number of electrolyzers required > Value : float
+        Number of electrolyzer units required, calculated as total nominal
         electrolyzer power divided by unit nominal power.
     Power Generation > Available Power (hourly, kWh) > Value : dict
         Available power (hourly, kWh) after subtracting power consumed by electrolyzer. 
@@ -286,7 +286,7 @@ class Electrolyzer_Plugin:
         else:
             unit_power = dcf.inp['Electrolyzer']['CAPEX Reference Power (kW)']['Value']
 
-        self.number_of_electrolyzers_required = int(np.ceil(total_power / unit_power))
+        self.number_of_electrolyzers_required = total_power / unit_power
     
 def calculate_electrolyzer_power_demand(power_requirement_increase, nominal_power, year):
     '''Calculation of yearly increase in electrolyzer power demand.
