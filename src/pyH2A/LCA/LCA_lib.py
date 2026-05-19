@@ -12,7 +12,6 @@ from __future__ import annotations
 import csv
 import importlib
 import os
-from functools import lru_cache
 from typing import List
 import numpy
 import numpy.linalg
@@ -241,7 +240,6 @@ class ImpactEntry:
         return index
 
 
-@lru_cache(maxsize=None)
 def matrix_of(file_path: str):
     '''
     Load a matrix from a file.
@@ -264,7 +262,6 @@ def matrix_of(file_path: str):
         return numpy.load(file_path)
 
 
-@lru_cache(maxsize=None)
 def _csv_rows_of(f: str) -> List[List[str]]:
     '''
     Read all data rows from a CSV file, skipping the header.
@@ -463,7 +460,7 @@ class _FactorizedSolver:
         rhs = numpy.asarray(rhs)
         if rhs.ndim == 1:
             return self._solve_fn(rhs)
-        # 2-D: solve each column; underlying solvers (splu, pypardiso) accept 2-D directly
+        # 2-D RHS matrices are handled directly by the underlying solver.
         return self._solve_fn(rhs)
 
 
