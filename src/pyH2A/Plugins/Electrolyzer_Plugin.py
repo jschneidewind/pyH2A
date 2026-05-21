@@ -190,7 +190,8 @@ class Electrolyzer_Plugin:
         self.replacement_frequency = calculate_stack_replacement(self.yearly_data[:,2], 
                                     dcf.inp['Electrolyzer']['Replacement time (h)']['Value'])
         self.calculate_scaling_factors(dcf)
-        self.calculate_number_of_electrolyzers_required(dcf)
+        if 'Life Cycle Assessment' in dcf.inp:
+            self.calculate_number_of_electrolyzers_required(dcf)
 
         insert(dcf, 'Technical Operating Parameters and Specifications', 'Plant Design Capacity (kg of H2/day)', 'Value', 
                 self.h2_production/365., __name__, print_info = print_info)
@@ -207,7 +208,8 @@ class Electrolyzer_Plugin:
                self.yearly_data, __name__, print_info = print_info)
         insert(dcf, 'Electrolyzer','H2 Production (yearly, kg)', 'Value',
                 self.h2_production, __name__, print_info = print_info)
-        insert(dcf, 'Electrolyzer', 'Number of electrolyzers required', 'Value',
+        if 'Life Cycle Assessment' in dcf.inp:
+            insert(dcf, 'Electrolyzer', 'Number of electrolyzers required', 'Value',
             self.number_of_electrolyzers_required, __name__, print_info = print_info)
 
         insert(dcf, 'Power Generation', 'Available Power (hourly, kWh)', 'Value',
@@ -284,7 +286,7 @@ class Electrolyzer_Plugin:
         if 'Unit Nominal Power (kW)' in dcf.inp['Electrolyzer']:
             unit_power = dcf.inp['Electrolyzer']['Unit Nominal Power (kW)']['Value']
         else:
-            unit_power = dcf.inp['Electrolyzer']['CAPEX Reference Power (kW)']['Value']
+            raise KeyError("Missing required input: Electrolyzer > Unit Nominal Power (kW) > Value. Please add Unit Nominal Power (kW) to calculate Number of electrolyzers required.")
 
         self.number_of_electrolyzers_required = total_power / unit_power
     
