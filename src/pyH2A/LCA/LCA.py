@@ -151,6 +151,44 @@ class LCA:
         cache_dir.mkdir(parents=True, exist_ok=True)
         return cache_dir
 
+    @staticmethod
+    def _matrix_folder_metadata_signature(matrix_folder: str) -> str:
+        '''Build a stable digest of matrix file paths, sizes, and mtimes.
+
+        Parameters
+        ----------
+        matrix_folder : str
+            Path to the matrix export folder.
+
+        Returns
+        -------
+        str
+            SHA-1 digest derived from each file's relative path, size, and
+            nanosecond modification time.
+        '''
+
+        folder = Path(matrix_folder)
+        if not folder.exists():
+            return 'missing-folder'
+
+        metadata_lines = []
+        for file_path in sorted(p for p in folder.rglob('*') if p.is_file()):
+            try:
+                stat = file_path.stat()
+            except OSError:
+                continue
+
+            relative = file_path.relative_to(folder).as_posix()
+            metadata_lines.append(
+                f"{relative}|size={stat.st_size}|mtime_ns={stat.st_mtime_ns}"
+            )
+
+        if not metadata_lines:
+            return 'empty-folder'
+
+        metadata_blob = '\n'.join(metadata_lines)
+        return hashlib.sha1(metadata_blob.encode('utf-8')).hexdigest()
+
     @classmethod
     def _build_matrix_cache_key(cls, matrix_folder: str, matrix) -> str:
         '''Build a stable cache key for matrix-dependent shared artifacts.
@@ -166,7 +204,7 @@ class LCA:
         -------
         str
             SHA-1 digest string derived from cache version, export
-            folder path, and matrix structure.
+            folder path, matrix structure, and matrix file metadata.
         '''
 
         if scipy.sparse.issparse(matrix):
@@ -176,9 +214,11 @@ class LCA:
             shape = np.asarray(matrix).shape
             nnz = int(np.count_nonzero(matrix))
 
+        folder_signature = cls._matrix_folder_metadata_signature(matrix_folder)
+
         raw_key = (
             f"v{cls._SHARED_CACHE_VERSION}|{matrix_folder}|"
-            f"shape={shape}|nnz={nnz}"
+            f"shape={shape}|nnz={nnz}|filesig={folder_signature}"
         )
         return hashlib.sha1(raw_key.encode('utf-8')).hexdigest()
 
