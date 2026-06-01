@@ -49,6 +49,8 @@ class pyH2A:
 		self.meta_workflow(self.meta_modules)
 
 		print(f'Levelized cost of hydrogen (base case): {self.base_case.h2_cost} $/kg')
+		for impact_name, result in self.base_case.lca.lca_results.items():
+			print(f"Impact: {impact_name}, Value: {result['value']}, Unit: {result['unit']}")
 
 	def meta_workflow(self, meta_dict):
 		'''Meta modules (analysis modules) are identified and executed
